@@ -1,3 +1,8 @@
+doc/
+native/
+resources/
+target/
+test/
 pom.xml
 pom.xml.asc
 *.jar
