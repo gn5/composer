@@ -25,13 +25,22 @@
                                     add_bars_at_score_index
                                     add_bars_to_score
                                     remove_bars_from_score
-                                    replace_bars_in_score
+                                    replace_bars_in_score]]
+             [sixdim.score.score_nav :refer [
+                                    get_score_beat 
+                                    get_next_eight]]
+             [sixdim.score.scales :refer [
+                                    shift_note_nooctave
+                                    get_new_note_octave
+                                    shift_note
+                                    scales
+                                    add_scale_Amin7sixthdim
                                       ]]) ;:verbose)  
   (:gen-class))
 ; (load-file "src/sixdim/core.clj")
 
 ; (print midi-out-virtualport)
-; (overtone.meqidi/midi-note midi-out-virtualport 66 127 500 0)
+; (overtone.midi/midi-note midi-out-virtualport 66 127 500 0)
 
 ; (def legato (atom 0.90)) ; as percentage
 ; (def eighth_swing (atom 0.5)) ; placement of eighth upbeats (triplet feel is at 0.6)

@@ -3,12 +3,47 @@
   ; (:require [sixdim.time.loop :refer [bar_bpm]])
   (:gen-class))
 
-(def map_note_flats
-  {:A "A" :a "Ab" :B "B" :b "Bb" :C "C" :c "Cb"
-   :D "D" :d "Db" :E "E" :e "Eb" :F "F" :f "Fb"
-   :G "G" :g "Gb"})
+(defn shift_note_nooctave [note direction n_semitones]
+  "- increase or decrease note by n_semitones
+   - direction must be '+' or '-' function
+   - note must be in format with octave, e.g. A4 or Ab4
+   - e.g. (shift_note \"A4\" + 1)
+   "
+  (as-> note v
+    (note-info v) 
+    (:pitch-class v) 
+    (v NOTES) 
+    (direction v n_semitones) 
+    (mod v 12)
+    (REVERSE-NOTES v)
+    (name v)))
 
-(def atom scales [])
+(defn get_new_note_octave [note direction n_semitones]
+  "- get new octave number of note after increase or decrease
+       by n_semitones
+   - direction must be '+' or '-' function
+   - note must be in format with octave, e.g. A4 or Ab4
+   - e.g. (get_new_note_octave \"A4\" + 1)
+   "
+  (as-> note v
+    (note-info v)
+    (:pitch-class v) ; :A 
+    (v NOTES) ; 9
+    (direction v n_semitones) ; 12 
+    (/ v 12) ; divided by 12 because 12 notes by octave
+    (cond (>= v 0)  
+          ; going to higher octave
+          (+ (:octave (note-info note)) (int v))
+          :else 
+          ; or to lower octave
+          (- (:octave (note-info note)) (int (+ 1 (* v -1))))))) 
+
+(defn shift_note [note direction n_semitones]
+  (str 
+    (shift_note_nooctave note direction n_semitones)
+    (str (get_new_note_octave note direction n_semitones))))
+
+(def scales (atom []))
 
 (defn add_scale_Amin7sixthdim [scales]
   (conj scales
@@ -26,6 +61,10 @@
    - get previous eigth note (quarter note down or up)
      add in semitone/tone up/down
    "
+   (nth                    ; in score   
+     ((nth score (- bar 1));  get bar number (e.g. 1 for 1st bar)
+       beat_key)           ;    get beat key (e.g. "quarter") 
+     (- beat_n 1))         ;      get beat number (e.g. 1)
   )
 
 (defn filt_sc_db [vec_to_filt score bar beat_key beat_n]
@@ -60,6 +99,6 @@
    (swap! score gen_melody a_prepared_gen_map) 
   "
   (map per_beat_gen_melody
-       (reduce conj [] (repeat (count gen_map) score))
+       (reduce conj [] (repeat (count gen_maps) score))
        gen_maps))
 
