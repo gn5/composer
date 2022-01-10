@@ -68,7 +68,22 @@
                     (:beat_key next_map)
                     (:beat_n next_map))))
 
-(get_score_beat tscore 2 "quarter" 1)
-(get_next_eight tscore 2 "quarter" 1 +)
-(get_next_eight tscore 2 "quarter" 1 -)
+; (get_score_beat tscore 2 "quarter" 1)
+; (get_next_eight tscore 2 "quarter" 1 +)
+; (get_next_eight tscore 2 "quarter" 1 -)
+
+(defn nav_eight
+  [score bar_n beat_key beat_n direction iter_n] 
+  (if (= iter_n 0)
+    (get_score_beat score bar_n beat_key beat_n)
+    (let [next_map (get_next_eight_map score bar_n beat_key beat_n direction)]
+      (nav_eight score
+                    ; substract or add a bar if necessary, if crossing
+                    (direction bar_n (:bar next_map))
+                    (:beat_key next_map)
+                    (:beat_n next_map)
+                    direction
+                    (- iter_n 1)))))
+
+; (nav_eight tscore 2 "quarter" 1 - 9)
 

@@ -2,47 +2,51 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(pprint (vector? @score))
+; (pprint (vector? @score))
 
-(pprint "count before (swap! score add_bars_to_score ")
-(pprint (count @score))
-(swap! score add_bars_to_score empty_bar (count @score))
-(pprint "count after (swap! score add_bars_to_score ")
-(pprint (count @score))
+; (pprint "count before (swap! score add_bars_to_score ")
+; (pprint (count @score))
+; (swap! score add_bars_to_score empty_bar (count @score))
+; (pprint "count after (swap! score add_bars_to_score ")
+; (pprint (count @score))
 
-(pprint (vector? @score))
+; (pprint (vector? @score))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(pprint "count before (swap! score remove_bars_from_score ")
-(pprint (count @score))
+; (pprint "count before (swap! score remove_bars_from_score ")
+; (pprint (count @score))
 ; (swap! score remove_bars_from_score index n_bars)
-(swap! score remove_bars_from_score 5 1)
-(pprint "count after (swap! score remove_bars_from_score ")
-(pprint (count @score))
+; (swap! score remove_bars_from_score 5 1)
+; (pprint "count after (swap! score remove_bars_from_score ")
+; (pprint (count @score))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(shift_note "A4" + 1)
-(shift_note "A4" - 1)
-(shift_note "A4" + 2)
-(shift_note "A4" - 2)
-(shift_note "A4" + 12)
-(shift_note "A4" - 12)
+; (shift_note "A4" + 1)
+; (shift_note "A4" - 12)
 
-score 
-[{:quarter [1 2 3 4] :eight [1 2 3 4]}
- {:quarter [_ _ _ _] :eight [_ _ _ _]}
- {:quarter [1 2 3 4] :eight [1 2 3 4]}]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-gen_maps [
-  {:bar 1 :k "quarter" :n 1 :g gen_sc :f filt_sc_db}
-  {:bar 1 :k "eight" :n 1 :g gen_sc :f filt_sc_ub}
-  {:bar 1 :k "quarter" :n 2 :g gen_sc :f filt_sc_db}
-  {:bar 1 :k "eight" :n 2 :g gen_sc :f filt_sc_ub}
-  {:bar 1 :k "quarter" :n 3 :g gen_sc :f filt_sc_db}
-  {:bar 1 :k "eight" :n 3 :g gen_sc :f filt_sc_ub}
-  {:bar 1 :k "quarter" :n 4 :g gen_sc :f filt_sc_db}
-  {:bar 1 :k "eight" :n 4 :g gen_sc :f filt_sc_ub}]
+; (def n_bars (atom 4)) ; init number of bars in whole score
+; (def score (atom (into [] (repeat @n_bars empty_bar)))) ; init partition score
+
+
+(defn gen_eighth_scalar_note
+  [score bar_n beat_key beat_n]
+  "generate possible scalar note: semitone or tone up or down"
+  (let [previous_eighth (nav_eight score bar_n beat_key beat_n - 1)
+        intervals ["+ 1"])
+  )
+
+(defn filt_sc_db [vec_to_filt score bar beat_key beat_n]
+  "filter generated notes for scalar movements
+   i.e. in scale tone or semitone up or down
+   for 'db' quarter downbeat, note must be in 'downbeats' group
+   for 'ub' quarter upbeat, note must be in 'upbeats' group"
+  )
+
+  )
 

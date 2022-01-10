@@ -20,21 +20,28 @@
                                     score
                                     add_bars_at_score_end
                                     add_bars_at_score_start
+                                    get_score_bar
                                     get_bars_1_to_n
                                     get_bars_n_to_end
                                     add_bars_at_score_index
                                     add_bars_to_score
-                                    remove_bars_from_score
-                                    replace_bars_in_score]]
+                                    remove_score_bars
+                                    replace_score_bars
+                                    replace_score_note
+                                    replace_bar_note]]
              [sixdim.score.score_nav :refer [
                                     get_score_beat 
-                                    get_next_eight]]
+                                    get_next_eight
+                                    nav_eight]]
              [sixdim.score.scales :refer [
                                     shift_note_nooctave
                                     get_new_note_octave
                                     shift_note
                                     scales
                                     add_scale_Amin7sixthdim
+                                    seconds
+                                    gen_note_from_intervals
+                                    ; gen_maps
                                       ]]) ;:verbose)  
   (:gen-class))
 ; (load-file "src/sixdim/core.clj")
