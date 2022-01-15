@@ -5,6 +5,10 @@
 
 (def default_note_volume 63)
 (def default_midi_channel 0)
+
+; (def legato (atom 0.90)) ; as percentage
+; (def eighth_swing (atom 0.5)) ; placement of eighth upbeats (triplet feel is at 0.6)
+
 (defn calc_bpm_based_note_duration
   [bar_bpm mult_factor]
   (* 1000.0 ;1000 ms per second
@@ -53,9 +57,9 @@
 
 (def init_bar
   {"quarter" (reduce conj [] (repeat 4 (new_note "A4" "quarter")))
-         "eight" (reduce conj [] (repeat 4 (new_note "A4" "eight")))
-         "triplet" (reduce conj [] (repeat 8 (new_note "A4" "triplet")))
-         "sixteen" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))})
+         "eight" (reduce conj [] (repeat 4 (new_note "B4" "eight")))
+         "triplet" (reduce conj [] (repeat 8 (new_note "C4" "triplet")))
+         "sixteen" (reduce conj [] (repeat 8 (new_note "D4" "sixteen")))})
 
 (def test_bar
   {"quarter" (reduce conj [] (repeat 4 (new_note "A4" "sixteen")))
@@ -65,7 +69,7 @@
 
 (def n_bars (atom 4)) ; init number of bars in whole score
 ; (def score (atom (into [] (repeat @n_bars empty_bar)))) ; init partition score
-(def score (atom (into [] (repeat @n_bars test_bar)))) ; init partition score
+(def score (atom (into [] (repeat @n_bars init_bar)))) ; init partition score
 
 (defn add_bars_at_score_end [score bars] 
   "append bar (add at end of current score)"

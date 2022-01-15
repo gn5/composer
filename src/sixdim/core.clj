@@ -62,13 +62,11 @@
                                       ]]
              ) ;:verbose)  
   (:gen-class))
+
 ; (load-file "src/sixdim/core.clj")
 
 ; (print midi-out-virtualport)
 ; (overtone.midi/midi-note midi-out-virtualport 66 127 500 0)
-
-; (def legato (atom 0.90)) ; as percentage
-; (def eighth_swing (atom 0.5)) ; placement of eighth upbeats (triplet feel is at 0.6)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -81,7 +79,10 @@
 
 (remove-watch location :watcher_location)
 
-; (remove-watch location :player_location)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; play to midi
+
 (defn midi_play_location [location score midi_port midi_channel]
   (let [current_note (get_score_beat
                        score 
@@ -96,7 +97,7 @@
                              (current_note "vol") 
                              (current_note "duration") 
                              midi_channel)
-      (= "triplet" (location "current_subdiv")) 
+      (= "eight" (location "current_subdiv")) 
       (overtone.midi/midi-note midi_port 
                              (:midi-note (note-info (current_note "pitch"))) 
                              (current_note "vol") 
@@ -110,3 +111,20 @@
              (midi_play_location new-state @score midi-out-virtualport default_midi_channel)))
 
 (remove-watch location :player_location)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; gen melody
+
+(defn print_2 [a] [
+          ((get_score_beat a 2 "quarter" 1) "pitch")
+          ((get_score_beat a 2 "eight" 1) "pitch")
+          ((get_score_beat a 2 "quarter" 2) "pitch")
+          ((get_score_beat a 2 "eight" 2) "pitch")
+          ((get_score_beat a 2 "quarter" 3) "pitch")
+          ((get_score_beat a 2 "eight" 3) "pitch")
+          ((get_score_beat a 2 "quarter" 4) "pitch")
+          ((get_score_beat a 2 "eight" 4) "pitch")])
+
+(count (gen_melody @score @gen_maps))
+(print_2 (:score (nth (gen_melody @score @gen_maps) 0)))
