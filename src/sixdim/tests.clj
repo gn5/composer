@@ -50,3 +50,37 @@
 
   )
 
+; (def tscore [tbar tbar])
+; [list of [score [list of filters]]
+; (def tinput [
+   ; {:score tscore 
+   ; :filters [
+             ; {:bar 1 :k "quarter" :n 2 
+          ; :g gen_note_from_intervals_seconds 
+          ; :f filter_accept_all}
+             ; {:bar 1 :k "quarter" :n 2 
+          ; :g gen_note_from_intervals_seconds 
+          ; :f filter_accept_all}]}
+   ; {:score tscore 
+   ; :filters [
+          ; {:bar 1 :k "quarter" :n 2 
+       ; :g gen_note_from_intervals_seconds 
+       ; :f filter_accept_all}
+          ; {:bar 1 :k "quarter" :n 2 
+       ; :g gen_note_from_intervals_seconds 
+       ; :f filter_accept_all}]}])
+
+
+
+; (defn print_2 [a] [
+          ; ((get_score_beat a 2 "quarter" 1) "pitch")
+          ; ((get_score_beat a 2 "eight" 1) "pitch")
+          ; ((get_score_beat a 2 "quarter" 2) "pitch")
+          ; ((get_score_beat a 2 "eight" 2) "pitch")
+          ; ((get_score_beat a 2 "quarter" 3) "pitch")
+          ; ((get_score_beat a 2 "eight" 3) "pitch")
+          ; ((get_score_beat a 2 "quarter" 4) "pitch")
+          ; ((get_score_beat a 2 "eight" 4) "pitch")])
+
+; (count (gen_melody tscore @gen_maps))
+; (print_2 (:score (nth (gen_melody tscore @gen_maps) 0)))

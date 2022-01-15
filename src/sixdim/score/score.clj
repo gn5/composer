@@ -3,7 +3,7 @@
   (:require [sixdim.time.loop :refer [bar_bpm]])
   (:gen-class))
 
-(def default_note_volume 127)
+(def default_note_volume 63)
 (def default_midi_channel 0)
 (defn calc_bpm_based_note_duration
   [bar_bpm mult_factor]
@@ -35,8 +35,9 @@
             (calc_bpm_based_note_duration @bar_bpm 32))))
   ([pitch]
     (new_note pitch "quarter")))
-(new_note "A4")
-(new_note "B4" "sixteen")
+
+; (new_note "A4")
+; (new_note "B4" "sixteen")
 
 (def empty_note
   {"quarter" (new_note nil default_note_volume (calc_bpm_based_note_duration @bar_bpm 16))
@@ -50,8 +51,21 @@
          "triplet" (reduce conj [] (repeat 8 (get empty_note "triplet")))
          "sixteen" (reduce conj [] (repeat 8 (get empty_note "sixteen")))})
 
+(def init_bar
+  {"quarter" (reduce conj [] (repeat 4 (new_note "A4" "quarter")))
+         "eight" (reduce conj [] (repeat 4 (new_note "A4" "eight")))
+         "triplet" (reduce conj [] (repeat 8 (new_note "A4" "triplet")))
+         "sixteen" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))})
+
+(def test_bar
+  {"quarter" (reduce conj [] (repeat 4 (new_note "A4" "sixteen")))
+         "eight" (reduce conj [] (repeat 4 (new_note "A4" "sixteen")))
+         "triplet" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))
+         "sixteen" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))})
+
 (def n_bars (atom 4)) ; init number of bars in whole score
-(def score (atom (into [] (repeat @n_bars empty_bar)))) ; init partition score
+; (def score (atom (into [] (repeat @n_bars empty_bar)))) ; init partition score
+(def score (atom (into [] (repeat @n_bars test_bar)))) ; init partition score
 
 (defn add_bars_at_score_end [score bars] 
   "append bar (add at end of current score)"
@@ -98,6 +112,7 @@
     (if (> index (count score))
       (add_bars_at_score_end score bars)
       (add_bars_at_score_index score bars index))))
+
 ; (add_bars_to_score ["1" "2" "2"] ["3"] 1)
 ; (add_bars_to_score ["1" "2" "2"] ["3"] 2)
 ; (add_bars_to_score ["1" "2" "2"] ["3"] 3)
@@ -116,6 +131,7 @@
     (let [pre_bars (subvec score 0 (- index 1))
           post_bars (subvec score (- (+ index n_bars) 1))]
       (into [] (concat pre_bars post_bars)))))
+
 ; (remove_score_bars [[1 1 1] [2 2 2]] 2 1)
 ; (add_bars_to_score [3 3 3] (remove_score_bars [[1 1 1] [2 2 2]] 2 1) 1)
 
@@ -129,6 +145,7 @@
           #(assoc %1 (- %2 1) %3) 
           beat_n      ;%2 (%1 is the vector at beat_key)
           new_note))  ;%3
+
 ; (replace_bar_note empty_bar "eight" 4 (new_note "A4"))
 
 (defn replace_score_bars [score bars index]
@@ -137,8 +154,11 @@
    - use with
      (swap! score replace_bars_in_score bars index)"
     (-> score
-      (remove_score_bars index (count bars))
+      (remove_score_bars index (if (vector? bars) 
+                                   (count bars)
+                                   1))
       (add_bars_to_score bars index)))
+
 ; (pprint (replace_score_bars [empty_bar empty_bar] 
   ; {"quarter" (reduce conj [] (repeat 4 (new_note "C8" "quarter")))
          ; "eight" (reduce conj [] (repeat 4 (new_note "C4" "eight")))
@@ -152,5 +172,7 @@
   (get_score_bar v bar_n)
   (replace_bar_note v beat_key beat_n new_note)
   (replace_score_bars score v bar_n)))
+
 ; (replace_score_note [empty_bar empty_bar] 2 "sixteen" 8 (new_note "C2" "sixteen"))
 ; (replace_bar_note empty_bar "sixteen" 8 (new_note "C2" "sixteen"))
+

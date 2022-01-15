@@ -2,7 +2,7 @@
   (:use overtone.core)
   (:gen-class))
 
-(def bar_bpm (atom 5)) ; bpm (n beats per minute) of bar (=4 quarter notes)
+(def bar_bpm (atom 10)) ; bpm (n beats per minute) of bar (=4 quarter notes)
 (def bar_metronome (metronome @bar_bpm)) ; start metronome at bar bpm speed
 (def loop_start_bar (atom 1)) ; first bar of play loop 
 (def loop_end_bar (atom 2)) ; last bar of play loop 
@@ -71,28 +71,33 @@
 (defn play_loop
   [bar_beat metro val]
   ; (println "looping at bar bpm; bar_beat =" bar_beat " val =" val)
+
   (trigger_bar_note bar_beat metro)
-  (trigger_sixteenth_note (+ bar_beat 0.0625) metro)
-  (trigger_triplet_note (+ bar_beat 0.08333333) metro)
-  (trigger_eighth_note (+ bar_beat 0.125) metro)
-  (trigger_triplet_note (+ bar_beat 0.16666666) metro)
-  (trigger_sixteenth_note (+ bar_beat 0.1875) metro)
   (trigger_quarter_note (+ bar_beat 0.25) metro)
-  (trigger_sixteenth_note (+ bar_beat 0.3125) metro)
-  (trigger_eighth_note (+ bar_beat 0.375) metro)
-  (trigger_triplet_note (+ bar_beat 0.4166666) metro)
-  (trigger_sixteenth_note (+ bar_beat 0.4375) metro)
   (trigger_quarter_note (+ bar_beat 0.5) metro)
-  (trigger_sixteenth_note (+ bar_beat 0.5625) metro)
-  (trigger_triplet_note (+ bar_beat 0.58333333) metro)
-  (trigger_eighth_note (+ bar_beat 0.625) metro)
-  (trigger_triplet_note (+ bar_beat 0.6666666) metro)
-  (trigger_sixteenth_note (+ bar_beat 0.6875) metro)
   (trigger_quarter_note (+ bar_beat 0.75) metro)
-  (trigger_sixteenth_note (+ bar_beat 0.8125) metro)
-  (trigger_triplet_note (+ bar_beat 0.8333333) metro)
+
+  (trigger_eighth_note (+ bar_beat 0.125) metro)
+  (trigger_eighth_note (+ bar_beat 0.375) metro)
+  (trigger_eighth_note (+ bar_beat 0.625) metro)
   (trigger_eighth_note (+ bar_beat 0.875) metro)
+
+  (trigger_triplet_note (+ bar_beat 0.08333333) metro)
+  (trigger_triplet_note (+ bar_beat 0.16666666) metro)
+  (trigger_triplet_note (+ bar_beat 0.33333333) metro)
+  (trigger_triplet_note (+ bar_beat 0.4166666) metro)
+  (trigger_triplet_note (+ bar_beat 0.58333333) metro)
+  (trigger_triplet_note (+ bar_beat 0.6666666) metro)
+  (trigger_triplet_note (+ bar_beat 0.8333333) metro)
   (trigger_triplet_note (+ bar_beat 0.9166666) metro)
+
+  (trigger_sixteenth_note (+ bar_beat 0.0625) metro)
+  (trigger_sixteenth_note (+ bar_beat 0.1875) metro)
+  (trigger_sixteenth_note (+ bar_beat 0.3125) metro)
+  (trigger_sixteenth_note (+ bar_beat 0.4375) metro)
+  (trigger_sixteenth_note (+ bar_beat 0.5625) metro)
+  (trigger_sixteenth_note (+ bar_beat 0.6875) metro)
+  (trigger_sixteenth_note (+ bar_beat 0.8125) metro)
   (trigger_sixteenth_note (+ bar_beat 0.9375) metro)
   (let [next_bar_beat (+ bar_beat 1)]
     (apply-at (metro next_bar_beat) #'play_loop [next_bar_beat metro (inc val)])))
