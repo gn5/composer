@@ -60,6 +60,14 @@
                                     filter_accept_all ;f
                                     filter_accept_bh ;f
                                       ]]
+             [sixdim.midi.play :refer [
+                                    to_midi ;a
+                                    midi_play_location ;
+                                      ]]
+             [membrane.java2d :as java2d]
+             [sixdim.gui.gui :refer [key_press ;a
+                                     main_gui ;gui f
+                                    ]]
              ) ;:verbose)  
   (:gen-class))
 
@@ -83,34 +91,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; play to midi
 
-(defn midi_play_location [location score midi_port midi_channel]
-  (let [current_note (get_score_beat
-                       score 
-                       (location "bar")
-                       (location "current_subdiv")
-                       (location (location "current_subdiv"))
-                       )]
-    (cond
-      (= "quarter" (location "current_subdiv")) 
-      (overtone.midi/midi-note midi_port 
-                             (:midi-note (note-info (current_note "pitch"))) 
-                             (current_note "vol") 
-                             (current_note "duration") 
-                             midi_channel)
-      (= "eight" (location "current_subdiv")) 
-      (overtone.midi/midi-note midi_port 
-                             (:midi-note (note-info (current_note "pitch"))) 
-                             (current_note "vol") 
-                             (current_note "duration") 
-                             midi_channel)
-      :else nil
-      )))
 
-(add-watch location :player_location
-           (fn [key atom old-state new-state]
-             (midi_play_location new-state @score midi-out-virtualport default_midi_channel)))
+; (add-watch location :player_location
+           ; (fn [key atom old-state new-state]
+             ; (midi_play_location new-state @score midi-out-virtualport default_midi_channel)))
 
-(remove-watch location :player_location)
+; (remove-watch location :player_location)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -128,3 +114,33 @@
 
 (count (gen_melody @score @gen_maps))
 (print_2 (:score (nth (gen_melody @score @gen_maps) 0)))
+
+(reset! score (:score (first (gen_melody @score @gen_maps))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; set up midi watcher for voice 1
+
+(add-watch to_midi :to_midi_watcher
+           (fn [key atom old-state new-state]
+             (cond new-state
+                   (add-watch location :player_location
+                     (fn [key atom old-state new-state]
+                       (midi_play_location
+                           new-state @score
+                           midi-out-virtualport default_midi_channel)))
+                   :else
+                   (remove-watch location :player_location))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; start GUI
+
+
+(java2d/run #(main_gui @bar_bpm @loop_start_bar
+                       @loop_end_bar
+                       @location @key_press
+                       @to_midi)
+            {:window-title "composer"
+             :window-start-width 500
+             :window-start-height 800})
+

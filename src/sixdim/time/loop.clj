@@ -2,7 +2,7 @@
   (:use overtone.core)
   (:gen-class))
 
-(def bar_bpm (atom 10)) ; bpm (n beats per minute) of bar (=4 quarter notes)
+(def bar_bpm (atom 15)) ; bpm (n beats per minute) of bar (=4 quarter notes)
 (def bar_metronome (metronome @bar_bpm)) ; start metronome at bar bpm speed
 (def loop_start_bar (atom 1)) ; first bar of play loop 
 (def loop_end_bar (atom 2)) ; last bar of play loop 

@@ -1,3 +1,11 @@
+(ns counter
+  (:require [membrane.java2d :as java2d]
+            [membrane.ui :as ui
+             :refer [horizontal-layout
+                     button
+                     label
+                     spacer
+                     on]]))
 ; (load-file "src/sixdim/tests.clj")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -32,23 +40,6 @@
 
 ; (def n_bars (atom 4)) ; init number of bars in whole score
 ; (def score (atom (into [] (repeat @n_bars empty_bar)))) ; init partition score
-
-
-(defn gen_eighth_scalar_note
-  [score bar_n beat_key beat_n]
-  "generate possible scalar note: semitone or tone up or down"
-  (let [previous_eighth (nav_eight score bar_n beat_key beat_n - 1)
-        intervals ["+ 1"])
-  )
-
-(defn filt_sc_db [vec_to_filt score bar beat_key beat_n]
-  "filter generated notes for scalar movements
-   i.e. in scale tone or semitone up or down
-   for 'db' quarter downbeat, note must be in 'downbeats' group
-   for 'ub' quarter upbeat, note must be in 'upbeats' group"
-  )
-
-  )
 
 ; (def tscore [tbar tbar])
 ; [list of [score [list of filters]]
