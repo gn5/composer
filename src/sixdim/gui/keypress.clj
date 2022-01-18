@@ -1,19 +1,6 @@
-(ns sixdim.core
+(ns sixdim.gui.keypress
   (:use overtone.core)
-  (:require [sixdim.midi.receivers 
-             :refer [midi-out-virtualport]]
-             [sixdim.global :refer [
-             key_press
-             log1
-             menu
-             selection_bar_start
-             selection_bar_end
-             active_view_bar
-             bar_view_horizontal
-             bar_view_vertical
-             selection_eight_start
-             selection_eight_end
-                                    ]]
+  (:require 
             [sixdim.time.loop :refer [
                                     location
                                     bar_bpm
@@ -72,96 +59,87 @@
                                     filter_accept_all ;f
                                     filter_accept_bh ;f
                                       ]]
+             [membrane.ui :as ui
+                            :refer [
+                                    vertical-layout
+                                    horizontal-layout
+                                    button
+                                    label
+                                    spacer
+                                    on]]
+            [sixdim.time.loop :refer [
+                                    location
+                                    bar_bpm
+                                    bar_metronome
+                                    loop_start_bar
+                                    loop_end_bar
+                                    play_loop]]
              [sixdim.midi.play :refer [
                                     to_midi ;a
                                     midi_play_location ;
-                                      ]]
-             [membrane.java2d :as java2d]
-             [sixdim.gui.windows :refer [
-                                    main_window ;f
+                                      ]] 
+             [sixdim.global :refer [
+             key_press
+             log1
+             menu
+             selection_bar_start
+             selection_bar_end
+             active_view_bar
+             bar_view_horizontal
+             bar_view_vertical
+             selection_eight_start
+             selection_eight_end
                                     ]]
-             ) ;:verbose)  
+             [sixdim.gui.core :refer [
+                                    default_color
+                                    default_bg_color
+                                    default_font
+                                    default_font_size
+                                    ll
+                                    sv
+                                    ]]
+            )
   (:gen-class))
 
-; (load-file "src/sixdim/core.clj")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; (print midi-out-virtualport)
-; (overtone.midi/midi-note midi-out-virtualport 66 127 500 0)
+(add-watch key_press :key_press_watcher
+  (fn [key atom old-state new-state]
+    (cond 
+
+      (= "t" new-state)
+      (do 
+      (reset! log1 "(t) swap! menu to base")
+      (reset! menu "base"))
+
+      (= "m" new-state)
+      (do 
+      (swap! score add_bars_at_score_end init_bar)
+      (reset! log1 "(m) swap! score add_bars_at_score_end init_bar"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; start metronome loop
-(play_loop (bar_metronome) bar_metronome 0)
+; selection
 
-(add-watch location :watcher_location
-           (fn [key atom old-state new-state]
-             (println "location update:" new-state)))
+      (= "n" new-state)
+      (do 
+      (swap! selection_bar_start dec)
+      (reset! log1 "(n) selection_bar_start dec"))
+      (= "e" new-state)
+      (do 
+      (swap! selection_bar_start inc)
+      (reset! log1 "(e) selection_bar_start inc"))
 
-(remove-watch location :watcher_location)
+      (= "i" new-state)
+      (do 
+      (swap! selection_bar_end dec)
+      (reset! log1 "(i) selection_bar_end dec"))
+      (= "o" new-state)
+      (do 
+      (swap! selection_bar_end inc)
+      (reset! log1 "(o) selection_bar_end inc"))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; play to midi
-
-
-; (add-watch location :player_location
-           ; (fn [key atom old-state new-state]
-             ; (midi_play_location new-state @score midi-out-virtualport default_midi_channel)))
-
-; (remove-watch location :player_location)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; gen melody
-
-(defn print_2 [a] [
-          ((get_score_beat a 2 "quarter" 1) "pitch")
-          ((get_score_beat a 2 "eight" 1) "pitch")
-          ((get_score_beat a 2 "quarter" 2) "pitch")
-          ((get_score_beat a 2 "eight" 2) "pitch")
-          ((get_score_beat a 2 "quarter" 3) "pitch")
-          ((get_score_beat a 2 "eight" 3) "pitch")
-          ((get_score_beat a 2 "quarter" 4) "pitch")
-          ((get_score_beat a 2 "eight" 4) "pitch")])
-
-(count (gen_melody @score @gen_maps))
-(print_2 (:score (nth (gen_melody @score @gen_maps) 0)))
-
-(reset! score (:score (first (gen_melody @score @gen_maps))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; set up midi watcher for voice 1
-
-(add-watch to_midi :to_midi_watcher
-           (fn [key atom old-state new-state]
-             (cond new-state
-                   (add-watch location :player_location
-                     (fn [key atom old-state new-state]
-                       (midi_play_location
-                           new-state @score
-                           midi-out-virtualport default_midi_channel)))
-                   :else
-                   (remove-watch location :player_location))))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; start GUI
-
-(java2d/run #(main_window @bar_bpm @loop_start_bar
-                       @loop_end_bar @score
-                       @location @key_press
-                       @to_midi
-                       @selection_bar_start
-                       @selection_bar_end
-                       @selection_eight_start
-                       @selection_eight_end
-                       @log1 @active_view_bar
-                       @bar_view_horizontal
-                       @bar_view_vertical
-                       @menu
-                       )
-            {:window-title "composer"
-             :window-start-width 850 
-             :window-start-height 850})
-
+      ))) 
+        

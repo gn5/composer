@@ -1,6 +1,11 @@
 (ns sixdim.score.score
   (:use overtone.core)
-  (:require [sixdim.time.loop :refer [bar_bpm]])
+  (:require [sixdim.time.loop :refer [
+              bar_bpm]])
+            [sixdim.global :refer [
+              n_bars
+              score
+              ]])
   (:gen-class))
 
 (def default_note_volume 63)
@@ -67,9 +72,8 @@
          "triplet" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))
          "sixteen" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))})
 
-(def n_bars (atom 4)) ; init number of bars in whole score
-; (def score (atom (into [] (repeat @n_bars empty_bar)))) ; init partition score
-(def score (atom (into [] (repeat @n_bars init_bar)))) ; init partition score
+; (def score (atom (into [] (repeat @n_bars init_bar)))) ; init partition score
+(reset! score #(into [] (repeat @n_bars init_bar))) ; init partition score
 
 (defn add_bars_at_score_end [score bars] 
   "append bar (add at end of current score)"

@@ -7,7 +7,26 @@
                      spacer
                      on]]))
 ; (load-file "src/sixdim/tests.clj")
+(def app-state (atom false))
 
+(defn checkbox [checked?]
+  ; (ui/rounded-rectangle 200 100 10)
+  ; (ui/with-color [0 0 0 (/ 4 5.0)]
+    ; (ui/rectangle 100 50))
+  ; (ui/with-color [1 0 0]
+     ; (ui/label "Hello"))
+  
+  (ui/bordered [0 0]
+  (ui/with-color [1 0.1 0.4]
+    (ui/rectangle 10 40)))
+  ; (ui/with-color [0 1 0]
+     ; (ui/label "Hello"))
+  )
+
+(java2d/run #(checkbox @app-state) 
+            {
+             :window-start-width 500
+             :window-start-height 800})
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; (pprint (vector? @score))
