@@ -1,18 +1,7 @@
 (ns sixdim.score.score
   (:use overtone.core)
-  (:require [sixdim.time.loop :refer [
-              bar_bpm]])
-            [sixdim.global :refer [
-              n_bars
-              score
-              ]])
+  (:require [sixdim.state_defs :as state_defs]) 
   (:gen-class))
-
-(def default_note_volume 63)
-(def default_midi_channel 0)
-
-; (def legato (atom 0.90)) ; as percentage
-; (def eighth_swing (atom 0.5)) ; placement of eighth upbeats (triplet feel is at 0.6)
 
 (defn calc_bpm_based_note_duration
   [bar_bpm mult_factor]
@@ -28,20 +17,20 @@
     {"pitch" pitch
     "vol" volume
     "duration" duration_ms
-    "scale_id" "A min7 sixth-dim"
+    "scale_id" "Ams" ;"A min7 sixth-dim"
     "generate" "locked"})
   ([pitch beat_key]
     (new_note 
       pitch 
-      default_note_volume
+      state_defs/default_note_volume
       (cond (= beat_key "quarter") 
-            (calc_bpm_based_note_duration @bar_bpm 16)
+            (calc_bpm_based_note_duration state_defs/bar_bpm 16)
             (= beat_key "eight") 
-            (calc_bpm_based_note_duration @bar_bpm 16)
-           (= beat_key "triplet") 
-            (calc_bpm_based_note_duration @bar_bpm 32)
+            (calc_bpm_based_note_duration state_defs/bar_bpm 16)
+            (= beat_key "triplet") 
+            (calc_bpm_based_note_duration state_defs/bar_bpm 32)
             (= beat_key "sixteen") 
-            (calc_bpm_based_note_duration @bar_bpm 32))))
+            (calc_bpm_based_note_duration state_defs/bar_bpm 32))))
   ([pitch]
     (new_note pitch "quarter")))
 
@@ -49,11 +38,11 @@
 ; (new_note "B4" "sixteen")
 
 (def empty_note
-  {"quarter" (new_note nil default_note_volume (calc_bpm_based_note_duration @bar_bpm 16))
-  "eight" (new_note nil default_note_volume (calc_bpm_based_note_duration @bar_bpm 16))
-  "triplet" (new_note nil default_note_volume (calc_bpm_based_note_duration @bar_bpm 32))
-  "sixteen" (new_note nil default_note_volume (calc_bpm_based_note_duration @bar_bpm 32))})
-;
+  {"quarter" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
+  "eight" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
+  "triplet" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 32))
+  "sixteen" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 32))})
+
 (def empty_bar
   {"quarter" (reduce conj [] (repeat 4 (get empty_note "quarter")))
          "eight" (reduce conj [] (repeat 4 (get empty_note "eight")))
@@ -65,15 +54,6 @@
          "eight" (reduce conj [] (repeat 4 (new_note "B4" "eight")))
          "triplet" (reduce conj [] (repeat 8 (new_note "C4" "triplet")))
          "sixteen" (reduce conj [] (repeat 8 (new_note "D4" "sixteen")))})
-
-(def test_bar
-  {"quarter" (reduce conj [] (repeat 4 (new_note "A4" "sixteen")))
-         "eight" (reduce conj [] (repeat 4 (new_note "A4" "sixteen")))
-         "triplet" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))
-         "sixteen" (reduce conj [] (repeat 8 (new_note "A4" "sixteen")))})
-
-; (def score (atom (into [] (repeat @n_bars init_bar)))) ; init partition score
-(reset! score #(into [] (repeat @n_bars init_bar))) ; init partition score
 
 (defn add_bars_at_score_end [score bars] 
   "append bar (add at end of current score)"

@@ -1,32 +1,6 @@
 (ns sixdim.score.scales
   (:use overtone.core)
-  (:require [sixdim.score.score :refer
-              [default_note_volume    
-               default_midi_channel
-               calc_bpm_based_note_duration
-               new_note 
-               empty_note
-               empty_bar
-               n_bars
-               score
-               add_bars_at_score_end
-               add_bars_at_score_start
-               get_score_bar
-               get_bars_1_to_n
-               get_bars_n_to_end
-               add_bars_at_score_index
-               add_bars_to_score
-               remove_score_bars
-               replace_score_bars
-               replace_score_note
-               replace_bar_note]]
-            [sixdim.score.score_nav :refer
-             [get_score_beat 
-              get_next_eight
-              nav_eight]])
   (:gen-class))
-
-(def scales (atom []))
 
 (defn shift_note_nooctave [note direction n_semitones]
   "- increase or decrease note by n_semitones
@@ -71,13 +45,13 @@
 
 (defn add_scale_Amin7sixthdim [scales]
   (conj scales
-    {:id "A min7 sixth-dim" 
+    {:id "Ams"
+     :id_long "A min7 sixth-dim" 
      :downbeats ["A" "C" "E" "G"]
      :upbeats ["B" "D" "F"]
      :scale_chromatics ["Ab"]
      :other_chromatics ["Db" "Eb" "Gb" "Bb"]}))
 
-(swap! scales add_scale_Amin7sixthdim)
 
 (defn in_scale_group [note_str scale scale_group]
   (let [true_nil 

@@ -6,6 +6,12 @@
                      label
                      spacer
                      on]]))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; (add-watch location :watcher_location
+           ; (fn [key atom old-state new-state]
+             ; (println "location update:" new-state)))
+; (remove-watch location :watcher_location)
+
 ; (load-file "src/sixdim/tests.clj")
 (def app-state (atom false))
 
