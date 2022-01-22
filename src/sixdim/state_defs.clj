@@ -15,5 +15,5 @@
 (def default_color [0.99 0.99 0.99]) ; close to 1 (white)
 (def default_bg_color [0.01 0.01 0.01]) ; close to 0 (black)
 (def default_font nil)
-(def default_font_size 20)
+(def default_font_size 18)
 

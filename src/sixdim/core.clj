@@ -3,8 +3,10 @@
   (:require 
     [sixdim.atoms :as atoms] 
     [sixdim.state_defs :as state_defs] 
-    [sixdim.midi.receivers :as midi]
-    [sixdim.midi.play :as play]
+    [sixdim.common_fns :as common_fns]
+    [sixdim.midi.receivers :as midi_receivers]
+    [sixdim.midi.play :as midi_play]
+    [sixdim.midi.play_watchers :as midi_play_watchers]
     [sixdim.time.loop :as tloop]
     [sixdim.score.score_nav :as nav]
     [sixdim.score.melody :as melody]
@@ -16,6 +18,8 @@
     [sixdim.print.score :as print_score]
     [membrane.java2d :as java2d]
     [sixdim.gui.windows :as windows]
+    ; [sixdim.gui.key_press :as windows]
+    [sixdim.gui.help_window :as help_window]
     )
   (:gen-class))
 
@@ -104,50 +108,103 @@
                                @atoms/gen_maps
                                @atoms/scales))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; set up midi watcher on atom true/false
-;   for on/off midi send of voice 1 (score1)
-
-; - add watcher if ui button activated (= new-state true)
-; - remove watcher if ui button de-activated (= new-state false)
-(add-watch atoms/to_midi1 :to_midi_watcher1
-  (fn [key atom old-state new-state]
-    (cond
-      new-state
-      (add-watch atoms/location :player1_location
-        (fn [key atom old_location new_location]
-          (play/midi_play_location
-            new_location 
-            @atoms/score1 
-            midi/midi_out_virtualport
-            @atoms/midi_channel1)))
-      :else
-      (remove-watch atoms/location :player1_location))))
-;
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ; start GUI window
 ;
 (java2d/run #(windows/main_window
-               state_defs/bar_bpm 
+               [state_defs/bar_bpm 
+               @atoms/active_view_bar
+               @atoms/active_scores
+               @atoms/active_scores_n
+               @atoms/active_ccs
+               @atoms/active_ccs_n
+
                @atoms/loop_start_bar
-               @atoms/loop_end_bar 
-               @atoms/score1 ; todo @atoms/active_score
-               @atoms/location @atoms/key_press
-               @atoms/to_midi1 ; todo active?
+               @atoms/loop_end_bar
+               @atoms/location
+               @atoms/key_press
                @atoms/selection_bar_start
                @atoms/selection_bar_end
                @atoms/selection_eight_start
                @atoms/selection_eight_end
-               @atoms/log1 @atoms/active_view_bar
+               @atoms/log1
                @atoms/bar_view_horizontal
                @atoms/bar_view_vertical
                @atoms/menu
+
+               @atoms/score1
+               @atoms/score2
+               @atoms/score3
+               @atoms/score4
+               @atoms/score5
+               @atoms/score6
+               @atoms/score7
+               @atoms/score8
+               @atoms/cc1
+               @atoms/cc2
+               @atoms/cc3
+               @atoms/cc4
+               @atoms/cc5
+               @atoms/cc6
+               @atoms/cc7
+               @atoms/cc8
+
+               @atoms/to_midi1
+               @atoms/to_midi2
+               @atoms/to_midi3
+               @atoms/to_midi4
+               @atoms/to_midi5
+               @atoms/to_midi6
+               @atoms/to_midi7
+               @atoms/to_midi8
+               @atoms/to_midi_cc1
+               @atoms/to_midi_cc2
+               @atoms/to_midi_cc3
+               @atoms/to_midi_cc4
+               @atoms/to_midi_cc5
+               @atoms/to_midi_cc6
+               @atoms/to_midi_cc7
+               @atoms/to_midi_cc8
+
+               @atoms/midi_channel1
+               @atoms/midi_channel2
+               @atoms/midi_channel3
+               @atoms/midi_channel4
+               @atoms/midi_channel5
+               @atoms/midi_channel6
+               @atoms/midi_channel7
+               @atoms/midi_channel8
+               @atoms/midi_channel_cc1
+               @atoms/midi_channel_cc2
+               @atoms/midi_channel_cc3
+               @atoms/midi_channel_cc4
+               @atoms/midi_channel_cc5
+               @atoms/midi_channel_cc6
+               @atoms/midi_channel_cc7
+               @atoms/midi_channel_cc8
+
+               @atoms/text_hoz1_1
+               @atoms/text_hoz1_2
+               @atoms/text_hoz1_3
+               @atoms/text_hoz1_4
+               @atoms/text_hoz2_1
+               @atoms/text_hoz2_2
+               @atoms/text_hoz2_3
+               @atoms/text_hoz2_4
+               @atoms/text_hoz3_1
+               @atoms/text_hoz3_2
+               @atoms/text_hoz3_3
+               @atoms/text_hoz3_4]
                )
             {:window-title "Composer"
-             :window-start-width 850
-             :window-start-height 850})
+             :window-start-width 1100
+             :window-start-height 800})
+
+; (java2d/run #(windows/main_help_window)
+            ; {:window-title "Commands"
+             ; :window-start-width 850
+             ; :window-start-height 850})
 ;
 ;
 ;
