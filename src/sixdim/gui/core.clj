@@ -2,7 +2,7 @@
   (:use overtone.core)
   (:require 
     [membrane.ui :as ui]
-    [membrane.sixdim.state_defs :as state_defs])
+    [sixdim.state_defs :as state_defs])
   (:gen-class))
 
 (def selection_eight_convert_map {

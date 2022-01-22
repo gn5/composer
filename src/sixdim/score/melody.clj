@@ -7,9 +7,21 @@
    to all generated scores"
   [score_filters bar_n beat_key beat_n generator]
   (map 
-    #(hash-map :score % :filters (:filters score_filters))
+    #(hash-map :score % 
+               :filters (:filters score_filters)
+               :scales (:scales score_filters))
     (generator (:score score_filters) bar_n beat_key beat_n)
   ))
+
+; (count (melody/apply_generator_on_score_filters 
+  ; {:score @atoms/score1 :filters [] :scales @atoms/scales} 
+  ; 2 "quarter" 1
+  ; mgens/gen_note_from_intervals_seconds_down))
+
+; (:scales (nth (melody/apply_generator_on_score_filters
+  ; {:score @atoms/score1 :filters [] :scales @atoms/scales}
+  ; 2 "quarter" 1
+  ; mgens/gen_note_from_intervals_seconds_down) 0))
 
 (defn apply_generator_on_scores_filters
   [vec_of_scores_filters bar_n beat_key beat_n generator]

@@ -47,7 +47,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; midi atoms
-(defonce to_midi (atom false))
+
+; mute/unmute score1..8 to respective midi channel
+;                                     e.g. midi_channel1
+(defonce to_midi1 (atom false))
+(defonce to_midi2 (atom false))
+(defonce to_midi3 (atom false))
+(defonce to_midi4 (atom false))
+(defonce to_midi5 (atom false))
+(defonce to_midi6 (atom false))
+(defonce to_midi7 (atom false))
+(defonce to_midi8 (atom false))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; scale atoms

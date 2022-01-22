@@ -1,7 +1,7 @@
 (ns sixdim.gui.windows
   (:require
     [membrane.ui :as ui]
-    [membrane.sixdim.state_defs :as state_defs]
+    [sixdim.state_defs :as state_defs]
     [sixdim.gui.horizontal1 :as hoz1]
     [sixdim.gui.horizontal2 :as hoz2]
     [sixdim.gui.horizontal3 :as hoz3])

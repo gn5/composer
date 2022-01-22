@@ -1,6 +1,7 @@
 (ns sixdim.gui.keypress
   (:use overtone.core)
   (:require 
+            [sixdim.atoms :as atoms]
             [sixdim.score.score :as score])
             ;not used: [sixdim.gui.core :as guicore]
             ;not used: [membrane.ui :as ui]
@@ -15,14 +16,14 @@
 
       (= "t" new-state)
       (do 
-      (reset! log1 "(t) swap! menu to base")
-      (reset! menu "base"))
+      (reset! atoms/log1 "(t) swap! menu to base")
+      (reset! atoms/menu "base"))
 
       (= "m" new-state)
       (do 
       ; todo replace score1 with active bar
-      (swap! score1 score/add_bars_at_score_end init_bar)
-      (reset! log1 "(m) swap! score add_bars_at_score_end init_bar"))
+      (swap! atoms/score1 score/add_bars_at_score_end init_bar)
+      (reset! atoms/log1 "(m) swap! score add_bars_at_score_end init_bar"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -30,21 +31,21 @@
 
       (= "n" new-state)
       (do 
-      (swap! selection_bar_start dec)
-      (reset! log1 "(n) selection_bar_start dec"))
+      (swap! atoms/selection_bar_start dec)
+      (reset! atoms/log1 "(n) selection_bar_start dec"))
       (= "e" new-state)
       (do 
-      (swap! selection_bar_start inc)
-      (reset! log1 "(e) selection_bar_start inc"))
+      (swap! atoms/selection_bar_start inc)
+      (reset! atoms/log1 "(e) selection_bar_start inc"))
 
       (= "i" new-state)
       (do 
-      (swap! selection_bar_end dec)
-      (reset! log1 "(i) selection_bar_end dec"))
+      (swap! atoms/selection_bar_end dec)
+      (reset! atoms/log1 "(i) selection_bar_end dec"))
       (= "o" new-state)
       (do 
-      (swap! selection_bar_end inc)
-      (reset! log1 "(o) selection_bar_end inc"))
+      (swap! atoms/selection_bar_end inc)
+      (reset! atoms/log1 "(o) selection_bar_end inc"))
 
 
       ))) 

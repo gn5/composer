@@ -1,5 +1,6 @@
 (ns sixdim.time.loop
   (:use overtone.core)
+  (:require [sixdim.atoms :as atoms]) 
   (:gen-class))
 
 (defn inc_subdiv [current_beat start_beat end_beat]
@@ -19,23 +20,23 @@
 
 (defn bar_player
   [beat]
-  (swap! location inc_location_at_subdiv "quarter" 4 @loop_start_bar @loop_end_bar "new_bar"))
+  (swap! atoms/location inc_location_at_subdiv "quarter" 4 @atoms/loop_start_bar @atoms/loop_end_bar "new_bar"))
   ; (println "bar trigger.. beat = " beat))
 (defn quarter_player
   [beat]
-  (swap! location inc_location_at_subdiv "quarter" 4 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "quarter" 4 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "quarter trigger.. beat = " beat))
 (defn eighth_player
   [beat]
-  (swap! location inc_location_at_subdiv "eight" 4 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "eight" 4 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "eigthh trigger.. beat = " beat))
 (defn triplet_player
   [beat]
-  (swap! location inc_location_at_subdiv "triplet" 8 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "triplet" 8 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "triplet trigger.. beat = " beat))
 (defn sixteenth_player
   [beat]
-  (swap! location inc_location_at_subdiv "sixteen" 8 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "sixteen" 8 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "sixteenth trigger.. beat = " beat))
               
 (defn trigger_bar_note

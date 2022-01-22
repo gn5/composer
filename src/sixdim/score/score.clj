@@ -38,10 +38,10 @@
 ; (new_note "B4" "sixteen")
 
 (def empty_note
-  {"quarter" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
-  "eight" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
-  "triplet" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 32))
-  "sixteen" (new_note nil default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 32))})
+  {"quarter" (new_note nil state_defs/default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
+  "eight" (new_note nil state_defs/default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
+  "triplet" (new_note nil state_defs/default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 32))
+  "sixteen" (new_note nil state_defs/default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 32))})
 
 (def empty_bar
   {"quarter" (reduce conj [] (repeat 4 (get empty_note "quarter")))

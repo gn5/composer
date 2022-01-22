@@ -1,9 +1,8 @@
 (ns sixdim.score.melody_filters
   (:use overtone.core)
   (:require
-    [sixdim.score.score :as score]
     [sixdim.score.scales :as scales]
-    ;not used: [sixdim.score.score_nav :as nav]
+    [sixdim.score.score_nav :as nav]
     )
   (:gen-class))
 
@@ -16,7 +15,7 @@
 (defn filter_accept_bh [score bar_n beat_key beat_n scales]
  "must return string passed, not_passed or to_rerun_next_beats
    accept Barry Harris scales downbeats/upbeats" 
-  (let [beat (score/get_score_beat score bar_n beat_key beat_n)]
+  (let [beat (nav/get_score_beat score bar_n beat_key beat_n)]
     (let [note_octave (beat "pitch")
           scale_id (beat "scale_id")
           generate (beat "generate")]
@@ -33,6 +32,6 @@
               "passed"
               :else "not_passed")))))
 
-; (filter_accept_bh tscore 1 "quarter" 1 @scales)
+; (filter_accept_bh @atoms/score 1 "quarter" 1 @atoms/scales)
 ; (filter_accept_bh tscore 1 "eight" 1 @scales)
 
