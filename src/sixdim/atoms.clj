@@ -24,6 +24,18 @@
 (defonce midi_channel7 (atom 6))
 (defonce midi_channel8 (atom 7))
 
+; mute/unmute score1..8 to respective midi channel
+;                                     e.g. midi_channel1
+(defonce to_midi1 (atom false))
+(defonce to_midi2 (atom false))
+(defonce to_midi3 (atom false))
+(defonce to_midi4 (atom false))
+(defonce to_midi5 (atom false))
+(defonce to_midi6 (atom false))
+(defonce to_midi7 (atom false))
+(defonce to_midi8 (atom false))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; midi-cc score atoms
 (defonce cc1 (atom [])) ; init partition cc score
@@ -45,19 +57,16 @@
 (defonce midi_channel_cc7 (atom 6))
 (defonce midi_channel_cc8 (atom 7))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; midi atoms
-
-; mute/unmute score1..8 to respective midi channel
-;                                     e.g. midi_channel1
-(defonce to_midi1 (atom false))
-(defonce to_midi2 (atom false))
-(defonce to_midi3 (atom false))
-(defonce to_midi4 (atom false))
-(defonce to_midi5 (atom false))
-(defonce to_midi6 (atom false))
-(defonce to_midi7 (atom false))
-(defonce to_midi8 (atom false))
+; mute/unmute cc1..8 to respective midi channel
+;                                     e.g. midi_channel_cc1
+(defonce to_midi_cc1 (atom false))
+(defonce to_midi_cc2 (atom false))
+(defonce to_midi_cc3 (atom false))
+(defonce to_midi_cc4 (atom false))
+(defonce to_midi_cc5 (atom false))
+(defonce to_midi_cc6 (atom false))
+(defonce to_midi_cc7 (atom false))
+(defonce to_midi_cc8 (atom false))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; scale atoms
@@ -86,10 +95,30 @@
 (defonce key_press (atom "t"))
 (defonce log1 (atom "init"))
 (defonce menu (atom ""))
+
 (defonce selection_bar_start (atom 1))
 (defonce selection_bar_end (atom 2))
-(defonce active_view_bar (atom 1))
 (defonce bar_view_horizontal (atom ""))
 (defonce bar_view_vertical (atom ""))
 (defonce selection_eight_start (atom 1))
 (defonce selection_eight_end (atom 8))
+
+(defonce active_view_bar (atom 1))
+(defonce active_scores (atom []))
+(defonce active_scores_n (atom [1]))
+(defonce active_ccs (atom []))
+(defonce active_ccs_n (atom [1]))
+
+; text areas for main window horizontal panels
+(defonce text_hoz1_1 (atom "text_hoz1_1"))
+(defonce text_hoz1_2 (atom "text_hoz1_2"))
+(defonce text_hoz1_3 (atom "text_hoz1_3"))
+(defonce text_hoz1_4 (atom "text_hoz1_4"))
+(defonce text_hoz2_1 (atom "text_hoz2_1"))
+(defonce text_hoz2_2 (atom "text_hoz2_2"))
+(defonce text_hoz2_3 (atom "text_hoz2_3"))
+(defonce text_hoz2_4 (atom "text_hoz2_4"))
+(defonce text_hoz3_1 (atom "text_hoz3_1"))
+(defonce text_hoz3_2 (atom "text_hoz3_2"))
+(defonce text_hoz3_3 (atom "text_hoz3_3"))
+(defonce text_hoz3_4 (atom "text_hoz3_4"))
