@@ -1,20 +1,7 @@
 (ns sixdim.time.loop
   (:use overtone.core)
+  (:require [sixdim.atoms :as atoms]) 
   (:gen-class))
-
-(def bar_bpm (atom 15)) ; bpm (n beats per minute) of bar (=4 quarter notes)
-(def bar_metronome (metronome @bar_bpm)) ; start metronome at bar bpm speed
-(def loop_start_bar (atom 1)) ; first bar of play loop 
-(def loop_end_bar (atom 2)) ; last bar of play loop 
-; init location to last quarter and bar to 0
-(def location ; current beat location (within loop start-end) used to trigger midi player(s)
-  (atom {"bar" 0     ; bar number
-         "quarter" 4 ; downbeats (quarter notes)
-         "eight" 0   ; upbeats (eighth notes in-between quarter notes)
-         "triplet" 0 ; triplets upbeats in-between quarter notes)
-         "sixteen" 0 ; sixteenth upbeats in-between eighth notes
-         "current_subdiv" "quarter" ; latest updated bar sub-division/beat
-         }))
 
 (defn inc_subdiv [current_beat start_beat end_beat]
   (if (or (>= current_beat end_beat) (< current_beat start_beat))
@@ -33,23 +20,23 @@
 
 (defn bar_player
   [beat]
-  (swap! location inc_location_at_subdiv "quarter" 4 @loop_start_bar @loop_end_bar "new_bar"))
+  (swap! atoms/location inc_location_at_subdiv "quarter" 4 @atoms/loop_start_bar @atoms/loop_end_bar "new_bar"))
   ; (println "bar trigger.. beat = " beat))
 (defn quarter_player
   [beat]
-  (swap! location inc_location_at_subdiv "quarter" 4 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "quarter" 4 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "quarter trigger.. beat = " beat))
 (defn eighth_player
   [beat]
-  (swap! location inc_location_at_subdiv "eight" 4 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "eight" 4 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "eigthh trigger.. beat = " beat))
 (defn triplet_player
   [beat]
-  (swap! location inc_location_at_subdiv "triplet" 8 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "triplet" 8 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "triplet trigger.. beat = " beat))
 (defn sixteenth_player
   [beat]
-  (swap! location inc_location_at_subdiv "sixteen" 8 @loop_start_bar @loop_end_bar "in_bar"))
+  (swap! atoms/location inc_location_at_subdiv "sixteen" 8 @atoms/loop_start_bar @atoms/loop_end_bar "in_bar"))
   ; (println "sixteenth trigger.. beat = " beat))
               
 (defn trigger_bar_note
@@ -70,7 +57,6 @@
 
 (defn play_loop
   [bar_beat metro val]
-  ; (println "looping at bar bpm; bar_beat =" bar_beat " val =" val)
 
   (trigger_bar_note bar_beat metro)
   (trigger_quarter_note (+ bar_beat 0.25) metro)

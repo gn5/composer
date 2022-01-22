@@ -1,43 +1,27 @@
 (ns sixdim.score.melody
   (:use overtone.core)
-  (:require 
-             [sixdim.score.melody_generators :refer [
-                                    seconds ;map
-                                    seconds_up ;map
-                                    seconds_down ;map
-                                    gen_note_from_intervals ;f
-                                    gen_note_from_intervals_seconds ;f
-                                    gen_note_from_intervals_seconds_down ;f
-                                    gen_note_from_intervals_seconds_up ;f
-                                      ]]
-             [sixdim.score.melody_filters :refer [
-                                    filter_accept_all ;f
-                                    filter_accept_bh ;f
-                                      ]]
-             )
   (:gen-class))
-
-(def gen_maps (
-  atom [
-  {:bar 2 :k "quarter" :n 1 :g gen_note_from_intervals_seconds_up :f filter_accept_bh}
-  {:bar 2 :k "eight" :n 1 :g gen_note_from_intervals_seconds_up :f filter_accept_bh}
-  {:bar 2 :k "quarter" :n 2 :g gen_note_from_intervals_seconds_up :f filter_accept_bh}
-  {:bar 2 :k "eight" :n 2 :g gen_note_from_intervals_seconds_up :f filter_accept_bh}
-  {:bar 2 :k "quarter" :n 3 :g gen_note_from_intervals_seconds_down :f filter_accept_bh}
-  {:bar 2 :k "eight" :n 3 :g gen_note_from_intervals_seconds_down :f filter_accept_bh}
-  {:bar 2 :k "quarter" :n 4 :g gen_note_from_intervals_seconds_down :f filter_accept_bh}
-  {:bar 2 :k "eight" :n 4 :g gen_note_from_intervals_seconds_down :f filter_accept_bh}
-  ]))
-
 
 (defn apply_generator_on_score_filters 
   "run generator on one score and re-attach :filters 
    to all generated scores"
   [score_filters bar_n beat_key beat_n generator]
   (map 
-    #(hash-map :score % :filters (:filters score_filters))
+    #(hash-map :score % 
+               :filters (:filters score_filters)
+               :scales (:scales score_filters))
     (generator (:score score_filters) bar_n beat_key beat_n)
   ))
+
+; (count (melody/apply_generator_on_score_filters 
+  ; {:score @atoms/score1 :filters [] :scales @atoms/scales} 
+  ; 2 "quarter" 1
+  ; mgens/gen_note_from_intervals_seconds_down))
+
+; (:scales (nth (melody/apply_generator_on_score_filters
+  ; {:score @atoms/score1 :filters [] :scales @atoms/scales}
+  ; 2 "quarter" 1
+  ; mgens/gen_note_from_intervals_seconds_down) 0))
 
 (defn apply_generator_on_scores_filters
   [vec_of_scores_filters bar_n beat_key beat_n generator]
@@ -72,11 +56,12 @@
     (reduced {})       
     :else
     (let [score (:score acc)
+          scales (:scales acc)
           bar_n (:bar current_filter)
           beat_key (:k current_filter)
           beat_n (:n current_filter)
           filter_func (:f current_filter)]
-      (let [res_func (filter_func score bar_n beat_key beat_n)]
+      (let [res_func (filter_func score bar_n beat_key beat_n scales)]
         (cond
           (= res_func "passed") 
             acc
@@ -92,7 +77,9 @@
 (defn run_filters_on_score_filters
   [score_filters]
   (reduce filters_reducer
-          {:score (:score score_filters) :filters []}
+          {:score (:score score_filters) 
+           :filters []
+           :scales (:scales score_filters)}
           (:filters score_filters)))
 
 ; (run_filters_on_score_filters (nth tinput 0))
@@ -119,10 +106,10 @@
 ; (in_scale_group "A" (first @scales) "downbeats")
 ; (in_scale_group "A" (first @scales) "upbeats")
 
-(defn gen_melody [score gen_maps]
+(defn gen_melody [score gen_maps scales]
   ""
   ; (flip all gen_maps beats meta to edit)
   (reduce gen_and_filters
           ; init list of objects {:score ... :filters [... ...]}
-          [{:score score :filters []}]
+          [{:score score :filters [] :scales scales}]
           gen_maps))

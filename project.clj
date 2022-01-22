@@ -6,4 +6,6 @@
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [overtone "0.10.6"]
                  [com.phronemophobic/membrane "0.9.31.5-beta"]]
+          ; [com.github.gn5/membrane "test2"]]
+  ; :repositories [["jitpack" "https://jitpack.io"]]
   :repl-options {:init-ns sixdim.core})

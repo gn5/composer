@@ -1,0 +1,95 @@
+(ns sixdim.atoms
+  (:gen-class))
+;; global app atoms 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; score atoms
+(defonce n_bars (atom 4)) ; init number of bars in whole score
+(defonce score1 (atom [])) ; init partition score
+(defonce score2 (atom []))
+(defonce score3 (atom []))
+(defonce score4 (atom []))
+(defonce score5 (atom []))
+(defonce score6 (atom []))
+(defonce score7 (atom []))
+(defonce score8 (atom []))
+
+; midi channel to use for each voice ("score{1..8}" atoms)
+(defonce midi_channel1 (atom 0))
+(defonce midi_channel2 (atom 1))
+(defonce midi_channel3 (atom 2))
+(defonce midi_channel4 (atom 3))
+(defonce midi_channel5 (atom 4))
+(defonce midi_channel6 (atom 5))
+(defonce midi_channel7 (atom 6))
+(defonce midi_channel8 (atom 7))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; midi-cc score atoms
+(defonce cc1 (atom [])) ; init partition cc score
+(defonce cc2 (atom []))
+(defonce cc3 (atom []))
+(defonce cc4 (atom []))
+(defonce cc5 (atom []))
+(defonce cc6 (atom []))
+(defonce cc7 (atom []))
+(defonce cc8 (atom []))
+
+; midi channel to use for each cc ("cc{1..8}" atoms)
+(defonce midi_channel_cc1 (atom 0))
+(defonce midi_channel_cc2 (atom 1))
+(defonce midi_channel_cc3 (atom 2))
+(defonce midi_channel_cc4 (atom 3))
+(defonce midi_channel_cc5 (atom 4))
+(defonce midi_channel_cc6 (atom 5))
+(defonce midi_channel_cc7 (atom 6))
+(defonce midi_channel_cc8 (atom 7))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; midi atoms
+
+; mute/unmute score1..8 to respective midi channel
+;                                     e.g. midi_channel1
+(defonce to_midi1 (atom false))
+(defonce to_midi2 (atom false))
+(defonce to_midi3 (atom false))
+(defonce to_midi4 (atom false))
+(defonce to_midi5 (atom false))
+(defonce to_midi6 (atom false))
+(defonce to_midi7 (atom false))
+(defonce to_midi8 (atom false))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; scale atoms
+(def scales (atom []))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; play loop atoms
+(defonce loop_start_bar (atom 1)) ; first bar of play loop 
+(defonce loop_end_bar (atom 2)) ; last bar of play loop 
+; init location to last quarter and bar to 0
+(defonce location ; current beat location (within loop start-end) used to trigger midi player(s)
+  (atom {"bar" 0     ; bar number
+         "quarter" 4 ; downbeats (quarter notes)
+         "eight" 0   ; upbeats (eighth notes in-between quarter notes)
+         "triplet" 0 ; triplets upbeats in-between quarter notes)
+         "sixteen" 0 ; sixteenth upbeats in-between eighth notes
+         "current_subdiv" "quarter" ; latest updated bar sub-division/beat
+         }))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; melody atoms
+(defonce gen_maps (atom []))
+ 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; gui atoms
+(defonce key_press (atom "t"))
+(defonce log1 (atom "init"))
+(defonce menu (atom ""))
+(defonce selection_bar_start (atom 1))
+(defonce selection_bar_end (atom 2))
+(defonce active_view_bar (atom 1))
+(defonce bar_view_horizontal (atom ""))
+(defonce bar_view_vertical (atom ""))
+(defonce selection_eight_start (atom 1))
+(defonce selection_eight_end (atom 8))

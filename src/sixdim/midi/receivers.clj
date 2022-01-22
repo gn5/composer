@@ -24,7 +24,7 @@
       (.open dev))
     (assoc sink-info :receiver (.getReceiver dev))))
 
-(def midi-out-virtualport  
+(def midi_out_virtualport  
   (with-receiver 
     (overtone.midi/midi-find-device 
       (overtone.midi/midi-sinks) "virtualport")))
