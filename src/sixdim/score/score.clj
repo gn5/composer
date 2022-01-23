@@ -1,6 +1,9 @@
 (ns sixdim.score.score
   (:use overtone.core)
-  (:require [sixdim.state_defs :as state_defs]) 
+  (:require 
+    [sixdim.state_defs :as state_defs] 
+    [sixdim.common_fns :as common_fns]
+    )
   (:gen-class))
 
 (defn calc_bpm_based_note_duration
@@ -163,4 +166,6 @@
 
 ; (replace_score_note [empty_bar empty_bar] 2 "sixteen" 8 (new_note "C2" "sixteen"))
 ; (replace_bar_note empty_bar "sixteen" 8 (new_note "C2" "sixteen"))
+
+
 
