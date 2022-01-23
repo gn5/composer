@@ -104,10 +104,12 @@
 (defonce selection_eight_end (atom 8))
 
 (defonce active_view_bar (atom 1))
-(defonce active_scores (atom []))
 (defonce active_scores_n (atom [1]))
-(defonce active_ccs (atom []))
+(defonce active_scores (atom []))
+(defonce active_score (atom []))
 (defonce active_ccs_n (atom [1]))
+(defonce active_ccs (atom []))
+(defonce active_cc (atom []))
 
 ; text areas for main window horizontal panels
 (defonce text_hoz1_1 (atom "text_hoz1_1"))

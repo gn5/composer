@@ -11,6 +11,8 @@
     [sixdim.score.score_nav :as nav]
     [sixdim.score.melody :as melody]
     [sixdim.score.score :as score]
+    [sixdim.score.swaps :as score_swaps]
+    [sixdim.score.watchers :as score_watchers]
     [sixdim.score.scales :as scales]
     [sixdim.score.melody_filters :as mfilters]
     [sixdim.score.melody_generators :as mgens]
@@ -18,7 +20,7 @@
     [sixdim.print.score :as print_score]
     [membrane.java2d :as java2d]
     [sixdim.gui.windows :as windows]
-    ; [sixdim.gui.key_press :as windows]
+    [sixdim.gui.key_press :as key_press]
     [sixdim.gui.help_window :as help_window]
     )
   (:gen-class))
@@ -115,8 +117,10 @@
 (java2d/run #(windows/main_window
                [state_defs/bar_bpm 
                @atoms/active_view_bar
+               @atoms/active_score
                @atoms/active_scores
                @atoms/active_scores_n
+               @atoms/active_cc
                @atoms/active_ccs
                @atoms/active_ccs_n
 
@@ -208,3 +212,21 @@
 ;
 ;
 ;
+(reset!
+  atoms/text_hoz2_1
+  (print_score/print_score_sel_bars_notes @atoms/score1 1 3 5))
+
+; (defonce active_scores_n (atom [1]))
+; (defonce active_scores (atom []))
+; (defonce active_score (atom []))
+; (defonce active_ccs_n (atom [1]))
+; (defonce active_ccs (atom []))
+; (defonce active_cc (atom []))
+
+
+
+
+
+
+
+

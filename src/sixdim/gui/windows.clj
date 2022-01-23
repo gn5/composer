@@ -11,8 +11,10 @@
 (defn main_window [
                [bar_bpm 
                active_view_bar
+               active_score
                active_scores
                active_scores_n
+               active_cc
                active_ccs
                active_ccs_n
 
@@ -100,8 +102,10 @@
          (hoz1/horizontal1
                [bar_bpm 
                active_view_bar
+               active_score
                active_scores
                active_scores_n
+               active_cc
                active_ccs
                active_ccs_n
 

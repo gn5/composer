@@ -10,8 +10,10 @@
 (defn horizontal1 [
                [bar_bpm_ 
                active_view_bar_
+               active_score_
                active_scores_
                active_scores_n_
+               active_cc_
                active_ccs_
                active_ccs_n_
 
@@ -98,15 +100,15 @@
                   ]])
     (ui/label ""))
 
-   (guicore/ll (str "bar bpm: " bar_bpm_))
-   (guicore/ll (str "active_ccs_: " active_ccs_))
-   (guicore/ll (str "active_ccs_n_: " active_ccs_n_))
+   (guicore/ll (str "active scores n: " active_scores_n_))
+   (guicore/ll (str "active view bar: " active_view_bar_))
+   (guicore/ll (str "active CCs n: " active_ccs_n_))
 
    (guicore/ll (str "bar:" (location_ "bar")
                     " q:" (location_ "quarter")
                     " e:" (location_ "eight")))
 
-   (guicore/ll (str "n bars: " (count active_score_)))
+   (guicore/ll (str "n bars active score: " (count active_score_)))
 
    (guicore/ll (str "loop: [" loop_start_bar_
                             " - "
@@ -118,8 +120,8 @@
                                  " - " selection_bar_end_
                                  " . " selection_eight_end_ "]"))
 
-   (guicore/ll (str "active_view_bar: " active_view_bar_))
-   (guicore/ll (str "keypress: " key_press_))
+   (guicore/ll (str "bar BPM: " bar_bpm_))
+   (guicore/ll (str "key press: " key_press_))
    (guicore/ll (str "menu: " menu_) )
    (guicore/ll (str "action log: " log1_))
 

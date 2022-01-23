@@ -41,3 +41,87 @@
             @atoms/midi_channel2)))
       :else
       (remove-watch atoms/location :player2_location))))
+
+(add-watch atoms/to_midi3 :to_midi_watcher3
+  (fn [key atom old-state new-state]
+    (cond
+      new-state
+      (add-watch atoms/location :player3_location
+        (fn [key atom old_location new_location]
+          (midi_play/midi_play_location
+            new_location 
+            @atoms/score3
+            midi_receivers/midi_out_virtualport
+            @atoms/midi_channel3)))
+      :else
+      (remove-watch atoms/location :player3_location))))
+
+(add-watch atoms/to_midi4 :to_midi_watcher4
+  (fn [key atom old-state new-state]
+    (cond
+      new-state
+      (add-watch atoms/location :player4_location
+        (fn [key atom old_location new_location]
+          (midi_play/midi_play_location
+            new_location 
+            @atoms/score4
+            midi_receivers/midi_out_virtualport
+            @atoms/midi_channel4)))
+      :else
+      (remove-watch atoms/location :player4_location))))
+
+(add-watch atoms/to_midi5 :to_midi_watcher5
+  (fn [key atom old-state new-state]
+    (cond
+      new-state
+      (add-watch atoms/location :player5_location
+        (fn [key atom old_location new_location]
+          (midi_play/midi_play_location
+            new_location 
+            @atoms/score5
+            midi_receivers/midi_out_virtualport
+            @atoms/midi_channel5)))
+      :else
+      (remove-watch atoms/location :player5_location))))
+
+(add-watch atoms/to_midi6 :to_midi_watcher6
+  (fn [key atom old-state new-state]
+    (cond
+      new-state
+      (add-watch atoms/location :player6_location
+        (fn [key atom old_location new_location]
+          (midi_play/midi_play_location
+            new_location 
+            @atoms/score6
+            midi_receivers/midi_out_virtualport
+            @atoms/midi_channel6)))
+      :else
+      (remove-watch atoms/location :player6_location))))
+
+(add-watch atoms/to_midi7 :to_midi_watcher7
+  (fn [key atom old-state new-state]
+    (cond
+      new-state
+      (add-watch atoms/location :player7_location
+        (fn [key atom old_location new_location]
+          (midi_play/midi_play_location
+            new_location 
+            @atoms/score7
+            midi_receivers/midi_out_virtualport
+            @atoms/midi_channel7)))
+      :else
+      (remove-watch atoms/location :player7_location))))
+
+(add-watch atoms/to_midi8 :to_midi_watcher8
+  (fn [key atom old-state new-state]
+    (cond
+      new-state
+      (add-watch atoms/location :player8_location
+        (fn [key atom old_location new_location]
+          (midi_play/midi_play_location
+            new_location 
+            @atoms/score8
+            midi_receivers/midi_out_virtualport
+            @atoms/midi_channel8)))
+      :else
+      (remove-watch atoms/location :player8_location))))
