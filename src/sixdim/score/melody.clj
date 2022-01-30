@@ -113,3 +113,8 @@
           ; init list of objects {:score ... :filters [... ...]}
           [{:score score :filters [] :scales scales}]
           gen_maps))
+
+; (print_score/print_bar_notes @atoms/score1 1 5)
+; (pprint @atoms/gen_maps)
+; @atoms/scales
+; (melody/gen_melody @atoms/score1 @atoms/gen_maps @atoms/scales)

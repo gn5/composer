@@ -2,49 +2,39 @@
   (:use overtone.core)
   (:require 
     [sixdim.atoms :as atoms]
-    [sixdim.score.swaps :as score_swaps]
+    [sixdim.score.swaps :as ss]
+    [sixdim.gui.menus.base :as menu_base]
+    [sixdim.gui.menus.gens :as menu_gens]
+    [sixdim.gui.menus.filts :as menu_filts]
     )
   (:gen-class))
-            ;not used: [sixdim.gui.core :as guicore]
-            ;not used: [membrane.ui :as ui]
+
+(def menu_map {
+    "base"  menu_base/key_menu 
+    "gens"  menu_gens/key_menu 
+    "filts" menu_filts/key_menu 
+      })
+
+; redirection of current menu to key_map of that menu
+(defn reset_atoms_log1 [str_]
+  (reset! atoms/log1 str_))
+
+(defn act_on_key [atoms_menu_str old_key new_key]
+  (let [menu_map_ (menu_map atoms_menu_str)]
+    (cond (contains? menu_map_ new_key)
+          (let [key_map (menu_map_ new_key)] 
+            (let [log1_str (:log1 key_map)
+                  atoms_action_fn (:action key_map)]
+              (do 
+                (reset_atoms_log1 
+                  (str "(" new_key ") " log1_str))
+                (atoms_action_fn))))
+          :else
+          (reset_atoms_log1
+            (str "(" new_key ")" 
+                 " not in menu " atoms_menu_str)))))
 
 (add-watch atoms/key_press :key_press_watcher
   (fn [key atom old-state new-state]
-    (cond 
+    (act_on_key @atoms/menu old-state new-state)))
 
-      (= "t" new-state)
-      (do 
-      (reset! atoms/log1 "(t) swap! menu to base")
-      (reset! atoms/menu "base"))
-
-      (= "m" new-state)
-      (do 
-      ; todo replace score1 with active bar
-      ; (swap! atoms/score1 score/add_bars_at_score_end init_bar)
-      (reset! atoms/log1 "(m) swap! score add_bars_at_score_end init_bar"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; selection
-
-      (= "n" new-state)
-      (do 
-      ; (swap! atoms/selection_bar_start dec)
-      (reset! atoms/log1 "(n) selection_bar_start dec"))
-      (= "e" new-state)
-      (do 
-      ; (swap! atoms/selection_bar_start inc)
-      (reset! atoms/log1 "(e) selection_bar_start inc"))
-
-      (= "i" new-state)
-      (do 
-      ; (swap! atoms/selection_bar_end dec)
-      (reset! atoms/log1 "(i) selection_bar_end dec"))
-      (= "o" new-state)
-      (do 
-      ; (swap! atoms/selection_bar_end inc)
-      (reset! atoms/log1 "(o) selection_bar_end inc"))
-
-
-      ))) 
-        
