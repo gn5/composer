@@ -20,7 +20,7 @@
     {"pitch" pitch
     "vol" volume
     "duration" duration_ms
-    "scale_id" "Ams" ;"A min7 sixth-dim"
+    "scale_id" "CM6" ;"A min7 sixth-dim"
     "generate" "locked"})
   ([pitch beat_key]
     (new_note 
@@ -167,5 +167,54 @@
 ; (replace_score_note [empty_bar empty_bar] 2 "sixteen" 8 (new_note "C2" "sixteen"))
 ; (replace_bar_note empty_bar "sixteen" 8 (new_note "C2" "sixteen"))
 
+(def all_bar_eights
+  [{:k "quarter" :n 1} {:k "eight" :n 1}
+  {:k "quarter" :n 2} {:k "eight" :n 2}
+  {:k "quarter" :n 3} {:k "eight" :n 3}
+  {:k "quarter" :n 4} {:k "eight" :n 4}])
+
+(def mapping_selection_start_bar_eights {
+  "1" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]
+  "2" [                    {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]
+  "3" [{:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]
+  "4" [{:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]
+  "5" [{:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]
+  "6" [{:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]
+  "7" [{:k "quarter" :n 4} {:k "eight" :n 4}]
+  "8" [{:k "eight" :n 4}]})
+
+(def mapping_selection_end_bar_eights {
+  "1" [{:k "quarter" :n 1}]
+  "2" [{:k "quarter" :n 1} {:k "eight" :n 1}]
+  "3" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 3}]
+  "4" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}]
+  "5" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3}]
+  "6" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}]
+  "7" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4}]
+  "8" [{:k "quarter" :n 1} {:k "eight" :n 1}
+       {:k "quarter" :n 2} {:k "eight" :n 2}
+       {:k "quarter" :n 3} {:k "eight" :n 3}
+       {:k "quarter" :n 4} {:k "eight" :n 4}]})
 
 

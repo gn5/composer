@@ -94,7 +94,7 @@
 ;; gui atoms
 (defonce key_press (atom "t"))
 (defonce log1 (atom "init"))
-(defonce menu (atom ""))
+(defonce menu (atom "base"))
 
 (defonce selection_bar_start (atom 1))
 (defonce selection_bar_end (atom 2))
@@ -110,6 +110,10 @@
 (defonce active_ccs_n (atom [1]))
 (defonce active_ccs (atom []))
 (defonce active_cc (atom []))
+
+(defn foo [bar] bar)
+(defonce active_generator (atom foo))
+(defonce active_filter (atom foo))
 
 ; text areas for main window horizontal panels
 (defonce text_hoz1_1 (atom "text_hoz1_1"))

@@ -22,6 +22,8 @@
     [sixdim.gui.windows :as windows]
     [sixdim.gui.key_press :as key_press]
     [sixdim.gui.help_window :as help_window]
+    [sixdim.gui.menus.logs :as menu_logs]
+    ; [sixdim.init.scales :as init_scales]
     )
   (:gen-class))
 
@@ -32,7 +34,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; load-in custom scales 
-(swap! atoms/scales scales/add_scale_Amin7sixthdim) ;Ams" "A min7 sixth-dim"
+(load-file "src/sixdim/init/scales.clj")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -99,20 +101,26 @@
    :f mfilters/filter_accept_bh}])
 
 
-(melody/gen_melody @atoms/score1 @atoms/gen_maps @atoms/scales)
+; (melody/gen_melody @atoms/score1 @atoms/gen_maps @atoms/scales)
 
-(count (melody/gen_melody @atoms/score1
-                          @atoms/gen_maps
-                          @atoms/scales))
+; (count (melody/gen_melody @atoms/score1
+                          ; @atoms/gen_maps
+                          ; @atoms/scales))
 
-(reset! atoms/score1 (:score (first (melody/gen_melody
-                               @atoms/score1
-                               @atoms/gen_maps
-                               @atoms/scales))))
+; (reset! atoms/score1 (:score (first (melody/gen_melody
+                               ; @atoms/score1
+                               ; @atoms/gen_maps
+                               ; @atoms/scales))))
 
+; init active_score from watcher of active_scores_n
+(reset! atoms/active_scores_n [1])
+(reset! atoms/active_ccs_n [1])
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; ; start GUI window
+
+; init menu log: key presses options
+(reset! atoms/text_hoz3_1 (menu_logs/logs "base"))
 ;
 (java2d/run #(windows/main_window
                [state_defs/bar_bpm 
@@ -123,6 +131,9 @@
                @atoms/active_cc
                @atoms/active_ccs
                @atoms/active_ccs_n
+
+               @atoms/active_generator
+               @atoms/active_filter
 
                @atoms/loop_start_bar
                @atoms/loop_end_bar
@@ -202,26 +213,13 @@
                @atoms/text_hoz3_4]
                )
             {:window-title "Composer"
-             :window-start-width 1100
+             :window-start-width 1250
              :window-start-height 800})
 
 ; (java2d/run #(windows/main_help_window)
             ; {:window-title "Commands"
              ; :window-start-width 850
              ; :window-start-height 850})
-;
-;
-;
-(reset!
-  atoms/text_hoz2_1
-  (print_score/print_score_sel_bars_notes @atoms/score1 1 3 5))
-
-; (defonce active_scores_n (atom [1]))
-; (defonce active_scores (atom []))
-; (defonce active_score (atom []))
-; (defonce active_ccs_n (atom [1]))
-; (defonce active_ccs (atom []))
-; (defonce active_cc (atom []))
 
 
 

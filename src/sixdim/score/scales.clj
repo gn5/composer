@@ -42,17 +42,6 @@
     (shift_note_nooctave note direction n_semitones)
     (str (get_new_note_octave note direction n_semitones))))
 
-
-(defn add_scale_Amin7sixthdim [scales]
-  (conj scales
-    {:id "Ams"
-     :id_long "A min7 sixth-dim" 
-     :downbeats ["A" "C" "E" "G"]
-     :upbeats ["B" "D" "F"]
-     :scale_chromatics ["Ab"]
-     :other_chromatics ["Db" "Eb" "Gb" "Bb"]}))
-
-
 (defn in_scale_group [note_str scale scale_group]
   (let [true_nil 
           (some #(= note_str %) ((keyword scale_group) scale))]

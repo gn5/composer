@@ -1,6 +1,7 @@
 (ns sixdim.gui.horizontal1
   (:use overtone.core)
   (:require 
+    [sixdim.common_fns :as common_fns]
     [membrane.ui :as ui]
     [sixdim.gui.core :as guicore]
     [sixdim.atoms :as atoms]
@@ -16,6 +17,9 @@
                active_cc_
                active_ccs_
                active_ccs_n_
+
+               active_generator_
+               active_filter_
 
                loop_start_bar_
                loop_end_bar_
@@ -86,9 +90,10 @@
                text_hoz1_3_
                text_hoz1_4_]
                    ] 
-  (let [active_score_ (first active_scores_)
-        active_cc_ (first active_ccs_)]
+  ; (let [active_score_ (first active_scores_)
+        ; active_cc_ (first active_ccs_)]
   (ui/vertical-layout 
+    (guicore/ll "--------- --------- --------- --------- --------- ----------- ")
 
   (ui/on :key-press (fn [akey]
                 [[
@@ -123,8 +128,12 @@
    (guicore/ll (str "bar BPM: " bar_bpm_))
    (guicore/ll (str "key press: " key_press_))
    (guicore/ll (str "menu: " menu_) )
-   (guicore/ll (str "action log: " log1_))
+   (guicore/ll (str "" log1_)) ; action log
 
+   (guicore/ll (str "gen: " 
+                    (common_fns/fn_name active_generator_)))
+   (guicore/ll (str "filt: " 
+                    (common_fns/fn_name active_filter_)))
 
    (guicore/ll (str "mute/unmute midi send:"))
    (ui/horizontal-layout 
@@ -216,5 +225,5 @@
        (ui/button
          (str "8:" (str to_midi_cc8_)) nil to_midi_cc8_)))
 
-   )))
+   ))
 

@@ -18,6 +18,9 @@
                active_ccs
                active_ccs_n
 
+               active_generator
+               active_filter
+
                loop_start_bar
                loop_end_bar
                location
@@ -109,6 +112,9 @@
                active_ccs
                active_ccs_n
 
+               active_generator
+               active_filter
+
                loop_start_bar
                loop_end_bar
                location
@@ -180,7 +186,10 @@
                 ))
        (ui/padding 5 5
          (hoz2/horizontal2 
-               [text_hoz2_1
+               [
+               active_score
+               active_view_bar
+               text_hoz2_1
                text_hoz2_2
                text_hoz2_3
                text_hoz2_4]

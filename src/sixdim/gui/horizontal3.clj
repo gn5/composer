@@ -10,11 +10,11 @@
                    text_hoz3_4_]
                    ]
  (ui/vertical-layout 
-    (guicore/ll "--------- --------- --------- --------- --------- --------- ")
+    (guicore/ll "--------- --------- --------- --------- --------- ----------- ")
 
-  (guicore/ll (str text_hoz3_1_))
-  (guicore/ll (str text_hoz3_2_))
-  (guicore/ll (str text_hoz3_3_))
-  (guicore/ll (str text_hoz3_4_))
+  (guicore/ll (str text_hoz3_1_)) ;menu
+  ; (guicore/ll (str text_hoz3_2_))
+  ; (guicore/ll (str text_hoz3_3_))
+  ; (guicore/ll (str text_hoz3_4_))
     ))
 

@@ -27,12 +27,26 @@
                               (:n %)) "eight"))        ;    n semitones
             intervals_map)))
 
-(def gen_note_from_intervals_seconds 
-  (partial gen_note_from_intervals seconds))
+; (def gen_note_from_intervals_seconds 
+  ; (partial gen_note_from_intervals seconds))
+; do not define as partial to get correct common_fns/fn_name
+(defn gen_note_from_intervals_seconds 
+  [score_ bar_n_ beat_key_ beat_n_] 
+  (gen_note_from_intervals seconds 
+                           score_ bar_n_ beat_key_ beat_n_))
 
-(def gen_note_from_intervals_seconds_down 
-  (partial gen_note_from_intervals seconds_down))
+; do not define as partial to get correct common_fns/fn_name
+; (def gen_note_from_intervals_seconds_down 
+  ; (partial gen_note_from_intervals seconds_down))
+(defn gen_note_from_intervals_seconds_down
+  [score_ bar_n_ beat_key_ beat_n_] 
+  (gen_note_from_intervals seconds_down 
+                           score_ bar_n_ beat_key_ beat_n_))
 
-(def gen_note_from_intervals_seconds_up 
-  (partial gen_note_from_intervals seconds_up))
-
+; do not define as partial to get correct common_fns/fn_name
+; (def gen_note_from_intervals_seconds_up 
+  ; (partial gen_note_from_intervals seconds_up))
+(defn gen_note_from_intervals_seconds_up
+  [score_ bar_n_ beat_key_ beat_n_] 
+  (gen_note_from_intervals seconds_up 
+                           score_ bar_n_ beat_key_ beat_n_))
