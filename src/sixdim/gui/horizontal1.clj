@@ -20,6 +20,11 @@
 
                active_generator_
                active_filter_
+               active_scale_ ;(atom "CM6"))
+               index_scores_buffer_ ;(atom 1))
+               n_scores_buffer_ ;(atom 1))
+               n_score_active_undo_ ;(atom {:back 0 :forw 0}))
+               n_cc_active_undo_ ;(atom {:back 0 :forw 0}))
 
                loop_start_bar_
                loop_end_bar_
@@ -104,20 +109,18 @@
                     "ignore")
                   ]])
     (ui/label ""))
-
-   (guicore/ll (str "active scores n: " active_scores_n_))
-   (guicore/ll (str "active view bar: " active_view_bar_))
-   (guicore/ll (str "active CCs n: " active_ccs_n_))
-
    (guicore/ll (str "bar:" (location_ "bar")
                     " q:" (location_ "quarter")
-                    " e:" (location_ "eight")))
-
-   (guicore/ll (str "n bars active score: " (count active_score_)))
-
-   (guicore/ll (str "loop: [" loop_start_bar_
+                    " e:" (location_ "eight")
+               " loop: [" loop_start_bar_
                             " - "
                             loop_end_bar_ "]"))
+
+   (guicore/ll (str "[active scores] bar current/max: " 
+                active_scores_n_ " "
+                active_view_bar_ "/"
+                (count active_score_)))
+   (guicore/ll (str "active CCs n: " active_ccs_n_))
 
    (guicore/ll (str "selection: [" selection_bar_start_
                                  " . "
@@ -125,7 +128,6 @@
                                  " - " selection_bar_end_
                                  " . " selection_eight_end_ "]"))
 
-   (guicore/ll (str "bar BPM: " bar_bpm_))
    (guicore/ll (str "key press: " key_press_))
    (guicore/ll (str "menu: " menu_) )
    (guicore/ll (str "" log1_)) ; action log
@@ -134,6 +136,22 @@
                     (common_fns/fn_name active_generator_)))
    (guicore/ll (str "filt: " 
                     (common_fns/fn_name active_filter_)))
+
+               ; active_scale_ ;(atom "CM6"))
+   (guicore/ll (str "scale: " active_scale_))
+               ; index_scores_buffer_ ;(atom 1))
+               ; n_scores_buffer_ ;(atom 1))
+   (guicore/ll (str "scores buffer i/n: "
+                    index_scores_buffer_ "/" n_scores_buffer_))
+
+               ; n_score_active_undo_ ;(atom {:back 0 :forw 0}))
+   (guicore/ll (str "n undo/redo active score: "
+                    (:back n_score_active_undo_) "-" 
+                    (:forw n_score_active_undo_)))
+               ; n_cc_active_undo_ ;(atom {:back 0 :forw 0}))
+   (guicore/ll (str "n undo/redo active cc: "
+                    (:back n_cc_active_undo_) "-" 
+                    (:forw n_cc_active_undo_)))
 
    (guicore/ll (str "mute/unmute midi send:"))
    (ui/horizontal-layout 
@@ -225,5 +243,6 @@
        (ui/button
          (str "8:" (str to_midi_cc8_)) nil to_midi_cc8_)))
 
+   (guicore/ll (str "bar BPM: " bar_bpm_))
    ))
 

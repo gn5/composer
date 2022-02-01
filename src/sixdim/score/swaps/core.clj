@@ -1,29 +1,14 @@
-(ns sixdim.score.swaps
+(ns sixdim.score.swaps.core
   (:use overtone.core)
   (:require 
+    [sixdim.state_defs :as state_defs]
     [sixdim.atoms :as atoms] 
     [sixdim.common_fns :as common_fns]
     [sixdim.score.score :as score]
+    [sixdim.score.undo :as undo]
     [sixdim.score.melody :as melody]
     )
   (:gen-class))
-
-; (swap_active_score[swap_function]
-; (reset_active_score [reset_function]
-; (increment_active_score_n []
-; (decrement_active_score_n []
-; (decrement_selection_start_bar []
-; (increment_selection_start_bar []
-; (decrement_selection_end_bar []
-; (increment_selection_end_bar []
-; (decrement_selection_start_eight []
-; (increment_selection_start_eight []
-; (decrement_selection_end_eight []
-; (increment_selection_end_eight []
-; (add_one_score_at_score_end []
-; (del_one_score_at_score_end []
-; (fill_gen_maps_all_active_gen_filt []
-; (fill_eight_gen_maps_with_active_gen_filt) []
 
 (defn swap_active_score
 "swap! active score"
@@ -201,17 +186,20 @@
           score_to_swap_
           (common_fns/int_to_score int_active_score)
           score_atom_to_swap_
-          (common_fns/int_to_score_atom int_active_score)]
-      (do 
-      (reset! score_atom_to_swap_
-             (:score (first (melody/gen_melody
-                            score_to_swap_
-                            gen_maps_
-                            scales_
-             ))))
-       (reset! atoms/active_score 
-               (common_fns/int_to_score 
-                 (first @atoms/active_scores_n)))
+          (common_fns/int_to_score_atom int_active_score)
+          undo_atom_to_swap_
+          (common_fns/int_to_undo_atom int_active_score)]
+      (do         
+      (swap! atoms/scores_buffer
+             undo/add_scores_to_buffer  
+             (vec (map #(:score %)
+                       (melody/gen_melody 
+                         score_to_swap_ gen_maps_ scales_)))
+             state_defs/max_scores_buffer)
+      ; (swap! undo_atom_to_swap_ undo/add_score_to_undo_buffer 
+             ; (first @atoms/scores_buffer) state_defs/max_redo)
+      (reset! score_atom_to_swap_ (first @atoms/scores_buffer))
+      ;bug (reset! atoms/active_score int_active_score)
       ))))
 
 ; (reset! atoms/selection_bar_start 1)

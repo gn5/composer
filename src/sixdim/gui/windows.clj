@@ -20,6 +20,11 @@
 
                active_generator
                active_filter
+               active_scale ;(atom "CM6"))
+               index_scores_buffer ;(atom 1))
+               n_scores_buffer ;(atom 1))
+               n_score_active_undo ;(atom {:back 0 :forw 0}))
+               n_cc_active_undo ;(atom {:back 0 :forw 0}))
 
                loop_start_bar
                loop_end_bar
@@ -114,6 +119,11 @@
 
                active_generator
                active_filter
+               active_scale ;(atom "CM6"))
+               index_scores_buffer ;(atom 1))
+               n_scores_buffer ;(atom 1))
+               n_score_active_undo ;(atom {:back 0 :forw 0}))
+               n_cc_active_undo ;(atom {:back 0 :forw 0}))
 
                loop_start_bar
                loop_end_bar

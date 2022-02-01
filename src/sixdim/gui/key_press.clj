@@ -2,7 +2,7 @@
   (:use overtone.core)
   (:require 
     [sixdim.atoms :as atoms]
-    [sixdim.score.swaps :as ss]
+    [sixdim.score.swaps.core :as ss]
     [sixdim.gui.menus.base :as menu_base]
     [sixdim.gui.menus.gens :as menu_gens]
     [sixdim.gui.menus.filts :as menu_filts]

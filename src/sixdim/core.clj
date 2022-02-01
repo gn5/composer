@@ -11,8 +11,10 @@
     [sixdim.score.score_nav :as nav]
     [sixdim.score.melody :as melody]
     [sixdim.score.score :as score]
-    [sixdim.score.swaps :as score_swaps]
-    [sixdim.score.watchers :as score_watchers]
+    [sixdim.score.undo :as undo]
+    [sixdim.score.swaps.core :as score_swaps]
+    [sixdim.score.swaps.undo :as score_swaps_undo]
+    [sixdim.score.watchers.core :as score_watchers]
     [sixdim.score.scales :as scales]
     [sixdim.score.melody_filters :as mfilters]
     [sixdim.score.melody_generators :as mgens]
@@ -134,6 +136,11 @@
 
                @atoms/active_generator
                @atoms/active_filter
+               @atoms/active_scale ;(atom "CM6"))
+               @atoms/index_scores_buffer ;(atom 1))
+               @atoms/n_scores_buffer ;(atom 1))
+               @atoms/n_score_active_undo ;(atom {:back 0 :forw 0}))
+               @atoms/n_cc_active_undo ;(atom {:back 0 :forw 0}))
 
                @atoms/loop_start_bar
                @atoms/loop_end_bar
