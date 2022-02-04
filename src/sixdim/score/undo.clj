@@ -43,6 +43,14 @@
 ; (add_score_to_undo_buffer {:back [1 2 3]} 4 4)
 ; (add_score_to_undo_buffer {:back [1 2 3]} 4 3)
 
+(defn remove_last_undo_score [undo_buffer]
+     {:back (pop (:back undo_buffer)) 
+      :forw (:forw undo_buffer)})
+
+(defn remove_last_redo_score [redo_buffer]
+     {:forw (pop (:forw redo_buffer)) 
+      :back (:back redo_buffer)})
+
 (defn add_score_to_redo_buffer [redo_buffer score n_max]
    (as-> 
      ;first add score to end of redo buffer

@@ -12,18 +12,25 @@
   (f) selection/gen/filt to gen_map
   (p) fill score with gen_map
 
-  (y) del last bar 
-  (h) add 1 bar at end score
+  () selection menu: shift/copy  
+  () scale menu   
 
-  (c) decrement active view bar
-  (d) increment active view bar
+  (/) dec/inc scores buffer index 
 
-  (l) decrement active score
-  (u) increment active score
+  (h/y) add/del last bar 
+  (`/^) undo/redo active score
+
+  (c/d) dec/inc active view bar
+  (l/u) dec/inc active score
+
+  loop dec/inc start/end:
+     - (z) (x) (<) (>)
 
   selection dec/inc start/end:
      - (n) (e) (i) (o): bar n
      - (.) (,) (-) (_): eighth n
+     - (#) (~) ($) (@): triplet n
+     - (?) (!) (/) (\\): sixteen n
   "
 
   "gens"
@@ -41,4 +48,25 @@
   (e) filter_accept_bh
   "
 
+  "selection"
+  "
+  selection operations:
+  (f) selection/gen/filt to gen_map
+  () same start/end
+  () end to next bar
+  () start to previous bar
+  "
+
+  "scale"
+  "
+  scale operations:
+  () change scale
+  () to closest note scale semitone down
+  () to closest note scale semitone up 
+  () to closest note scale tone down 
+  () to closest note scale tone up 
+  "
   })
+
+
+

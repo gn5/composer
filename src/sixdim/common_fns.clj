@@ -71,3 +71,32 @@
 
 (defn int_to_ccundo_atom [score_n]
   (int_to_ccundo_map (str score_n)))
+
+
+
+(def int_to_n_undo_map {
+   "1" atoms/n_score1_undo
+   "2" atoms/n_score2_undo
+   "3" atoms/n_score3_undo
+   "4" atoms/n_score4_undo
+   "5" atoms/n_score5_undo
+   "6" atoms/n_score6_undo
+   "7" atoms/n_score7_undo
+   "8" atoms/n_score8_undo})
+
+(defn int_to_n_undo_score [score_n]
+  (deref (int_to_n_undo_map (str score_n))))
+
+(def int_to_n_ccundo_map {
+   "1" atoms/n_cc1_undo
+   "2" atoms/n_cc2_undo
+   "3" atoms/n_cc3_undo
+   "4" atoms/n_cc4_undo
+   "5" atoms/n_cc5_undo
+   "6" atoms/n_cc6_undo
+   "7" atoms/n_cc7_undo
+   "8" atoms/n_cc8_undo})
+
+(defn int_to_n_ccundo [score_n]
+  (deref (int_to_n_ccundo_map (str score_n))))
+

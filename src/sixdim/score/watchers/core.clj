@@ -23,8 +23,17 @@
       (reset! atoms/active_score 
               (common_fns/int_to_score int_active_score)))))
 
+(add-watch atoms/active_scores_n :active_scores_n_undo_watcher
+  (fn [key atom old-state new-state]
+    (let [int_active_score (first new-state)]
+      (reset! atoms/n_score_active_undo 
+              (common_fns/int_to_n_undo_score int_active_score)))))
+
 ; run watcher once to init atoms/active_score
 (reset! atoms/active_scores_n [1])
+
+
+
 
 (add-watch atoms/active_ccs_n :active_ccs_n_watcher
   (fn [key atom old-state new-state]
@@ -32,8 +41,17 @@
       (reset! atoms/active_cc
               (common_fns/int_to_cc int_active_score)))))
 
+(add-watch atoms/active_ccs_n :active_ccs_n_undo_watcher
+  (fn [key atom old-state new-state]
+    (let [int_active_score (first new-state)]
+      (reset! atoms/n_cc_active_undo 
+              (common_fns/int_to_n_ccundo int_active_score)))))
+
 ; run watcher once to init atoms/active_cc
 (reset! atoms/active_ccs_n [1])
+
+
+
 
 (add-watch atoms/active_score :active_score_n_bars_watcher
   (fn [key atom old-state new-state]

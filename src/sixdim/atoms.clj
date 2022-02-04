@@ -100,8 +100,12 @@
 (defonce selection_bar_end (atom 2))
 (defonce bar_view_horizontal (atom ""))
 (defonce bar_view_vertical (atom ""))
-(defonce selection_eight_start (atom 1))
+(defonce selection_eight_start (atom 2))
 (defonce selection_eight_end (atom 8))
+(defonce selection_triplet_start (atom 2))
+(defonce selection_triplet_end (atom 12))
+(defonce selection_sixteen_start (atom 2))
+(defonce selection_sixteen_end (atom 16))
 
 (defonce active_view_bar (atom 1))
 (defonce active_scores_n (atom [1]))

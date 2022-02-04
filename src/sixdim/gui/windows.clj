@@ -34,6 +34,11 @@
                selection_bar_end
                selection_eight_start
                selection_eight_end
+               selection_triplet_start
+               selection_triplet_end
+               selection_sixteen_start
+               selection_sixteen_end
+
                log1
                bar_view_horizontal
                bar_view_vertical
@@ -133,6 +138,11 @@
                selection_bar_end
                selection_eight_start
                selection_eight_end
+               selection_triplet_start
+               selection_triplet_end
+               selection_sixteen_start
+               selection_sixteen_end
+
                log1
                bar_view_horizontal
                bar_view_vertical

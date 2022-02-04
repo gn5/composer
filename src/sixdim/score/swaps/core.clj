@@ -40,7 +40,7 @@
 (defn increment_active_score_n []
   (swap! atoms/active_scores_n 
          (fn [a] (cond 
-                   (< (first a) 7) ;max score is n 8  
+                   (< (first a) 8) ;max score is n 8  
                    (update-in a [0] inc)
                    :else ; score can't be below 1
                    a))))
@@ -62,6 +62,37 @@
                    :else ; score can't be below 1
                    a))))
 
+(defn decrement_loop_start_bar []
+  (swap! atoms/loop_start_bar
+         (fn [a] (cond 
+                   (>= a 2)
+                   (dec a)
+                   :else
+                   a))))
+
+(defn increment_loop_start_bar [loop_end_bar]
+  (swap! atoms/loop_start_bar
+         (fn [a] (cond 
+                   (< a loop_end_bar) 
+                   (inc a)
+                   :else
+                   a))))
+
+(defn decrement_loop_end_bar [loop_start_bar]
+  (swap! atoms/loop_end_bar
+         (fn [a] (cond 
+                   (> a loop_start_bar)
+                   (dec a)
+                   :else
+                   a))))
+
+(defn increment_loop_end_bar [max_bars]
+  (swap! atoms/loop_end_bar
+         (fn [a] (cond 
+                   (< a max_bars) 
+                   (inc a)
+                   :else
+                   a))))
 
 (defn decrement_selection_start_bar []
       (swap! atoms/selection_bar_start dec))
@@ -190,17 +221,24 @@
           undo_atom_to_swap_
           (common_fns/int_to_undo_atom int_active_score)]
       (do         
+      ;add scores to scores buffer
       (swap! atoms/scores_buffer
              undo/add_scores_to_buffer  
              (vec (map #(:score %)
                        (melody/gen_melody 
                          score_to_swap_ gen_maps_ scales_)))
              state_defs/max_scores_buffer)
-      ; (swap! undo_atom_to_swap_ undo/add_score_to_undo_buffer 
-             ; (first @atoms/scores_buffer) state_defs/max_redo)
+      ;add previous score to undo buffer
+      (swap! undo_atom_to_swap_ 
+             undo/add_score_to_undo_buffer
+             score_to_swap_ ;(first @atoms/scores_buffer) 
+             state_defs/max_redo)
+      ;add first found score in current active score
       (reset! score_atom_to_swap_ (first @atoms/scores_buffer))
-      ;bug (reset! atoms/active_score int_active_score)
+      ;reset active_score for GUI sync
+      (reset! atoms/active_score (first @atoms/scores_buffer))
       ))))
+
 
 ; (reset! atoms/selection_bar_start 1)
 ; (reset! atoms/selection_bar_end 4)

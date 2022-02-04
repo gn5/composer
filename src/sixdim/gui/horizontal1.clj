@@ -34,6 +34,11 @@
                selection_bar_end_
                selection_eight_start_
                selection_eight_end_
+               selection_triplet_start_
+               selection_triplet_end_
+               selection_sixteen_start_
+               selection_sixteen_end_
+
                log1_
                bar_view_horizontal_
                bar_view_vertical_
@@ -122,11 +127,14 @@
                 (count active_score_)))
    (guicore/ll (str "active CCs n: " active_ccs_n_))
 
-   (guicore/ll (str "selection: [" selection_bar_start_
-                                 " . "
-                                 selection_eight_start_ 
-                                 " - " selection_bar_end_
+   (guicore/ll (str "selection bar: [" selection_bar_start_
+                                 " . " selection_bar_end_ "]"))
+   (guicore/ll (str "        eight: ["   selection_eight_start_
                                  " . " selection_eight_end_ "]"))
+   (guicore/ll (str "      triplet: [" selection_triplet_start_
+                                 " . " selection_triplet_end_ "]"))
+   (guicore/ll (str "      sixteen: [" selection_sixteen_start_
+                                 " . " selection_sixteen_end_ "]"))
 
    (guicore/ll (str "key press: " key_press_))
    (guicore/ll (str "menu: " menu_) )

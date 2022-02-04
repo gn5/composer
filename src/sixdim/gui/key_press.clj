@@ -6,6 +6,8 @@
     [sixdim.gui.menus.base :as menu_base]
     [sixdim.gui.menus.gens :as menu_gens]
     [sixdim.gui.menus.filts :as menu_filts]
+    [sixdim.gui.menus.selection :as menu_selection]
+    [sixdim.gui.menus.scale :as menu_scale]
     )
   (:gen-class))
 
@@ -13,6 +15,8 @@
     "base"  menu_base/key_menu 
     "gens"  menu_gens/key_menu 
     "filts" menu_filts/key_menu 
+    "selection" menu_selection/key_menu 
+    "scale" menu_scale/key_menu 
       })
 
 ; redirection of current menu to key_map of that menu
