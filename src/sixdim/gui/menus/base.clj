@@ -2,7 +2,8 @@
   (:use overtone.core)
   (:require 
     [sixdim.atoms :as atoms]
-    [sixdim.score.swaps :as ss]
+    [sixdim.score.swaps.core :as ss]
+    [sixdim.score.swaps.undo :as ss_undo]
     [sixdim.gui.menus.switch :as menu_switch]
     )
   (:gen-class))
@@ -38,6 +39,18 @@
          :action #(ss/increment_active_view_bar 
                     (count @atoms/active_score))}
 
+    "z" {:log1       "decrement_loop_start_bar"
+         :action #(ss/decrement_loop_start_bar)}
+    "x" {:log1       "increment_loop_start_bar"
+         :action #(ss/increment_loop_start_bar 
+                     @atoms/loop_end_bar)}
+
+    "<" {:log1       "decrement_loop_end_bar"
+         :action #(ss/decrement_loop_end_bar
+                    @atoms/loop_start_bar)}
+    ">" {:log1       "increment_loop_end_bar"
+         :action #(ss/increment_loop_end_bar 
+                    (count @atoms/active_score))}
 
     "n" {:log1       "decrement_selection_start_bar"
          :action #(ss/decrement_selection_start_bar)}
@@ -56,7 +69,16 @@
          :action #(ss/decrement_selection_end_eight)}
     "_" {:log1       "increment_selection_end_eight"
          :action #(ss/increment_selection_end_eight)}
+
+    "`" {:log1 "undo active score"
+         :action #(ss_undo/undo_active_score
+                    (first @atoms/active_scores_n))}
+    "^" {:log1 "redo active score"
+         :action #(ss_undo/redo_active_score
+                    (first @atoms/active_scores_n))}
       })
+
+(first @atoms/active_scores_n)
 
 ; (swap_active_score [swap_function]
 ; (reset_active_score [reset_function]

@@ -166,12 +166,33 @@
 
 ; (replace_score_note [empty_bar empty_bar] 2 "sixteen" 8 (new_note "C2" "sixteen"))
 ; (replace_bar_note empty_bar "sixteen" 8 (new_note "C2" "sixteen"))
+(def all_bar_bars
+  [{:k "quarter" :n 1}
+   {:k "quarter" :n 2}
+   {:k "quarter" :n 3}
+   {:k "quarter" :n 4}])
 
 (def all_bar_eights
   [{:k "quarter" :n 1} {:k "eight" :n 1}
-  {:k "quarter" :n 2} {:k "eight" :n 2}
-  {:k "quarter" :n 3} {:k "eight" :n 3}
-  {:k "quarter" :n 4} {:k "eight" :n 4}])
+   {:k "quarter" :n 2} {:k "eight" :n 2}
+   {:k "quarter" :n 3} {:k "eight" :n 3}
+   {:k "quarter" :n 4} {:k "eight" :n 4}])
+
+(def all_bar_triplets
+  [{:k "quarter" :n 1} {:k "triplet" :n 1} {:k "triplet" :n 2}
+   {:k "quarter" :n 2} {:k "triplet" :n 3} {:k "triplet" :n 4}
+   {:k "quarter" :n 3} {:k "triplet" :n 5} {:k "triplet" :n 6}
+   {:k "quarter" :n 4} {:k "triplet" :n 7} {:k "triplet" :n 8}])
+
+(def all_bar_sixteen
+  [{:k "quarter" :n 1} {:k "sixteen" :n 1} {:k "sixteen" :n 2}
+   {:k "eight" :n 1}   {:k "sixteen" :n 3} {:k "sixteen" :n 4}
+   {:k "quarter" :n 2} {:k "sixteen" :n 5} {:k "sixteen" :n 6}
+   {:k "eight" :n 2}   {:k "sixteen" :n 7} {:k "sixteen" :n 8}
+   {:k "quarter" :n 3} {:k "sixteen" :n 9} {:k "sixteen" :n 10}
+   {:k "eight" :n 3}   {:k "sixteen" :n 11} {:k "sixteen" :n 12}
+   {:k "quarter" :n 4} {:k "sixteen" :n 13} {:k "sixteen" :n 14}
+   {:k "eight" :n 4}   {:k "sixteen" :n 15} {:k "sixteen" :n 16}])
 
 (def mapping_selection_start_bar_eights {
   "1" [{:k "quarter" :n 1} {:k "eight" :n 1}
@@ -195,6 +216,38 @@
   "7" [{:k "quarter" :n 4} {:k "eight" :n 4}]
   "8" [{:k "eight" :n 4}]})
 
+(def mapping_selection_start_bar_triplets {
+  "1" all_bar_triplets
+  "2"  (vec (take-last 11 all_bar_triplets))
+  "3"  (vec (take-last 10 all_bar_triplets))
+  "4"  (vec (take-last 9 all_bar_triplets))
+  "5"  (vec (take-last 8 all_bar_triplets))
+  "6"  (vec (take-last 7 all_bar_triplets))
+  "7"  (vec (take-last 6 all_bar_triplets))
+  "8"  (vec (take-last 5 all_bar_triplets))
+  "9"  (vec (take-last 4 all_bar_triplets))
+  "10" (vec (take-last 3 all_bar_triplets))
+  "11" (vec (take-last 2 all_bar_triplets))
+  "12" (vec (take-last 1 all_bar_triplets))})
+
+(def mapping_selection_start_bar_sixteen {
+  "1" all_bar_sixteen
+  "2"  (vec (take-last 15 all_bar_sixteen))
+  "3"  (vec (take-last 14 all_bar_sixteen))
+  "4"  (vec (take-last 13 all_bar_sixteen))
+  "5"  (vec (take-last 12 all_bar_sixteen))
+  "6"  (vec (take-last 11 all_bar_sixteen))
+  "7"  (vec (take-last 10 all_bar_sixteen))
+  "8"  (vec (take-last 9  all_bar_sixteen))
+  "9"  (vec (take-last 8  all_bar_sixteen))
+  "10" (vec (take-last 7  all_bar_sixteen))
+  "11" (vec (take-last 6  all_bar_sixteen))
+  "12" (vec (take-last 5  all_bar_sixteen))
+  "13" (vec (take-last 4  all_bar_sixteen))
+  "14" (vec (take-last 3  all_bar_sixteen))
+  "15" (vec (take-last 2  all_bar_sixteen))
+  "16" (vec (take-last 1  all_bar_sixteen))})
+
 (def mapping_selection_end_bar_eights {
   "1" [{:k "quarter" :n 1}]
   "2" [{:k "quarter" :n 1} {:k "eight" :n 1}]
@@ -216,5 +269,37 @@
        {:k "quarter" :n 2} {:k "eight" :n 2}
        {:k "quarter" :n 3} {:k "eight" :n 3}
        {:k "quarter" :n 4} {:k "eight" :n 4}]})
+
+(def mapping_selection_end_bar_triplets {
+  "1"  (vec (take 1 all_bar_triplets))
+  "2"  (vec (take 2 all_bar_triplets))
+  "3"  (vec (take 3 all_bar_triplets))
+  "4"  (vec (take 4 all_bar_triplets))
+  "5"  (vec (take 5 all_bar_triplets))
+  "6"  (vec (take 6 all_bar_triplets))
+  "7"  (vec (take 7 all_bar_triplets))
+  "8"  (vec (take 8 all_bar_triplets))
+  "9"  (vec (take 9 all_bar_triplets))
+  "10" (vec (take 10 all_bar_triplets))
+  "11" (vec (take 11 all_bar_triplets))
+  "12" (vec (take 12 all_bar_triplets))})
+
+(def mapping_selection_end_bar_sixteen {
+  "1"  (vec (take 1  all_bar_sixteen))
+  "2"  (vec (take 2  all_bar_sixteen))
+  "3"  (vec (take 3  all_bar_sixteen))
+  "4"  (vec (take 4  all_bar_sixteen))
+  "5"  (vec (take 5  all_bar_sixteen))
+  "6"  (vec (take 6  all_bar_sixteen))
+  "7"  (vec (take 7  all_bar_sixteen))
+  "8"  (vec (take 8  all_bar_sixteen))
+  "9"  (vec (take 9  all_bar_sixteen))
+  "10" (vec (take 10 all_bar_sixteen))
+  "11" (vec (take 11 all_bar_sixteen))
+  "12" (vec (take 12 all_bar_sixteen))
+  "13" (vec (take 13 all_bar_sixteen))
+  "14" (vec (take 14 all_bar_sixteen))
+  "15" (vec (take 15 all_bar_sixteen))
+  "16" (vec (take 16 all_bar_sixteen))})
 
 

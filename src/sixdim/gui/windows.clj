@@ -20,6 +20,11 @@
 
                active_generator
                active_filter
+               active_scale ;(atom "CM6"))
+               index_scores_buffer ;(atom 1))
+               n_scores_buffer ;(atom 1))
+               n_score_active_undo ;(atom {:back 0 :forw 0}))
+               n_cc_active_undo ;(atom {:back 0 :forw 0}))
 
                loop_start_bar
                loop_end_bar
@@ -29,6 +34,11 @@
                selection_bar_end
                selection_eight_start
                selection_eight_end
+               selection_triplet_start
+               selection_triplet_end
+               selection_sixteen_start
+               selection_sixteen_end
+
                log1
                bar_view_horizontal
                bar_view_vertical
@@ -114,6 +124,11 @@
 
                active_generator
                active_filter
+               active_scale ;(atom "CM6"))
+               index_scores_buffer ;(atom 1))
+               n_scores_buffer ;(atom 1))
+               n_score_active_undo ;(atom {:back 0 :forw 0}))
+               n_cc_active_undo ;(atom {:back 0 :forw 0}))
 
                loop_start_bar
                loop_end_bar
@@ -123,6 +138,11 @@
                selection_bar_end
                selection_eight_start
                selection_eight_end
+               selection_triplet_start
+               selection_triplet_end
+               selection_sixteen_start
+               selection_sixteen_end
+
                log1
                bar_view_horizontal
                bar_view_vertical

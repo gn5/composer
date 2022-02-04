@@ -100,8 +100,12 @@
 (defonce selection_bar_end (atom 2))
 (defonce bar_view_horizontal (atom ""))
 (defonce bar_view_vertical (atom ""))
-(defonce selection_eight_start (atom 1))
+(defonce selection_eight_start (atom 2))
 (defonce selection_eight_end (atom 8))
+(defonce selection_triplet_start (atom 2))
+(defonce selection_triplet_end (atom 12))
+(defonce selection_sixteen_start (atom 2))
+(defonce selection_sixteen_end (atom 16))
 
 (defonce active_view_bar (atom 1))
 (defonce active_scores_n (atom [1]))
@@ -114,6 +118,13 @@
 (defn foo [bar] bar)
 (defonce active_generator (atom foo))
 (defonce active_filter (atom foo))
+(defonce active_scale (atom "CM6"))
+; hold vec of alternative scores in buffer
+(defonce scores_buffer (atom []))
+; active index being checked out (range 1 to count)
+(defonce index_scores_buffer (atom 1))
+(defonce n_scores_buffer (atom 1))
+
 
 ; text areas for main window horizontal panels
 (defonce text_hoz1_1 (atom "text_hoz1_1"))
@@ -128,3 +139,43 @@
 (defonce text_hoz3_2 (atom "text_hoz3_2"))
 (defonce text_hoz3_3 (atom "text_hoz3_3"))
 (defonce text_hoz3_4 (atom "text_hoz3_4"))
+
+; undo/redo score changes
+(defonce score1_undo (atom {:back [] :forw []}))
+(defonce score2_undo (atom {:back [] :forw []}))
+(defonce score3_undo (atom {:back [] :forw []}))
+(defonce score4_undo (atom {:back [] :forw []}))
+(defonce score5_undo (atom {:back [] :forw []}))
+(defonce score6_undo (atom {:back [] :forw []}))
+(defonce score7_undo (atom {:back [] :forw []}))
+(defonce score8_undo (atom {:back [] :forw []}))
+(defonce n_score_active_undo (atom {:back 0 :forw 0}))
+(defonce n_score1_undo (atom {:back 0 :forw 0}))
+(defonce n_score2_undo (atom {:back 0 :forw 0}))
+(defonce n_score3_undo (atom {:back 0 :forw 0}))
+(defonce n_score4_undo (atom {:back 0 :forw 0}))
+(defonce n_score5_undo (atom {:back 0 :forw 0}))
+(defonce n_score6_undo (atom {:back 0 :forw 0}))
+(defonce n_score7_undo (atom {:back 0 :forw 0}))
+(defonce n_score8_undo (atom {:back 0 :forw 0}))
+
+; undo/redo cc changes
+(defonce cc1_undo (atom {:back [] :forw []}))
+(defonce cc2_undo (atom {:back [] :forw []}))
+(defonce cc3_undo (atom {:back [] :forw []}))
+(defonce cc4_undo (atom {:back [] :forw []}))
+(defonce cc5_undo (atom {:back [] :forw []}))
+(defonce cc6_undo (atom {:back [] :forw []}))
+(defonce cc7_undo (atom {:back [] :forw []}))
+(defonce cc8_undo (atom {:back [] :forw []}))
+
+(defonce n_cc_active_undo (atom {:back 0 :forw 0}))
+(defonce n_cc1_undo (atom {:back 0 :forw 0}))
+(defonce n_cc2_undo (atom {:back 0 :forw 0}))
+(defonce n_cc3_undo (atom {:back 0 :forw 0}))
+(defonce n_cc4_undo (atom {:back 0 :forw 0}))
+(defonce n_cc5_undo (atom {:back 0 :forw 0}))
+(defonce n_cc6_undo (atom {:back 0 :forw 0}))
+(defonce n_cc7_undo (atom {:back 0 :forw 0}))
+(defonce n_cc8_undo (atom {:back 0 :forw 0}))
+

@@ -17,3 +17,7 @@
 (def default_font nil)
 (def default_font_size 18)
 
+; max alternative scores held in memory buffer
+(def max_scores_buffer 500)
+; max redo/undo history for notes and cc scores
+(def max_redo 500)
