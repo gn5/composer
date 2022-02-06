@@ -40,6 +40,18 @@
 ; (new_note "A4")
 ; (new_note "B4" "sixteen")
 
+(defn replace_note_scale [current_note scale_id]
+  (assoc current_note "scale_id" scale_id))
+
+(defn replace_note_vol [current_note vol]
+  (assoc current_note "vol" vol))
+
+(defn replace_note_duration [current_note duration]
+  (assoc current_note "duration" duration))
+
+(defn replace_note_generate [current_note generate]
+  (assoc current_note "generate" generate))
+
 (def empty_note
   {"quarter" (new_note nil state_defs/default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))
   "eight" (new_note nil state_defs/default_note_volume (calc_bpm_based_note_duration state_defs/bar_bpm 16))

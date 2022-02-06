@@ -47,6 +47,11 @@
           (some #(= note_str %) ((keyword scale_group) scale))]
     (if (= true_nil nil) false true)))
 
+(defn get_scale [scale_id scales_vec]
+  (first (filter #(= scale_id (:id %)) scales_vec)))
+
+(scales/get_scale "GDi" @atoms/scales)
+
 ; (def tbar
   ; {"quarter" (reduce conj [] (repeat 4 (new_note "E4" "quarter")))
    ; "eight"   (reduce conj [] (repeat 4 (new_note "D4" "eight"  )))})

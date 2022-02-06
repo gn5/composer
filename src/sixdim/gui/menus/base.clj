@@ -13,6 +13,8 @@
          :action #(menu_switch/to_menu "gens")}
     "r" {:log1 "menu choose filter"
          :action #(menu_switch/to_menu "filts")}
+    "w" {:log1 "scales menu"
+         :action #(menu_switch/to_menu "scales")}
 
     "l" {:log1 "decrement_active_score_n"
          :action #(ss/decrement_active_score_n)}

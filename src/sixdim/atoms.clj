@@ -118,7 +118,8 @@
 (defn foo [bar] bar)
 (defonce active_generator (atom foo))
 (defonce active_filter (atom foo))
-(defonce active_scale (atom "CM6"))
+(defonce active_scale (atom "GDi"))
+; (defonce active_scale (atom "CM6"))
 ; hold vec of alternative scores in buffer
 (defonce scores_buffer (atom []))
 ; active index being checked out (range 1 to count)

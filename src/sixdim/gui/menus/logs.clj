@@ -12,8 +12,8 @@
   (f) selection/gen/filt to gen_map
   (p) fill score with gen_map
 
+  (w) scales menu   
   () selection menu: shift/copy  
-  () scale menu   
 
   (/) dec/inc scores buffer index 
 
@@ -39,6 +39,8 @@
   (n) gen_note_from_intervals_seconds
   (e) gen_note_from_intervals_seconds_down
   (i) gen_note_from_intervals_seconds_up
+
+  (l) gen_note_from_scale
   "
 
   "filts"
@@ -57,14 +59,17 @@
   () start to previous bar
   "
 
-  "scale"
+  "scales"
   "
   scale operations:
-  () change scale
-  () to closest note scale semitone down
-  () to closest note scale semitone up 
-  () to closest note scale tone down 
-  () to closest note scale tone up 
+  (n) selection to maj6 sixth-dim
+  (i) selection to maj5 sixth-dim
+  (-) selection to dom sixth-dim
+  (_) selection to dom in scale
+  ...(?) to closest note scale semitone down
+  ...(!) to closest note scale semitone up 
+  ...(/) to closest note scale tone down 
+  ...(\\) to closest note scale tone up 
   "
   })
 

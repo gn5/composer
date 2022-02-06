@@ -30,4 +30,10 @@
         (reset! atoms/active_generator 
                 mgens/gen_note_from_intervals_seconds_up)
         (menu_switch/to_menu "base"))}
+
+    "l" {:log1 "gen_note_from_scale"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_note_from_scale)
+        (menu_switch/to_menu "base"))}
       })

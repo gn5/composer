@@ -150,6 +150,10 @@
     (map (fn [gen_map] (assoc gen_map :f filt)) 
          gen_maps))
 
+(defn add_scale_to_gen_maps [scale_id gen_maps]
+    (map (fn [gen_map] (assoc gen_map :scale_id scale_id)) 
+         gen_maps))
+
 (defn fill_eight_gen_maps_with_active_gen_filt []
 "fill a gen_map in selection bar/eight boundary 
    with current active generator and filter"
@@ -160,6 +164,7 @@
         ;active generator and filter
         active_generator @atoms/active_generator
         active_filter @atoms/active_filter
+        active_scale @atoms/active_scale
         ; bounds from active selection
         start_bar @atoms/selection_bar_start
         end_bar @atoms/selection_bar_end
@@ -176,12 +181,14 @@
         (get_start_bar_maps (str start_eight)) [v])
       (add_gen_to_gen_maps active_generator v)
       (add_filt_to_gen_maps active_filter v)
+      (add_scale_to_gen_maps active_scale v)
       (vec v))
 
     (as-> bars_inside_range v
       (add_bars_to_gen_maps all_bar_maps v)
       (add_gen_to_gen_maps active_generator v)
       (add_filt_to_gen_maps active_filter v)
+      (add_scale_to_gen_maps active_scale v)
       (vec v))
 
     (as-> end_bar v
@@ -189,6 +196,7 @@
         (get_end_bar_maps (str end_eight)) [v])
       (add_gen_to_gen_maps active_generator v)
       (add_filt_to_gen_maps active_filter v)
+      (add_scale_to_gen_maps active_scale v)
       (vec v))
     ])))))
 
