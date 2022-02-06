@@ -22,18 +22,23 @@
          :action #(ss/increment_active_score_n)}
 
     "y" {:log1 "del_one_score_at_score_end"
-         :action #(do (ss/del_one_score_at_score_end)
-                      (reset! atoms/active_scores_n 
-                             @atoms/active_scores_n))}
+         :action #(ss/del_one_score_at_score_end)}
+                      ; (reset! atoms/active_scores_n 
+                             ; @atoms/active_scores_n))}
     "h" {:log1 "add_one_score_at_score_end"
-         :action #(do (ss/add_one_score_at_score_end)
-                      (reset! atoms/active_scores_n 
-                             @atoms/active_scores_n))}
+         :action #(ss/add_one_score_at_score_end)}
+                      ; (reset! atoms/active_scores_n 
+                             ; @atoms/active_scores_n))}
 
     "f" {:log1  "reset_eight_gen_maps_with_active_gen_filt"
     :action #(ss/reset_eight_gen_maps_with_active_gen_filt)}
     "p" {:log1  "reset_fill_score_with_active_gen_map"
     :action #(ss/reset_fill_score_with_active_gen_map)}
+
+    "0" {:log1  "next buffer score"
+    :action #(ss/score_from_next_buffer)}
+    "4" {:log1  "previous buffer score"
+    :action #(ss/score_from_previous_buffer)}
 
     "c" {:log1       "decrement_active_view_bar"
          :action #(ss/decrement_active_view_bar)}

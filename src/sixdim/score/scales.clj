@@ -50,7 +50,7 @@
 (defn get_scale [scale_id scales_vec]
   (first (filter #(= scale_id (:id %)) scales_vec)))
 
-(scales/get_scale "GDi" @atoms/scales)
+; (scales/get_scale "Gni" @atoms/scales)
 
 ; (def tbar
   ; {"quarter" (reduce conj [] (repeat 4 (new_note "E4" "quarter")))

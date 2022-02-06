@@ -15,7 +15,7 @@
   (w) scales menu   
   () selection menu: shift/copy  
 
-  (/) dec/inc scores buffer index 
+  (0/4) dec/inc scores buffer index 
 
   (h/y) add/del last bar 
   (`/^) undo/redo active score
@@ -40,7 +40,10 @@
   (e) gen_note_from_intervals_seconds_down
   (i) gen_note_from_intervals_seconds_up
 
-  (l) gen_note_from_scale
+  (l) change scale (gen_note_from_scale)
+        - use filter_accept_all
+  (u) gen_closest_scale_note
+        - use filter_accept_all
   "
 
   "filts"
