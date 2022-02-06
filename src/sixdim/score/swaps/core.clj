@@ -117,13 +117,6 @@
 (defn increment_selection_end_eight []
       (swap! atoms/selection_eight_end inc))
 
-(defn add_one_score_at_score_end []
-  (swap_active_score
-    #(score/add_bars_at_score_end % score/init_bar)))
-
-(defn del_one_score_at_score_end []
-  (swap_active_score
-    #(score/remove_score_bars % (count %) 1)))
 ; (defn remove_score_bars [score index n_bars]
  
 ; (def mapping_selection_start_bar_eights
@@ -150,6 +143,10 @@
     (map (fn [gen_map] (assoc gen_map :f filt)) 
          gen_maps))
 
+(defn add_scale_to_gen_maps [scale_id gen_maps]
+    (map (fn [gen_map] (assoc gen_map :scale_id scale_id)) 
+         gen_maps))
+
 (defn fill_eight_gen_maps_with_active_gen_filt []
 "fill a gen_map in selection bar/eight boundary 
    with current active generator and filter"
@@ -160,6 +157,7 @@
         ;active generator and filter
         active_generator @atoms/active_generator
         active_filter @atoms/active_filter
+        active_scale @atoms/active_scale
         ; bounds from active selection
         start_bar @atoms/selection_bar_start
         end_bar @atoms/selection_bar_end
@@ -176,12 +174,14 @@
         (get_start_bar_maps (str start_eight)) [v])
       (add_gen_to_gen_maps active_generator v)
       (add_filt_to_gen_maps active_filter v)
+      (add_scale_to_gen_maps active_scale v)
       (vec v))
 
     (as-> bars_inside_range v
       (add_bars_to_gen_maps all_bar_maps v)
       (add_gen_to_gen_maps active_generator v)
       (add_filt_to_gen_maps active_filter v)
+      (add_scale_to_gen_maps active_scale v)
       (vec v))
 
     (as-> end_bar v
@@ -189,6 +189,7 @@
         (get_end_bar_maps (str end_eight)) [v])
       (add_gen_to_gen_maps active_generator v)
       (add_filt_to_gen_maps active_filter v)
+      (add_scale_to_gen_maps active_scale v)
       (vec v))
     ])))))
 
@@ -239,7 +240,6 @@
       (reset! atoms/active_score (first @atoms/scores_buffer))
       ))))
 
-
 ; (reset! atoms/selection_bar_start 1)
 ; (reset! atoms/selection_bar_end 4)
 ; (reset! atoms/selection_eight_start 8)
@@ -256,3 +256,107 @@
 ; (pprint @atoms/gen_maps)
 ; @atoms/scales
 ; (melody/gen_melody @atoms/score1 @atoms/gen_maps @atoms/scales)
+
+
+; (defonce scores_buffer (atom []))
+; active index being checked out (range 1 to count)
+; (defonce index_scores_buffer (atom 1))
+; (defonce n_scores_buffer (atom 1))
+
+(defn score_from_next_buffer []
+  (let [int_active_score (first @atoms/active_scores_n) 
+        new_buffer_index (inc @atoms/index_scores_buffer)]
+    (let [
+          score_to_swap_
+          (common_fns/int_to_score int_active_score)
+          score_atom_to_swap_
+          (common_fns/int_to_score_atom int_active_score)
+          undo_atom_to_swap_
+          (common_fns/int_to_undo_atom int_active_score)]
+    (if (> new_buffer_index (count @atoms/scores_buffer)) 
+      nil
+      (do        
+      (let [new_score
+           (nth @atoms/scores_buffer (- new_buffer_index 1))]
+
+        (swap! atoms/index_scores_buffer inc)
+        
+        (swap! undo_atom_to_swap_ 
+               undo/add_score_to_undo_buffer
+               score_to_swap_ ;(first @atoms/scores_buffer) 
+               state_defs/max_redo)
+
+        (reset! score_atom_to_swap_ new_score)
+
+        (reset! atoms/active_score new_score)))))))
+
+(defn score_from_previous_buffer []
+  (let [int_active_score (first @atoms/active_scores_n) 
+        new_buffer_index (dec @atoms/index_scores_buffer)]
+    (let [
+          score_to_swap_
+          (common_fns/int_to_score int_active_score)
+          score_atom_to_swap_
+          (common_fns/int_to_score_atom int_active_score)
+          undo_atom_to_swap_
+          (common_fns/int_to_undo_atom int_active_score)]
+    (if (< new_buffer_index 1) 
+      nil
+      (do        
+      (let [new_score
+           (nth @atoms/scores_buffer (- new_buffer_index 1))]
+
+        (swap! atoms/index_scores_buffer dec)
+        
+        (swap! undo_atom_to_swap_ 
+               undo/add_score_to_undo_buffer
+               score_to_swap_ ;(first @atoms/scores_buffer) 
+               state_defs/max_redo)
+
+        (reset! score_atom_to_swap_ new_score)
+
+        (reset! atoms/active_score new_score)))))))
+
+; (score_from_previous_buffer)
+
+(defn add_one_score_at_score_end [] 
+  (let [int_active_score (first @atoms/active_scores_n) 
+        new_buffer_index (dec @atoms/index_scores_buffer)]
+    (let [
+          score_to_swap_
+          (common_fns/int_to_score int_active_score)
+          score_atom_to_swap_
+          (common_fns/int_to_score_atom int_active_score)
+          undo_atom_to_swap_
+          (common_fns/int_to_undo_atom int_active_score)]
+  (do
+    (swap! undo_atom_to_swap_ 
+           undo/add_score_to_undo_buffer
+           score_to_swap_ ;(first @atoms/scores_buffer) 
+           state_defs/max_redo)
+    (swap_active_score
+      #(score/add_bars_at_score_end % score/init_bar)) 
+    (reset! atoms/active_scores_n 
+            @atoms/active_scores_n)))))
+
+(defn del_one_score_at_score_end []
+  (let [int_active_score (first @atoms/active_scores_n) 
+        new_buffer_index (dec @atoms/index_scores_buffer)]
+    (let [
+          score_to_swap_
+          (common_fns/int_to_score int_active_score)
+          score_atom_to_swap_
+          (common_fns/int_to_score_atom int_active_score)
+          undo_atom_to_swap_
+          (common_fns/int_to_undo_atom int_active_score)]
+  (do
+    (swap! undo_atom_to_swap_ 
+           undo/add_score_to_undo_buffer
+           score_to_swap_ ;(first @atoms/scores_buffer) 
+           state_defs/max_redo)
+    (swap_active_score
+      #(score/remove_score_bars % (count %) 1))
+    (reset! atoms/active_scores_n 
+            @atoms/active_scores_n)))))
+
+

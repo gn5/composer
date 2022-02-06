@@ -5,13 +5,15 @@
 (defn apply_generator_on_score_filters 
   "run generator on one score and re-attach :filters 
    to all generated scores"
-  [score_filters bar_n beat_key beat_n generator]
+  [score_filters bar_n beat_key beat_n generator extra_gen_args]
   (map 
     #(hash-map :score % 
                :filters (:filters score_filters)
                :scales (:scales score_filters))
-    (generator (:score score_filters) bar_n beat_key beat_n)
-  ))
+    (generator (:score score_filters) 
+               bar_n beat_key beat_n
+               (assoc extra_gen_args
+                      :scales (:scales score_filters)))))
 
 ; (count (melody/apply_generator_on_score_filters 
   ; {:score @atoms/score1 :filters [] :scales @atoms/scales} 
@@ -24,11 +26,11 @@
   ; mgens/gen_note_from_intervals_seconds_down) 0))
 
 (defn apply_generator_on_scores_filters
-  [vec_of_scores_filters bar_n beat_key beat_n generator]
+  [vec_of_scores_filters bar_n beat_key beat_n generator extra_gen_args]
   (reduce into [] ; flatten vec of vec 
     (map ; apply the score generator on each score
       #(apply_generator_on_score_filters 
-          % bar_n beat_key beat_n generator)
+          % bar_n beat_key beat_n generator extra_gen_args)
       vec_of_scores_filters)))
 
 ; (apply_generator_on_scores_filters tinput 1 "eight" 4 gen_note_from_intervals_seconds)
@@ -93,9 +95,12 @@
         beat_key (:k gen_beat)
         beat_n (:n gen_beat)
         beat_gen (:g gen_beat)
-        beat_filt (:f gen_beat)] 
+        beat_filt (:f gen_beat)
+        extra_gen_args {:scale_id (:scale_id gen_beat)}
+        ] 
     (as-> acc_scores_filters v
-      (apply_generator_on_scores_filters v bar_n beat_key beat_n beat_gen)
+      (apply_generator_on_scores_filters v bar_n beat_key beat_n 
+                                         beat_gen extra_gen_args)
       (add_filter_to_scores_filters v bar_n beat_key beat_n beat_filt)
       (run_filters_on_scores_filters v)
       (filter #(not= {} %) v)

@@ -4,7 +4,7 @@
 
 (defn add_scale_G [scales]
   (conj scales
-    {:id "GdC" ; G dom in Cmaj scale
+    {:id "GDi" ; G dom in Cmaj scale
      :id_long "G dom in Cmaj" 
      :downbeats ["G" "B" "D" "F"]
      :upbeats ["A" "C" "E"]
