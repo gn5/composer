@@ -180,3 +180,15 @@
 (defonce n_cc7_undo (atom {:back 0 :forw 0}))
 (defonce n_cc8_undo (atom {:back 0 :forw 0}))
 
+(defonce auto_play (atom 
+  {:requested 0 ; 1 when keypress or midi 
+   :state "inactive" ; for one-shot: first_silent first_to_last inactive 
+   :start_loop 1
+   :end_loop 2
+   :scores [1] ; which scores e.g. [1 2] to midi play (mute/unmute)
+   :ccs []}))
+
+
+
+
+

@@ -35,10 +35,10 @@
     "p" {:log1  "reset_fill_score_with_active_gen_map"
     :action #(ss/reset_fill_score_with_active_gen_map)}
 
-    "0" {:log1  "next buffer score"
-    :action #(ss/score_from_next_buffer)}
-    "4" {:log1  "previous buffer score"
+    "0" {:log1  "previous buffer score"
     :action #(ss/score_from_previous_buffer)}
+    "4" {:log1  "next buffer score"
+    :action #(ss/score_from_next_buffer)}
 
     "c" {:log1       "decrement_active_view_bar"
          :action #(ss/decrement_active_view_bar)}

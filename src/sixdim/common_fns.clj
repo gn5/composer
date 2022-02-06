@@ -100,3 +100,29 @@
 (defn int_to_n_ccundo [score_n]
   (deref (int_to_n_ccundo_map (str score_n))))
 
+
+(def int_to_midi_map {
+   "1" atoms/to_midi1
+   "2" atoms/to_midi2
+   "3" atoms/to_midi3
+   "4" atoms/to_midi4
+   "5" atoms/to_midi5
+   "6" atoms/to_midi6
+   "7" atoms/to_midi7
+   "8" atoms/to_midi8})
+
+(def int_to_midicc_map {
+   "1" atoms/to_midi_cc1
+   "2" atoms/to_midi_cc2
+   "3" atoms/to_midi_cc3
+   "4" atoms/to_midi_cc4
+   "5" atoms/to_midi_cc5
+   "6" atoms/to_midi_cc6
+   "7" atoms/to_midi_cc7
+   "8" atoms/to_midi_cc8})
+
+(defn int_to_midi [score_n]
+  (int_to_midi_map (str score_n)))
+
+(defn int_to_midicc [score_n]
+  (int_to_midicc_map (str score_n)))
