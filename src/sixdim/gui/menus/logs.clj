@@ -26,6 +26,8 @@
   loop dec/inc start/end:
      - (z) (x) (<) (>)
 
+  (6) auto_play loop once w/ silent pre-bar
+
   selection dec/inc start/end:
      - (n) (e) (i) (o): bar n
      - (.) (,) (-) (_): eighth n

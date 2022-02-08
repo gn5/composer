@@ -17,6 +17,11 @@
     (REVERSE-NOTES v)
     (name v)))
 
+(def c_inc_to (partial scales/shift_note_nooctave "C4" +))
+; (defn distance_down [top_note down_note]
+;
+  ; )
+
 (defn get_new_note_octave [note direction n_semitones]
   "- get new octave number of note after increase or decrease
        by n_semitones

@@ -135,6 +135,7 @@
                @atoms/active_cc
                @atoms/active_ccs
                @atoms/active_ccs_n
+               ; @atoms/to_midi_auto_play
 
                @atoms/active_generator
                @atoms/active_filter

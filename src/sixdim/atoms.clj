@@ -188,6 +188,7 @@
    :scores [1] ; which scores e.g. [1 2] to midi play (mute/unmute)
    :ccs []}))
 
+; (defonce to_midi_auto_play (atom "w"))
 
 
 

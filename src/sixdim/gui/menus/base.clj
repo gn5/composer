@@ -83,9 +83,12 @@
     "^" {:log1 "redo active score"
          :action #(ss_undo/redo_active_score
                     (first @atoms/active_scores_n))}
+
+    "6" {:log1 "auto_play loop once w/ silent pre-bar"
+         :action #(swap! atoms/auto_play assoc :requested 1)}
       })
 
-(first @atoms/active_scores_n)
+; (first @atoms/active_scores_n)
 
 ; (swap_active_score [swap_function]
 ; (reset_active_score [reset_function]
