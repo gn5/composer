@@ -18,6 +18,7 @@
     [sixdim.score.watchers.core :as score_watchers]
     [sixdim.score.watchers.undo :as score_undo_watchers]
     [sixdim.score.scales :as scales]
+    [sixdim.score.scales.diminished :as scales_dim]
     [sixdim.score.melody_filters :as mfilters]
     [sixdim.score.melody_generators :as mgens]
     [sixdim.print.core :as print_core]

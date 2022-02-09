@@ -1,24 +1,8 @@
-(ns sixdim.score.scales.min_sixth_dim
+(ns sixdim.score.scales.diminished
   (:use overtone.core)
   (:require
     [sixdim.score.scales :as scales])
   (:gen-class))
-
-(defn add_scale_C [scales]
-  (conj scales
-    {:id "Cm6"
-     :id_long "Cmin6 sixth-dim" ; =A half dim
-     :downbeats ["A" "C" "Eb" "G"]
-     :upbeats ["B" "D" "F"]
-     :scale_chromatics ["Ab"]
-     :other_chromatics ["Db" "E" "Gb" "Bb"]}))
-
-    {:id "Cm6"
-     :id_long "Cmin6 sixth-dim" ; =A half dim
-     :downbeats ["A" "C" "Eb" "G"]
-     :upbeats ["B" "D" "F"]
-     :scale_chromatics ["Ab"]
-     :other_chromatics ["Db" "E" "Gb" "Bb"]}))
 
 (def diminished_scale_map
 ; barry harris style scales
@@ -89,40 +73,26 @@
      :other_chromatics [1 4 7 9]}
  })
 
-(def flat_to_case {
-  "C" "C" "Cb" "B" "C#" "d" 
-  "D" "D" "Db" "d" "D#" "e" 
-  "E" "E" "Eb" "e" "E#" "F" 
-  "F" "F" "Fb" "f" "F#" "g" 
-  "G" "G" "Gb" "g" "G#" "a" 
-  "A" "A" "Ab" "a" "A#" "b" 
-  "B" "B" "Bb" "b" "B#" "C" })
-
-(def c_inc_to (partial scales/shift_note_nooctave "C4" +))
-(c_inc_to 0)
-(c_inc_to 1)
-; (scales/c_inc_to 4)
-
 ; (scales/shift_note_nooctave "Db4" - 3)
-(scales/shift_note_nooctave "C4" - 3)
+; (scales/shift_note_nooctave "C4" - 3)
 
 (defn id_to [r v] 
-  (str (flat_to_case r) v)) 
+  (str (scales/flat_to_case r) v)) 
 
-(id_to "Db" "M6")
+; (id_to "Db" "M6")
 
 (defn id_long_to [r v]
   (clojure.string/replace  
     (clojure.string/replace v "Cx" r) 
     "Ax" (scales/shift_note_nooctave (str r "4") - 3))) 
 
-(id_long_to "Db" "Cxm5 --- Cx min b5 6 dim --- Axdim7 - Cxdim7")
+; (id_long_to "Db" "Cxm5 --- Cx min b5 6 dim --- Axdim7 - Cxdim7")
     
 (defn downbeats_to [r v]
   (mapv #(scales/shift_note_nooctave (str r "4") + %) v)) 
 
-(downbeats_to "Db" [0 3 6 10])
-(downbeats_to "C" [0 3 6 10])
+; (downbeats_to "Db" [0 3 6 10])
+; (downbeats_to "C" [0 3 6 10])
 
 (defn upbeats_to [r v]
   (mapv #(scales/shift_note_nooctave (str r "4") + %) v)) 
@@ -134,7 +104,7 @@
   (mapv #(scales/shift_note_nooctave (str r "4") + %) v)) 
 
 (defn n_to_diminished_scale [n scale_id] 
-  (let [root (c_inc_to n)]
+  (let [root (scales/c_inc_to n)]
   (as-> (diminished_scale_map scale_id) v
     (assoc v :id (id_to root (:id v)))
     (assoc v :id_long (id_long_to root (:id_long v)))
@@ -143,12 +113,15 @@
     (assoc v :scale_chromatics (scale_chromatics_to root (:scale_chromatics v)))
     (assoc v :other_chromatics (other_chromatics_to root (:other_chromatics v))))))
 
-(n_to_diminished_scale 1 "m5")
-(n_to_diminished_scale 0 "m5")
+; (n_to_diminished_scale 1 "m5")
+; (scales_dim/n_to_diminished_scale 0 "m5")
 
+; (mapv #(map (fn [a b] (n_to_diminished_scale a b)) (range 12) %1) 
+     ; (keys diminished_scale_map))
 
+(defn add_diminished_scales [scales]
+  (conj scales 
+    (mapv #(map (fn [a] (n_to_diminished_scale a %1)) (range 12)) 
+      (keys diminished_scale_map))))
 
-
-
-
-
+; (pprint (scales_dim/add_diminished_scales []))

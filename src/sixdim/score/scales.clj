@@ -17,10 +17,7 @@
     (REVERSE-NOTES v)
     (name v)))
 
-(def c_inc_to (partial scales/shift_note_nooctave "C4" +))
-; (defn distance_down [top_note down_note]
-;
-  ; )
+(def c_inc_to (partial shift_note_nooctave "C4" +))
 
 (defn get_new_note_octave [note direction n_semitones]
   "- get new octave number of note after increase or decrease
@@ -55,6 +52,17 @@
 (defn get_scale [scale_id scales_vec]
   (first (filter #(= scale_id (:id %)) scales_vec)))
 
+(def flat_to_case {
+  "C" "C" "Cb" "B" "C#" "d" 
+  "D" "D" "Db" "d" "D#" "e" 
+  "E" "E" "Eb" "e" "E#" "F" 
+  "F" "F" "Fb" "f" "F#" "g" 
+  "G" "G" "Gb" "g" "G#" "a" 
+  "A" "A" "Ab" "a" "A#" "b" 
+  "B" "B" "Bb" "b" "B#" "C" })
+
+
+; (scales/c_inc_to 4)
 ; (scales/get_scale "Gni" @atoms/scales)
 
 ; (def tbar

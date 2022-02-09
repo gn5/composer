@@ -17,6 +17,7 @@
     "filts" menu_filts/key_menu 
     "selection" menu_selection/key_menu 
     "scales" menu_scales/key_menu 
+    "scale_root" menu_scales/key_root_menu 
       })
 
 ; redirection of current menu to key_map of that menu

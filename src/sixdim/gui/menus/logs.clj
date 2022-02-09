@@ -76,6 +76,23 @@
   ...(/) to closest note scale tone down 
   ...(\\) to closest note scale tone up 
   "
+
+  "scale_root"
+  "
+  scale operations:
+  (l) C 
+  (u) d C#
+  (y) D
+  (h) e D#
+  (n) E 
+  (e) F
+  (i) g F#
+  (o) G 
+  (.) a G#
+  (,) A
+  (-) b A#
+  (_) B
+  "
   })
 
 
