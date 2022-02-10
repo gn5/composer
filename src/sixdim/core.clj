@@ -14,6 +14,7 @@
     [sixdim.score.undo :as undo]
     [sixdim.score.swaps.core :as score_swaps]
     [sixdim.score.scales.swaps :as scales_swaps]
+    [sixdim.score.scales.watchers :as scales_watchers]
     [sixdim.score.swaps.undo :as score_swaps_undo]
     [sixdim.score.watchers.core :as score_watchers]
     [sixdim.score.watchers.undo :as score_undo_watchers]

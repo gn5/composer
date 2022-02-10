@@ -31,15 +31,27 @@
                 mgens/gen_note_from_intervals_seconds_up)
         (menu_switch/to_menu "base"))}
 
-    "l" {:log1 "gen_note_from_scale"
+    "l" {:log1 "change notes scale gen_note_from_scale"
          :action #(do 
         (reset! atoms/active_generator 
                 mgens/gen_note_from_scale)
         (menu_switch/to_menu "base"))}
 
-    "u" {:log1 "gen_closest_scale_note"
+    "u" {:log1 "gen_closest_scale_note_up_and_down"
          :action #(do 
         (reset! atoms/active_generator 
-                mgens/gen_closest_scale_note)
+                mgens/gen_closest_scale_note_up_and_down)
+        (menu_switch/to_menu "base"))}
+
+    "y" {:log1 "gen_closest_scale_note_up_first"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_closest_scale_note_up_first)
+        (menu_switch/to_menu "base"))}
+
+    "h" {:log1 "gen_closest_scale_note_down_first"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_closest_scale_note_down_first)
         (menu_switch/to_menu "base"))}
       })

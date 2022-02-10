@@ -130,10 +130,9 @@
   {"quarter" "downbeats"
    "eight" "upbeats"
    "triplet" "downbeats"
-   "sixteen" "downbeats"
-   })
+   "sixteen" "downbeats"})
 
-(defn gen_closest_scale_note [score bar_n beat_key beat_n extra_gen_args]
+(defn gen_closest_scale_note_up_and_down [score bar_n beat_key beat_n extra_gen_args]
   (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
     (let [scale (scales/get_scale (current_note "scale_id")
                                   (:scales extra_gen_args))]
@@ -151,3 +150,44 @@
                 score bar_n beat_key beat_n 
                 (assoc current_note "pitch" %)) 
              new_notes_vec)))))
+
+(defn gen_closest_scale_note_up_first [score bar_n beat_key beat_n extra_gen_args]
+  (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
+    (let [scale (scales/get_scale (current_note "scale_id")
+                                  (:scales extra_gen_args))]
+      (let [new_notes_vec
+            (as-> (current_note "pitch") v
+              (map #(inc_note_to_closest v %)   
+                   (closest_note_inc_map "up_first"))
+            (map #(note_oct_vec_del_not_in_scale_key 
+                    % scale 
+                    (beat_key_to_scale_key beat_key))
+                 v)
+              (filter (complement empty?) v)
+              (first v))]
+        (map #(score/replace_score_note 
+                score bar_n beat_key beat_n 
+                (assoc current_note "pitch" %)) 
+             new_notes_vec)))))
+
+(defn gen_closest_scale_note_down_first [score bar_n beat_key beat_n extra_gen_args]
+  (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
+    (let [scale (scales/get_scale (current_note "scale_id")
+                                  (:scales extra_gen_args))]
+      (let [new_notes_vec
+            (as-> (current_note "pitch") v
+              (map #(inc_note_to_closest v %)   
+                   (closest_note_inc_map "down_first"))
+            (map #(note_oct_vec_del_not_in_scale_key 
+                    % scale 
+                    (beat_key_to_scale_key beat_key))
+                 v)
+              (filter (complement empty?) v)
+              (first v))]
+        (map #(score/replace_score_note 
+                score bar_n beat_key beat_n 
+                (assoc current_note "pitch" %)) 
+             new_notes_vec)))))
+
+
+

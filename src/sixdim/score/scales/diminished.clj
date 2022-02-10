@@ -120,8 +120,9 @@
      ; (keys diminished_scale_map))
 
 (defn add_diminished_scales [scales]
-  (conj scales 
-    (mapv #(map (fn [a] (n_to_diminished_scale a %1)) (range 12)) 
-      (keys diminished_scale_map))))
+  (flatten
+    (conj scales 
+      (mapv #(map (fn [a] (n_to_diminished_scale a %1)) (range 12)) 
+        (keys diminished_scale_map)))))
 
 ; (pprint (scales_dim/add_diminished_scales []))

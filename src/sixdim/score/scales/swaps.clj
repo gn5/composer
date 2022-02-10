@@ -9,8 +9,3 @@
     ; [sixdim.score.undo :as undo]
     )
   (:gen-class))
-
-; (scale_swaps/selection_to_scale "GDi") ;G dom in Cmaj scale
-(defn selection_to_scale [scale_id]
-  scale_id)
-
