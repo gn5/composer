@@ -182,6 +182,7 @@
 
 (defonce auto_play (atom 
   {:requested 0 ; 1 when keypress or midi 
+   :silent_pre_bar 1 ; 1 to play a silent pre bar  
    :state "inactive" ; for one-shot: first_silent first_to_last inactive 
    :start_loop 1
    :end_loop 2
@@ -268,6 +269,7 @@
   ["active_cc" active_cc] 
   ["active_scores_n" active_scores_n]
   ["active_ccs_n" active_ccs_n]
+  ["auto_play" auto_play]
   ]))
   
   

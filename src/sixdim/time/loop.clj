@@ -51,6 +51,28 @@
 (defn mute_midicc_scores [scores_vec] 
   (mapv #(reset! (common_fns/int_to_midicc %) false) scores_vec))
 
+(defn unmute_scores_cc []
+  (do
+  (unmute_midi_scores (:scores @atoms/auto_play))
+  (unmute_midicc_scores (:ccs @atoms/auto_play))))
+
+(defn rec_and_mute_scores_cc []
+  (do
+  (swap! atoms/auto_play assoc 
+       :scores (vec (filter #(= true @(common_fns/int_to_midi %)) [1 2 3 4 5 6 7 8]))
+       :ccs (vec (filter #(= true @(common_fns/int_to_midicc %)) [1 2 3 4 5 6 7 8])))
+  (mute_midi_scores (:scores @atoms/auto_play))
+  (mute_midicc_scores (:ccs @atoms/auto_play))))
+
+(defn auto_mute_or_unmute []
+  (cond (and (= [] 
+             (vec (filter #(= true @(common_fns/int_to_midi %)) [1 2 3 4 5 6 7 8])))
+             (= [] 
+             (vec (filter #(= true @(common_fns/int_to_midicc %)) [1 2 3 4 5 6 7 8]))))
+        (unmute_scores_cc) 
+        :else
+        (rec_and_mute_scores_cc)))
+
 ; (:scores @atoms/auto_play)
 ; (common_fns/int_to_midi (str 1))
 ; (reset! (common_fns/int_to_midi 1) true)
@@ -63,7 +85,7 @@
 (defn auto_player
   [beat]
   (cond 
-  (= 1 (:requested @atoms/auto_play))
+  (and (= 1 (:requested @atoms/auto_play)) (= 1 (:silent_pre_bar @atoms/auto_play)))
     (do 
       (swap! atoms/auto_play assoc 
         :start_loop @atoms/loop_start_bar
@@ -73,26 +95,33 @@
       (reset! atoms/loop_end_bar @atoms/loop_start_bar)
       (mute_midi_scores (:scores @atoms/auto_play))
       (mute_midicc_scores (:ccs @atoms/auto_play)))
+  (and (= 1 (:requested @atoms/auto_play)) (= 0 (:silent_pre_bar @atoms/auto_play)))
+    (do 
+      (swap! atoms/auto_play assoc 
+        :start_loop @atoms/loop_start_bar
+        :end_loop @atoms/loop_end_bar
+        :state "first_to_last"
+        :requested 0)
+      (unmute_midi_scores (:scores @atoms/auto_play))
+      (unmute_midicc_scores (:ccs @atoms/auto_play)))
   (= "first_silent" (:state @atoms/auto_play))
     (do 
       (reset! atoms/loop_end_bar (:end_loop @atoms/auto_play))
       (swap! atoms/auto_play assoc :state "first_to_last")
       (unmute_midi_scores (:scores @atoms/auto_play))
-      ; (reset! (common_fns/int_to_midi 1) true)
       (unmute_midicc_scores (:ccs @atoms/auto_play)))
   (= "first_to_last" (:state @atoms/auto_play))
     (if (= (@atoms/location "bar") (:end_loop @atoms/auto_play))
     (do 
       (swap! atoms/auto_play assoc :state "inactive")
       (mute_midi_scores (:scores @atoms/auto_play))
-      ; (reset! (common_fns/int_to_midi 1) false)
       (mute_midicc_scores (:ccs @atoms/auto_play))))
   ))
 
-      ; (swap! atoms/auto_play assoc :start_loop @atoms/loop_start_bar)
-      ; (swap! atoms/auto_play assoc :end_loop @atoms/loop_end_bar)
-      ; (swap! atoms/auto_play assoc :state "first_silent")
-      ; (swap! atoms/auto_play assoc :requested 0)
+; (swap! atoms/auto_play assoc :start_loop @atoms/loop_start_bar)
+; (swap! atoms/auto_play assoc :end_loop @atoms/loop_end_bar)
+; (swap! atoms/auto_play assoc :state "first_silent")
+; (swap! atoms/auto_play assoc :requested 0)
 
 ; @atoms/auto_play
 ; (swap! atoms/auto_play assoc :requested 1)
@@ -149,6 +178,7 @@
   (trigger_sixteenth_note (+ bar_beat 0.9375) metro)
 
   (trigger_auto_player (+ bar_beat 0.96) metro)
+
   (let [next_bar_beat (+ bar_beat 1)]
     (apply-at (metro next_bar_beat) #'play_loop [next_bar_beat metro (inc val)])))
 

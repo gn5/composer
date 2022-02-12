@@ -2,9 +2,12 @@
   (:use overtone.core)
   (:require 
     [sixdim.atoms :as atoms]
+    [sixdim.state_defs :as state_defs] 
     [sixdim.score.swaps.core :as ss]
     [sixdim.score.swaps.undo :as ss_undo]
     [sixdim.gui.menus.switch :as menu_switch]
+    [sixdim.time.loop :as tloop]
+    [sixdim.save :as save]
     )
   (:gen-class))
 
@@ -84,10 +87,22 @@
          :action #(ss_undo/redo_active_score
                     (first @atoms/active_scores_n))}
 
-    "6" {:log1 "auto_play loop once w/ silent pre-bar"
-         :action #(swap! atoms/auto_play assoc :requested 1)}
+    "escape" {:log1 "auto_play loop once"
+              :action #(swap! atoms/auto_play assoc :requested 1 :silent_pre_bar 0)}
+    "enter" {:log1 "rec and auto_mute_or_unmute"
+             :action #(tloop/auto_mute_or_unmute)}
+    "backspace" {:log1 "auto_play loop once w/ silent pre-bar"
+                 :action #(swap! atoms/auto_play assoc :requested 1 :silent_pre_bar 1)}
+
+    "q" {:log1   "save_atoms to default dir"
+         :action #(save/save_atoms @atoms/atoms_to_save state_defs/save_root_dir)}
+
+    "\"" {:log1   "load saved default dir atoms"
+         :action #(save/load_default_atoms @atoms/atoms_to_save state_defs/save_root_dir)}
+
       })
 
+    ; 1 to play a silent pre bar  
 ; (first @atoms/active_scores_n)
 
 ; (swap_active_score [swap_function]
