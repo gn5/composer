@@ -205,8 +205,6 @@
        (ui/button
          (str "8:" (str to_midi8_)) nil to_midi8_)))
 
-
-
    (guicore/ll (str "mute/unmute midi cc send:"))
    (ui/horizontal-layout 
    (ui/on :mouse-down (fn [[mouse-x mouse-y]]

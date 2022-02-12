@@ -118,7 +118,7 @@
 (defn foo [bar] bar)
 (defonce active_generator (atom foo))
 (defonce active_filter (atom foo))
-(defonce active_scale (atom "GDi"))
+(defonce active_scale (atom "CM5"))
 ; (defonce active_scale (atom "CM6"))
 ; hold vec of alternative scores in buffer
 (defonce scores_buffer (atom []))
@@ -188,7 +188,102 @@
    :scores [1] ; which scores e.g. [1 2] to midi play (mute/unmute)
    :ccs []}))
 
+; (defonce to_midi_auto_play (atom "w"))
 
-
-
-
+(defonce atoms_to_save (atom [
+  ["scales" scales]
+  ["n_bars" n_bars]
+  ["midi_channel1" midi_channel1]
+  ["midi_channel2" midi_channel2]
+  ["midi_channel3" midi_channel3]
+  ["midi_channel4" midi_channel4]
+  ["midi_channel5" midi_channel5]
+  ["midi_channel6" midi_channel6]
+  ["midi_channel7" midi_channel7]
+  ["midi_channel8" midi_channel8]
+  ["midi_channel_cc1" midi_channel_cc1]
+  ["midi_channel_cc2" midi_channel_cc2]
+  ["midi_channel_cc3" midi_channel_cc3]
+  ["midi_channel_cc4" midi_channel_cc4]
+  ["midi_channel_cc5" midi_channel_cc5]
+  ["midi_channel_cc6" midi_channel_cc6]
+  ["midi_channel_cc7" midi_channel_cc7]
+  ["midi_channel_cc8" midi_channel_cc8]
+  ["score1" score1]
+  ["score2" score2]
+  ["score3" score3]
+  ["score4" score4]
+  ["score5" score5]
+  ["score6" score6]
+  ["score7" score7]
+  ["score8" score8]
+  ["score1" score1]
+  ["cc2" cc2]
+  ["cc3" cc3]
+  ["cc4" cc4]
+  ["cc5" cc5]
+  ["cc6" cc6]
+  ["cc7" cc7]
+  ["cc8" cc8]
+  ["scores_buffer" scores_buffer]
+  ["index_scores_buffer" index_scores_buffer]
+  ["n_scores_buffer" n_scores_buffer]
+  ["score1_undo" score1_undo]
+  ["score2_undo" score2_undo]
+  ["score3_undo" score3_undo]
+  ["score4_undo" score4_undo]
+  ["score5_undo" score5_undo]
+  ["score6_undo" score6_undo]
+  ["score7_undo" score7_undo]
+  ["score8_undo" score8_undo]
+  ["n_score_active_undo" n_score_active_undo]
+  ["n_score1_undo" n_score1_undo]
+  ["n_score2_undo" n_score2_undo]
+  ["n_score3_undo" n_score3_undo]
+  ["n_score4_undo" n_score4_undo]
+  ["n_score5_undo" n_score5_undo]
+  ["n_score6_undo" n_score6_undo]
+  ["n_score7_undo" n_score7_undo]
+  ["n_score8_undo" n_score8_undo]
+  ["cc1_undo" cc1_undo]
+  ["cc2_undo" cc2_undo]
+  ["cc3_undo" cc3_undo]
+  ["cc4_undo" cc4_undo]
+  ["cc5_undo" cc5_undo]
+  ["cc6_undo" cc6_undo]
+  ["cc7_undo" cc7_undo]
+  ["cc8_undo" cc8_undo]
+  ["n_cc_active_undo" n_cc_active_undo]
+  ["n_cc1_undo" n_cc1_undo]
+  ["n_cc2_undo" n_cc2_undo]
+  ["n_cc3_undo" n_cc3_undo]
+  ["n_cc4_undo" n_cc4_undo]
+  ["n_cc5_undo" n_cc5_undo]
+  ["n_cc6_undo" n_cc6_undo]
+  ["n_cc7_undo" n_cc7_undo]
+  ["n_cc8_undo" n_cc8_undo]
+  ["active_scores" active_scores]
+  ["active_score" active_score]
+  ["active_ccs" active_ccs]
+  ["active_cc" active_cc] 
+  ["active_scores_n" active_scores_n]
+  ["active_ccs_n" active_ccs_n]
+  ]))
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

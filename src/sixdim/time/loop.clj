@@ -95,7 +95,7 @@
       ; (swap! atoms/auto_play assoc :requested 0)
 
 ; @atoms/auto_play
-(swap! atoms/auto_play assoc :requested 1)
+; (swap! atoms/auto_play assoc :requested 1)
 
 (defn trigger_bar_note
   [beat metro]

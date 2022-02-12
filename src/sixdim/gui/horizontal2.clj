@@ -40,7 +40,7 @@
     active_view_bar_
     active_view_bar_ 7))
 
-  ; (guicore/ll (str text_hoz2_1_))
+  (guicore/ll (str text_hoz2_1_))
   ; (guicore/ll (str text_hoz2_2_))
   ; (guicore/ll (str text_hoz2_3_))
   ; (guicore/ll (str text_hoz2_4_))

@@ -21,3 +21,5 @@
 (def max_scores_buffer 500)
 ; max redo/undo history for notes and cc scores
 (def max_redo 500)
+
+(def save_root_dir "./saves/")

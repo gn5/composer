@@ -124,3 +124,48 @@
              (println "location update:" new-state)))
 
 (play_loop (bar_metronome) bar_metronome 0)   (apply-at (metro next_bar_beat) #'play_loop [next_bar_beat metro (inc val)])))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; gen melody
+;
+; (reset! atoms/gen_maps
+;  [{:bar 2 :k "quarter" :n 1
+;    :g mgens/gen_note_from_intervals_seconds_up
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "eight" :n 1
+;    :g mgens/gen_note_from_intervals_seconds_up
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "quarter" :n 2
+;    :g mgens/gen_note_from_intervals_seconds_up
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "eight" :n 2
+;    :g mgens/gen_note_from_intervals_seconds_up
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "quarter" :n 3
+;    :g mgens/gen_note_from_intervals_seconds_down
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "eight" :n 3
+;    :g mgens/gen_note_from_intervals_seconds_down
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "quarter" :n 4
+;    :g mgens/gen_note_from_intervals_seconds_down
+;    :f mfilters/filter_accept_bh}
+;   {:bar 2 :k "eight" :n 4
+;    :g mgens/gen_note_from_intervals_seconds_down
+;    :f mfilters/filter_accept_bh}])
+
+
+; (melody/gen_melody @atoms/score1 @atoms/gen_maps @atoms/scales)
+
+; (count (melody/gen_melody @atoms/score1
+                          ; @atoms/gen_maps
+                          ; @atoms/scales))
+
+; (reset! atoms/score1 (:score (first (melody/gen_melody
+                               ; @atoms/score1
+                               ; @atoms/gen_maps
+                               ; @atoms/scales))))
+
+
