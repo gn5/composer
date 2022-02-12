@@ -26,7 +26,12 @@
   loop dec/inc start/end:
      - (z) (x) (<) (>)
 
-  (6) auto_play loop once w/ silent pre-bar
+  (enter) rec and auto_mute_or_unmute
+  (escape) auto_play loop once
+  (backspace) auto_play loop once w/ silent pre-bar
+
+  (q) save_atoms to default dir
+  (\") load saved default dir atoms
 
   selection dec/inc start/end:
      - (n) (e) (i) (o): bar n
