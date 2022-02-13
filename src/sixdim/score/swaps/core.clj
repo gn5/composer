@@ -7,6 +7,7 @@
     [sixdim.score.score :as score]
     [sixdim.score.undo :as undo]
     [sixdim.score.melody :as melody]
+    ; [sixdim.score.swaps.gen_maps :as swaps_gen_maps]
     )
   (:gen-class))
 
@@ -123,79 +124,6 @@
 ; (def mapping_selection_end_bar_eights
 ; (def all_bar_eigths
 
-(defn add_bar_to_gen_map [gen_map bar_n]
-  (assoc gen_map :bar bar_n))
-
-(defn add_bar_to_gen_maps [gen_maps bar_n]
-  (map #(add_bar_to_gen_map % bar_n) gen_maps))
-
-(defn add_bars_to_gen_maps [gen_maps bars]
-  (reduce into []
-  (map #(add_bar_to_gen_maps gen_maps %) bars)))
-
-; (add_bars_to_gen_maps score/all_bar_eights [2 3])
-
-(defn add_gen_to_gen_maps [gen gen_maps]
-    (map (fn [gen_map] (assoc gen_map :g gen)) 
-         gen_maps))
-
-(defn add_filt_to_gen_maps [filt gen_maps]
-    (map (fn [gen_map] (assoc gen_map :f filt)) 
-         gen_maps))
-
-(defn add_scale_to_gen_maps [scale_id gen_maps]
-    (map (fn [gen_map] (assoc gen_map :scale_id scale_id)) 
-         gen_maps))
-
-(defn fill_eight_gen_maps_with_active_gen_filt []
-"fill a gen_map in selection bar/eight boundary 
-   with current active generator and filter"
-  (let [;eight gen maps
-        all_bar_maps score/all_bar_eights
-        get_start_bar_maps score/mapping_selection_start_bar_eights 
-        get_end_bar_maps score/mapping_selection_end_bar_eights 
-        ;active generator and filter
-        active_generator @atoms/active_generator
-        active_filter @atoms/active_filter
-        active_scale @atoms/active_scale
-        ; bounds from active selection
-        start_bar @atoms/selection_bar_start
-        end_bar @atoms/selection_bar_end
-        start_eight @atoms/selection_eight_start
-        end_eight @atoms/selection_eight_end
-        bars_inside_range (range (+ 1 start_bar) end_bar)]    
-
-  (reset! atoms/gen_maps
-  (distinct 
-  (reduce into [] [
-
-    (as-> start_bar v
-      (add_bars_to_gen_maps
-        (get_start_bar_maps (str start_eight)) [v])
-      (add_gen_to_gen_maps active_generator v)
-      (add_filt_to_gen_maps active_filter v)
-      (add_scale_to_gen_maps active_scale v)
-      (vec v))
-
-    (as-> bars_inside_range v
-      (add_bars_to_gen_maps all_bar_maps v)
-      (add_gen_to_gen_maps active_generator v)
-      (add_filt_to_gen_maps active_filter v)
-      (add_scale_to_gen_maps active_scale v)
-      (vec v))
-
-    (as-> end_bar v
-      (add_bars_to_gen_maps
-        (get_end_bar_maps (str end_eight)) [v])
-      (add_gen_to_gen_maps active_generator v)
-      (add_filt_to_gen_maps active_filter v)
-      (add_scale_to_gen_maps active_scale v)
-      (vec v))
-    ])))))
-
-(defn reset_eight_gen_maps_with_active_gen_filt []
-  (reset! atoms/gen_maps
-    (fill_eight_gen_maps_with_active_gen_filt)))
 
 ; (reset! atoms/selection_bar_start 1)
 ; (reset! atoms/selection_bar_end 4)

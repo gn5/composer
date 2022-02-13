@@ -9,10 +9,10 @@
   base menu:
   (a) choose generator
   (r) choose filter
-  (f) selection/gen/filt to gen_map
+  (w) choose scale   
+  (f) choose gen_map
   (p) fill score with gen_map
 
-  (w) scales menu   
   () selection menu: shift/copy  
 
   (0/4) dec/inc scores buffer index 
@@ -55,6 +55,42 @@
         - use filter_accept_all
   (h) gen_closest_scale_note_down_first
         - use filter_accept_all
+  "
+
+  "gen_maps"
+  "
+  fill gen_maps:
+  (n) all eight
+  (.) first eight
+  (l) all triplet 
+  (#) first triplet 
+  (enter) all sixteen
+  (?) first sixteen
+
+  (a) complement eight 
+  (r) complement triplet
+  (s) complement sixteen
+
+  (e) every 2 eight
+  (,)   every 2 eight + 1
+  (u) every 2 triplet
+  (~)   every 2 triplet + 1
+  (backspace) every 2 sixteen
+  (!)   every 2 sixteen + 1
+
+  (i) every 3 eight
+  (-)   every 3 eight + 1
+  (y) every 3 triplet
+  ($)   every 3 triplet + 1
+  ( ) every 3 sixteen
+  (/)   every 3 sixteen + 1
+
+  (o) every 4 eight
+  (_)   every 4 eight + 1
+  (h) every 4 triplet
+  (@)   every 4 triplet + 1
+  (tab) every  4 sixteen
+  (\\)   every 4 sixteen + 1
   "
 
   "filts"
