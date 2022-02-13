@@ -13,18 +13,33 @@
 
 (def seconds_up [{:sign + :n 1} {:sign + :n 2}])
 
+        ; (map #(score/replace_score_note 
+                ; score bar_n beat_key beat_n 
+                ; (assoc current_note "pitch" %))
+             ; new_notes_vec)))))
+
+          ; (map #(score/replace_score_note score bar_n beat_key beat_n; replace current note
+                  ; (score/new_note (scales/shift_note previous_eigth ; with previous note
+                              ; (:sign %)      ;  + or -
+                              ; (:n %)) "eight"))        ;    n semitones
+            ; intervals_map)))
+
 (defn gen_note_from_intervals
   [intervals_map score bar_n beat_key beat_n extra_gen_args]
   "- generate possible scalar note: semitone or tone up or down
    - from 1 score, generate vector of n (length intervals) scores
      where each score has new note at beat_n
      - new note is previous eigth note +- n semitones"
-  (let [previous_eigth
-        ((nav/nav_eight score bar_n beat_key beat_n - 1) "pitch")]
+  (let [previous_eigth ((nav/nav_eight score bar_n beat_key beat_n - 1) "pitch")
+        current_note   (nav/get_score_beat score bar_n beat_key beat_n)]
+        ; scale (scales/get_scale (current_note "scale_id")
+                                ; (:scales extra_gen_args))]
           (map #(score/replace_score_note score bar_n beat_key beat_n; replace current note
-                  (score/new_note (scales/shift_note previous_eigth ; with previous note
-                              (:sign %)      ;  + or -
-                              (:n %)) "eight"))        ;    n semitones
+                  (assoc current_note 
+                         "pitch" 
+                         (scales/shift_note previous_eigth ; with previous note
+                                            (:sign %)      ;  + or -
+                                            (:n %))))      ;  n semitones
             intervals_map)))
 
 ; (def gen_note_from_intervals_seconds 
