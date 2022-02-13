@@ -5,6 +5,7 @@
     [sixdim.score.swaps.core :as ss]
     [sixdim.gui.menus.base :as menu_base]
     [sixdim.gui.menus.gens :as menu_gens]
+    [sixdim.gui.menus.gen_maps :as menu_gen_maps]
     [sixdim.gui.menus.filts :as menu_filts]
     [sixdim.gui.menus.selection :as menu_selection]
     [sixdim.gui.menus.scales :as menu_scales]
@@ -14,6 +15,7 @@
 (def menu_map {
     "base"  menu_base/key_menu 
     "gens"  menu_gens/key_menu 
+    "gen_maps"  menu_gen_maps/key_menu 
     "filts" menu_filts/key_menu 
     "selection" menu_selection/key_menu 
     "scales" menu_scales/key_menu 

@@ -18,7 +18,7 @@
 
 ; init
 (def bar_bpm (atom 60))
-(def eight_swing (atom 0.5)) ; start placement upbeat triplet feel 0.6
+(def sixteen_swing (atom 0.5)) ; start placement upbeat sixteen feel 0.6
 (def legato (atom 0.90)) ;percentage
 
 ; init song
@@ -59,12 +59,12 @@
 (defn quarter_player
   [beat]
   (println "quarter trigger.. beat = " beat))
-(defn eighth_player
+(defn sixteenh_player
   [beat]
   (println "eigthh trigger.. beat = " beat))
-(defn triplet_player
+(defn sixteen_player
   [beat]
-  (println "triplet trigger.. beat = " beat))
+  (println "sixteen trigger.. beat = " beat))
 (defn sixteenth_player
   [beat]
   (println "sixteenth trigger.. beat = " beat))
@@ -75,12 +75,12 @@
 (defn trigger_quarter_note
   [beat metro]
     (apply-at (metro beat) #'quarter_player [beat]))
-(defn trigger_eighth_note
+(defn trigger_sixteenh_note
   [beat metro]
-    (apply-at (metro beat) #'eighth_player [beat]))
-(defn trigger_triplet_note
+    (apply-at (metro beat) #'sixteenh_player [beat]))
+(defn trigger_sixteen_note
   [beat metro]
-    (apply-at (metro beat) #'triplet_player [beat]))
+    (apply-at (metro beat) #'sixteen_player [beat]))
 (defn trigger_sixteenth_note
   [beat metro]
     (apply-at (metro beat) #'sixteenth_player [beat]))
@@ -115,7 +115,7 @@
 ; (overtone.meqidi/midi-note midi-out-virtualport 66 127 500 0)
 
 ; (def legato (atom 0.90)) ; as percentage
-; (def eighth_swing (atom 0.5)) ; placement of eighth upbeats (triplet feel is at 0.6)
+; (def sixteenh_swing (atom 0.5)) ; placement of sixteenh upbeats (sixteen feel is at 0.6)
 (def score (atom [44 55 66 77])) ; init partition score
 (def n_bars (atom 4)) ;number of bars in whole partition
 
@@ -134,25 +134,25 @@
 ;  [{:bar 2 :k "quarter" :n 1
 ;    :g mgens/gen_note_from_intervals_seconds_up
 ;    :f mfilters/filter_accept_bh}
-;   {:bar 2 :k "eight" :n 1
+;   {:bar 2 :k "sixteen" :n 1
 ;    :g mgens/gen_note_from_intervals_seconds_up
 ;    :f mfilters/filter_accept_bh}
 ;   {:bar 2 :k "quarter" :n 2
 ;    :g mgens/gen_note_from_intervals_seconds_up
 ;    :f mfilters/filter_accept_bh}
-;   {:bar 2 :k "eight" :n 2
+;   {:bar 2 :k "sixteen" :n 2
 ;    :g mgens/gen_note_from_intervals_seconds_up
 ;    :f mfilters/filter_accept_bh}
 ;   {:bar 2 :k "quarter" :n 3
 ;    :g mgens/gen_note_from_intervals_seconds_down
 ;    :f mfilters/filter_accept_bh}
-;   {:bar 2 :k "eight" :n 3
+;   {:bar 2 :k "sixteen" :n 3
 ;    :g mgens/gen_note_from_intervals_seconds_down
 ;    :f mfilters/filter_accept_bh}
 ;   {:bar 2 :k "quarter" :n 4
 ;    :g mgens/gen_note_from_intervals_seconds_down
 ;    :f mfilters/filter_accept_bh}
-;   {:bar 2 :k "eight" :n 4
+;   {:bar 2 :k "sixteen" :n 4
 ;    :g mgens/gen_note_from_intervals_seconds_down
 ;    :f mfilters/filter_accept_bh}])
 
@@ -167,5 +167,4 @@
                                ; @atoms/score1
                                ; @atoms/gen_maps
                                ; @atoms/scales))))
-
 

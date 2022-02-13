@@ -16,8 +16,12 @@
          :action #(menu_switch/to_menu "gens")}
     "r" {:log1 "menu choose filter"
          :action #(menu_switch/to_menu "filts")}
+    "f" {:log1 "menu set gen_maps"
+         :action #(menu_switch/to_menu "gen_maps")}
     "w" {:log1 "scales menu"
          :action #(menu_switch/to_menu "scales")}
+    "p" {:log1 "reset_fill_score_with_active_gen_map"
+         :action #(ss/reset_fill_score_with_active_gen_map)}
 
     "l" {:log1 "decrement_active_score_n"
          :action #(ss/decrement_active_score_n)}
@@ -32,11 +36,6 @@
          :action #(ss/add_one_score_at_score_end)}
                       ; (reset! atoms/active_scores_n 
                              ; @atoms/active_scores_n))}
-
-    "f" {:log1  "reset_eight_gen_maps_with_active_gen_filt"
-    :action #(ss/reset_eight_gen_maps_with_active_gen_filt)}
-    "p" {:log1  "reset_fill_score_with_active_gen_map"
-    :action #(ss/reset_fill_score_with_active_gen_map)}
 
     "0" {:log1  "previous buffer score"
     :action #(ss/score_from_previous_buffer)}

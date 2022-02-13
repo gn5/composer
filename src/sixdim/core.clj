@@ -10,14 +10,22 @@
     [sixdim.midi.play :as midi_play]
     [sixdim.midi.play_watchers :as midi_play_watchers]
     [sixdim.time.loop :as tloop]
+    [sixdim.score.nav.eight :as nav_eight] 
+    [sixdim.score.nav.triplet :as nav_triplet]
+    [sixdim.score.nav.sixteen :as nav_sixteen]
     [sixdim.score.score_nav :as nav]
     [sixdim.score.melody :as melody]
     [sixdim.score.score :as score]
     [sixdim.score.undo :as undo]
     [sixdim.score.swaps.core :as score_swaps]
+    [sixdim.score.swaps.gen_maps.core :as gen_maps_core]
+    [sixdim.score.swaps.gen_maps.eight :as gen_maps_eight]
+    [sixdim.score.swaps.gen_maps.triplet :as gen_maps_triplet]
+    [sixdim.score.swaps.gen_maps.sixteen :as gen_maps_sixteen]
     [sixdim.score.scales.swaps :as scales_swaps]
     [sixdim.score.scales.watchers :as scales_watchers]
     [sixdim.score.swaps.undo :as score_swaps_undo]
+    [sixdim.score.swaps.gen_maps :as swaps_gen_maps]
     [sixdim.score.watchers.core :as score_watchers]
     [sixdim.score.watchers.undo :as score_undo_watchers]
     [sixdim.score.scales :as scales]
@@ -43,11 +51,6 @@
 (load-file "src/sixdim/init/save.clj")
 (load-file "src/sixdim/init/gui.clj")
 
-; load default (latest) save
-; (save/load_default_atoms @atoms/atoms_to_save state_defs/save_root_dir)
-
-; save
-; (save/save_atoms @atoms/atoms_to_save state_defs/save_root_dir)
 
 
 

@@ -13,5 +13,8 @@
 (save/mkdir (save/default_save_path state_defs/save_root_dir))
 (save/mkdir (str state_defs/save_root_dir "/1"))
 
-; (save/save_atoms @atoms/atoms_to_save state_defs/save_root_dir)
+; load default (latest) save
 ; (save/load_default_atoms @atoms/atoms_to_save state_defs/save_root_dir)
+
+; save
+; (save/save_atoms @atoms/atoms_to_save state_defs/save_root_dir)

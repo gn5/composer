@@ -128,18 +128,18 @@
 
 
 ; text areas for main window horizontal panels
-(defonce text_hoz1_1 (atom "text_hoz1_1"))
-(defonce text_hoz1_2 (atom "text_hoz1_2"))
-(defonce text_hoz1_3 (atom "text_hoz1_3"))
-(defonce text_hoz1_4 (atom "text_hoz1_4"))
-(defonce text_hoz2_1 (atom "text_hoz2_1"))
-(defonce text_hoz2_2 (atom "text_hoz2_2"))
-(defonce text_hoz2_3 (atom "text_hoz2_3"))
-(defonce text_hoz2_4 (atom "text_hoz2_4"))
-(defonce text_hoz3_1 (atom "text_hoz3_1"))
-(defonce text_hoz3_2 (atom "text_hoz3_2"))
-(defonce text_hoz3_3 (atom "text_hoz3_3"))
-(defonce text_hoz3_4 (atom "text_hoz3_4"))
+(defonce text_hoz1_1 (atom "---"))
+(defonce text_hoz1_2 (atom "---"))
+(defonce text_hoz1_3 (atom "---"))
+(defonce text_hoz1_4 (atom "---"))
+(defonce text_hoz2_1 (atom "---"))
+(defonce text_hoz2_2 (atom "---"))
+(defonce text_hoz2_3 (atom "---"))
+(defonce text_hoz2_4 (atom "---"))
+(defonce text_hoz3_1 (atom "---"))
+(defonce text_hoz3_2 (atom "---"))
+(defonce text_hoz3_3 (atom "---"))
+(defonce text_hoz3_4 (atom "---"))
 
 ; undo/redo score changes
 (defonce score1_undo (atom {:back [] :forw []}))
