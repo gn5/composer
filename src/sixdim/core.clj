@@ -42,8 +42,8 @@
     )
   (:gen-class))
 
-; (print midi_out_virtualport)
-; (overtone.midi/midi-note midi_out_virtualport 66 127 500 0)
+; (print midi_receivers/midi_out_virtualport)
+; (overtone.midi/midi-note midi_receivers/midi_out_virtualport 66 127 500 0)
 
 (load-file "src/sixdim/init/scales.clj")
 (load-file "src/sixdim/init/scores.clj")
@@ -51,6 +51,11 @@
 (load-file "src/sixdim/init/save.clj")
 (load-file "src/sixdim/init/gui.clj")
 
+; (defn ttt []
+  ; (overtone.midi/midi-note midi_receivers/midi_out_virtualport 66 127 500 0))
+; (apply-by (+ 10000 (now)) #'ttt [])
+
+; (apply-at (+ 1000 (now)) #'overtone.midi/midi-note [midi_receivers/midi_out_virtualport 66 127 500 0])
 
 
 
