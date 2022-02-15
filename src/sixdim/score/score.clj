@@ -20,6 +20,8 @@
     {"pitch" pitch
     "vol" volume
     "duration" duration_ms
+    "play" true ;true or false
+    "delay" (calc_bpm_based_note_duration state_defs/bar_bpm 16)
     "scale_id" "CM6" ;"A min7 sixth-dim"
     "generate" "locked"})
   ([pitch beat_key]
@@ -42,6 +44,12 @@
 
 (defn replace_note_scale [current_note scale_id]
   (assoc current_note "scale_id" scale_id))
+
+(defn replace_note_delay [current_note duration_ms]
+  (assoc current_note "delay" duration_ms))
+
+(defn replace_note_play [current_note true_false]
+  (assoc current_note "play" true_false))
 
 (defn replace_note_vol [current_note vol]
   (assoc current_note "vol" vol))

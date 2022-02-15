@@ -43,18 +43,22 @@
   "gens"
   "
   choose generator:
-  (n) gen_note_from_intervals_seconds
-  (e) gen_note_from_intervals_seconds_down
-  (i) gen_note_from_intervals_seconds_up
+  - use filter_accept_bh:
+  (n) 12 seconds 
+  (e) 12 seconds down
+  (i) 12 seconds up
+  (,) 34 57 thirds down
+  (-) 34 57 thirds up
 
-  (l) change scale (gen_note_from_scale)
-        - use filter_accept_all
-  (u) gen_closest_scale_note_up_and_down
-        - use filter_accept_all
-  (y) gen_closest_scale_note_up_first
-        - use filter_accept_all
-  (h) gen_closest_scale_note_down_first
-        - use filter_accept_all
+  - use filter_accept_all:
+  (c/d) shift down/up scale 
+  (enter) set play true
+  (backspace) set play false
+
+  (l) set scale (gen_note_from_scale)
+  (u) closest scale note up and down
+  (y) closest scale note up first
+  (h) closest scale note down first
   "
 
   "gen_maps"

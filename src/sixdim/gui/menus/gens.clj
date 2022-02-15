@@ -13,6 +13,18 @@
     "t" {:log1 "reset menu to base"
          :action #(menu_switch/to_menu "base")}
 
+    "c" {:log1 "gen_shift_down_scale1"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_shift_down_scale1)
+        (menu_switch/to_menu "base"))}
+
+    "d" {:log1 "gen_shift_up_scale1"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_shift_up_scale1)
+        (menu_switch/to_menu "base"))}
+
     "n" {:log1 "gen_note_from_intervals_seconds"
          :action #(do 
         (reset! atoms/active_generator 
@@ -30,6 +42,19 @@
         (reset! atoms/active_generator 
                 mgens/gen_note_from_intervals_seconds_up)
         (menu_switch/to_menu "base"))}
+
+    "," {:log1 "gen_note_from_intervals_34_57_down"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_note_from_intervals_34_57_down)
+        (menu_switch/to_menu "base"))}
+
+    "-" {:log1 "gen_note_from_intervals_34_57_up"
+         :action #(do 
+        (reset! atoms/active_generator 
+                mgens/gen_note_from_intervals_34_57_up)
+        (menu_switch/to_menu "base"))}
+
 
     "l" {:log1 "change notes scale gen_note_from_scale"
          :action #(do 
@@ -54,4 +79,21 @@
         (reset! atoms/active_generator 
                 mgens/gen_closest_scale_note_down_first)
         (menu_switch/to_menu "base"))}
+
+    "enter" {:log1 "gen_note_play_true"
+             :action #(do 
+             (reset! atoms/active_generator 
+                     mgens/gen_note_play_true)
+             (menu_switch/to_menu "base"))}
+
+    "backspace" {:log1 "gen_note_play_false"
+                 :action #(do 
+                (reset! atoms/active_generator 
+                        mgens/gen_note_play_false)
+                (menu_switch/to_menu "base"))}
+
       })
+
+
+
+

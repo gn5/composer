@@ -13,6 +13,12 @@
 
 (def seconds_up [{:sign + :n 1} {:sign + :n 2}])
 
+(def n34_57_down [{:sign - :n 3} {:sign - :n 4}
+                 {:sign - :n 5} {:sign - :n 7}])
+
+(def n34_57_up [{:sign - :n 3} {:sign - :n 4}
+               {:sign - :n 5} {:sign - :n 7}])
+
 (defn gen_note_from_intervals
   [intervals_map score bar_n beat_key beat_n extra_gen_args]
   "- generate possible scalar note: semitone or tone up or down
@@ -39,6 +45,15 @@
   (gen_note_from_intervals seconds 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
 
+(defn gen_note_from_intervals_34_57_down
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals n34_57_down 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_34_57_up
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals n34_57_up
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+
 ; do not define as partial to get correct common_fns/fn_name
 ; (def gen_note_from_intervals_seconds_down 
   ; (partial gen_note_from_intervals seconds_down))
@@ -61,11 +76,22 @@
         scale_id (:scale_id extra_gen_args)]
     ;replace current note
     (list (score/replace_score_note 
-        score 
-        bar_n 
-        beat_key 
-        beat_n
+        score bar_n beat_key beat_n
         (score/replace_note_scale current_note scale_id)))))
+
+(defn gen_note_play_false
+  [score bar_n beat_key beat_n extra_gen_args]
+  (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
+    (list (score/replace_score_note 
+        score bar_n beat_key beat_n 
+        (score/replace_note_play current_note false)))))
+
+(defn gen_note_play_true
+  [score bar_n beat_key beat_n extra_gen_args]
+  (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
+    (list (score/replace_score_note 
+        score bar_n beat_key beat_n 
+        (score/replace_note_play current_note true)))))
 
 ; (mgens/gen_note_from_intervals_seconds_up 
   ; @atoms/score1 1 "eight" 1 {:scale_id "ra"}) 
@@ -192,6 +218,32 @@
                 score bar_n beat_key beat_n 
                 (assoc current_note "pitch" %)) 
              new_notes_vec)))))
+
+(defn gen_shift_up_scale1 [score bar_n beat_key beat_n extra_gen_args]
+  (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
+    (let [scale (scales/get_scale (current_note "scale_id")
+                                  (:scales extra_gen_args))]
+      (let [new_pitch 
+            (scales/up_scale_note_n (current_note "pitch") scale 1)]
+        (list (score/replace_score_note 
+                score bar_n beat_key beat_n 
+                (assoc current_note "pitch" new_pitch)))))))
+
+; (gen_shift_up_scale1 @atoms/score1 1 "quarter" 1 {:scales @atoms/scales})
+
+(defn gen_shift_down_scale1 [score bar_n beat_key beat_n extra_gen_args]
+  (let [current_note (nav/get_score_beat score bar_n beat_key beat_n)]
+    (let [scale (scales/get_scale (current_note "scale_id")
+                                  (:scales extra_gen_args))]
+      (let [new_pitch 
+            (scales/down_scale_note_n (current_note "pitch") scale 1)]
+        (list (score/replace_score_note 
+                score bar_n beat_key beat_n 
+                (assoc current_note "pitch" new_pitch)))))))
+
+
+
+
 
 
 
