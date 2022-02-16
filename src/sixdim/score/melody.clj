@@ -86,6 +86,14 @@
 
 ; (run_filters_on_score_filters (nth tinput 0))
 
+(defn subsample_scores [scores_vec]
+  (if (> (count scores_vec) 40)
+         (take 40 (shuffle scores_vec))
+         scores_vec))
+
+; (subsample_scores {:score (range 301) :filters [] :scales "a_scale"})
+; (subsample_scores {:score (range 401) :filters [] :scales "a_scale"})
+
 (defn run_filters_on_scores_filters
   [scores_filters]
   (map run_filters_on_score_filters scores_filters))
@@ -105,6 +113,7 @@
       (run_filters_on_scores_filters v)
       (filter #(not= {} %) v)
       (filter #(not= [] (:score %)) v)
+      (subsample_scores v)
       )))
    
 

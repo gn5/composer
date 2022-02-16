@@ -8,18 +8,14 @@
 
 (def seconds [{:sign + :n 1} {:sign + :n 2}
               {:sign - :n 1} {:sign - :n 2}])
-
 (def seconds_down [{:sign - :n 1} {:sign - :n 2}])
-
 (def seconds_up [{:sign + :n 1} {:sign + :n 2}])
-
 (def n34_57_down [{:sign - :n 3} {:sign - :n 4}
                  {:sign - :n 5} {:sign - :n 7}])
+(def n34_57_up [{:sign + :n 3} {:sign + :n 4}
+               {:sign + :n 5} {:sign + :n 7}])
 
-(def n34_57_up [{:sign - :n 3} {:sign - :n 4}
-               {:sign - :n 5} {:sign - :n 7}])
-
-(defn gen_note_from_intervals
+(defn gen_note_from_intervals_eight
   [intervals_map score bar_n beat_key beat_n extra_gen_args]
   "- generate possible scalar note: semitone or tone up or down
    - from 1 score, generate vector of n (length intervals) scores
@@ -36,39 +32,111 @@
                                             (:sign %)      ;  + or -
                                             (:n %))))      ;  n semitones
             intervals_map)))
-
-; (def gen_note_from_intervals_seconds 
-  ; (partial gen_note_from_intervals seconds))
-; do not define as partial to get correct common_fns/fn_name
-(defn gen_note_from_intervals_seconds 
+(defn gen_note_from_intervals_34_57_down_eight
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
-  (gen_note_from_intervals seconds 
+  (gen_note_from_intervals_eight n34_57_down 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_34_57_up_eight
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_eight n34_57_up
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_eight 
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_eight seconds 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_down_eight
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_eight seconds_down 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_up_eight
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_eight seconds_up 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
 
-(defn gen_note_from_intervals_34_57_down
+
+(defn gen_note_from_intervals_triplet
+  [intervals_map score bar_n beat_key beat_n extra_gen_args]
+  (let [previous_eigth ((nav/nav_triplet score bar_n beat_key beat_n - 1) "pitch")
+        current_note   (nav/get_score_beat score bar_n beat_key beat_n)]
+          (map #(score/replace_score_note score bar_n beat_key beat_n
+                  (assoc current_note 
+                         "pitch" 
+                         (scales/shift_note previous_eigth ; with previous note
+                                            (:sign %)      ;  + or -
+                                            (:n %))))      ;  n semitones
+            intervals_map)))
+(defn gen_note_from_intervals_34_57_down_triplet
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
-  (gen_note_from_intervals n34_57_down 
+  (gen_note_from_intervals_triplet n34_57_down 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
-(defn gen_note_from_intervals_34_57_up
+(defn gen_note_from_intervals_34_57_up_triplet
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
-  (gen_note_from_intervals n34_57_up
+  (gen_note_from_intervals_triplet n34_57_up
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_triplet
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_triplet seconds 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_down_triplet
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_triplet seconds_down 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_up_triplet
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_triplet seconds_up 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
 
-; do not define as partial to get correct common_fns/fn_name
-; (def gen_note_from_intervals_seconds_down 
-  ; (partial gen_note_from_intervals seconds_down))
-(defn gen_note_from_intervals_seconds_down
+(defn gen_note_from_intervals_sixteen
+  [intervals_map score bar_n beat_key beat_n extra_gen_args]
+  (let [previous_eigth ((nav/nav_sixteen score bar_n beat_key beat_n - 1) "pitch")
+        current_note   (nav/get_score_beat score bar_n beat_key beat_n)]
+          (map #(score/replace_score_note score bar_n beat_key beat_n
+                  (assoc current_note 
+                         "pitch" 
+                         (scales/shift_note previous_eigth ; with previous note
+                                            (:sign %)      ;  + or -
+                                            (:n %))))      ;  n semitones
+            intervals_map)))
+(defn gen_note_from_intervals_34_57_down_sixteen
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
-  (gen_note_from_intervals seconds_down 
+  (gen_note_from_intervals_sixteen n34_57_down 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_34_57_up_sixteen
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_sixteen n34_57_up
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_sixteen
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_sixteen seconds 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_down_sixteen
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_sixteen seconds_down 
+                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+(defn gen_note_from_intervals_seconds_up_sixteen
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  (gen_note_from_intervals_sixteen seconds_up 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
 
-; do not define as partial to get correct common_fns/fn_name
-; (def gen_note_from_intervals_seconds_up 
-  ; (partial gen_note_from_intervals seconds_up))
-(defn gen_note_from_intervals_seconds_up
-  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
-  (gen_note_from_intervals seconds_up 
-                           score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 (defn gen_note_from_scale
   [score bar_n beat_key beat_n extra_gen_args]

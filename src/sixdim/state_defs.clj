@@ -3,7 +3,7 @@
 ;; global app state definitions
 
 ; bpm (n beats per minute) of bar (=4 quarter notes)
-(def bar_bpm 20) 
+(def bar_bpm 60) 
 
 (def default_note_volume 63) ; in midi range 1 to 127
 

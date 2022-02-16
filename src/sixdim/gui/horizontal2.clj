@@ -39,6 +39,16 @@
     active_score_
     active_view_bar_
     active_view_bar_ 7))
+ (guicore/ll
+  (print_score/print_score_sel_bars_plays
+    active_score_
+    active_view_bar_
+    active_view_bar_ 7))
+ (guicore/ll
+  (print_score/print_score_sel_bars_delays
+    active_score_
+    active_view_bar_
+    active_view_bar_ 7))
 
   (guicore/ll (str text_hoz2_1_))
   ; (guicore/ll (str text_hoz2_2_))
