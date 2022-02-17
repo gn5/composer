@@ -79,6 +79,24 @@
     "_" {:log1       "increment_selection_end_eight"
          :action #(ss/increment_selection_end_eight)}
 
+    "#" {:log1       "decrement_selection_start_triplet"
+         :action #(ss/decrement_selection_start_triplet)}
+    "~" {:log1       "increment_selection_start_triplet"
+         :action #(ss/increment_selection_start_triplet)}
+    "$" {:log1       "decrement_selection_end_triplet"
+         :action #(ss/decrement_selection_end_triplet)}
+    "@" {:log1       "increment_selection_end_triplet"
+         :action #(ss/increment_selection_end_triplet)}
+
+    "?" {:log1       "decrement_selection_start_sixteen"
+         :action #(ss/decrement_selection_start_sixteen)}
+    "!" {:log1       "increment_selection_start_sixteen"
+         :action #(ss/increment_selection_start_sixteen)}
+    "/" {:log1       "decrement_selection_end_sixteen"
+         :action #(ss/decrement_selection_end_sixteen)}
+    "\\" {:log1       "increment_selection_end_sixteen"
+         :action #(ss/increment_selection_end_sixteen)}
+
     "`" {:log1 "undo active score"
          :action #(ss_undo/undo_active_score
                     (first @atoms/active_scores_n))}

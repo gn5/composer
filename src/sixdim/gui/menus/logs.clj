@@ -55,7 +55,7 @@
   (backspace) gen_note_from_intervals_seconds_up_sixteen
   ( ) gen_note_from_intervals_34_57_down_sixteen
   (tab) gen_note_from_intervals_34_57_up_sixteen
-  (q) gen_note_play_true
+  (s) gen_note_play_true
   (w) gen_note_play_false
   (f) gen_shift_down_scale1
   (p) gen_shift_up_scale1

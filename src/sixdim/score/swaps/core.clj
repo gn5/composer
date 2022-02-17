@@ -99,25 +99,40 @@
       (swap! atoms/selection_bar_start dec))
 (defn increment_selection_start_bar []
       (swap! atoms/selection_bar_start inc))
-
 (defn decrement_selection_end_bar []
       (swap! atoms/selection_bar_end dec))
 (defn increment_selection_end_bar []
       (swap! atoms/selection_bar_end inc))
 
-; (defonce selection_eight_start (atom 1))
-; (defonce selection_eight_end (atom 8))
-
 (defn decrement_selection_start_eight []
       (swap! atoms/selection_eight_start dec))
 (defn increment_selection_start_eight []
       (swap! atoms/selection_eight_start inc))
-
 (defn decrement_selection_end_eight []
       (swap! atoms/selection_eight_end dec))
 (defn increment_selection_end_eight []
       (swap! atoms/selection_eight_end inc))
 
+(defn decrement_selection_start_triplet []
+      (swap! atoms/selection_triplet_start dec))
+(defn increment_selection_start_triplet []
+      (swap! atoms/selection_triplet_start inc))
+(defn decrement_selection_end_triplet []
+      (swap! atoms/selection_triplet_end dec))
+(defn increment_selection_end_triplet []
+      (swap! atoms/selection_triplet_end inc))
+
+(defn decrement_selection_start_sixteen []
+      (swap! atoms/selection_sixteen_start dec))
+(defn increment_selection_start_sixteen []
+      (swap! atoms/selection_sixteen_start inc))
+(defn decrement_selection_end_sixteen []
+      (swap! atoms/selection_sixteen_end dec))
+(defn increment_selection_end_sixteen []
+      (swap! atoms/selection_sixteen_end inc))
+
+; (defonce selection_eight_start (atom 1))
+; (defonce selection_eight_end (atom 8))
 ; (defn remove_score_bars [score index n_bars]
  
 ; (def mapping_selection_start_bar_eights

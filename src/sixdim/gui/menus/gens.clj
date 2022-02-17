@@ -79,7 +79,7 @@
 
 
 
-    "q" {:log1 "gen_note_play_true"
+    "s" {:log1 "gen_note_play_true"
              :action #(do 
              (reset! atoms/active_generator 
                      mgens/gen_note_play_true)

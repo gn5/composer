@@ -117,8 +117,8 @@
                @atoms/text_hoz3_4]
                )
             {:window-title "Composer"
-             :window-start-width 1260
-             :window-start-height 850})
+             :window-start-width 1400
+             :window-start-height 860})
 
 ; (java2d/run #(windows/main_help_window)
             ; {:window-title "Commands"
