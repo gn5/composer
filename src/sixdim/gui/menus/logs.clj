@@ -43,22 +43,26 @@
   "gens"
   "
   choose generator:
-  - use filter_accept_bh:
-  (n) 12 seconds 
-  (e) 12 seconds down
-  (i) 12 seconds up
-  (,) 34 57 thirds down
-  (-) 34 57 thirds up
-
-  - use filter_accept_all:
-  (c/d) shift down/up scale 
-  (enter) set play true
-  (backspace) set play false
-
-  (l) set scale (gen_note_from_scale)
-  (u) closest scale note up and down
-  (y) closest scale note up first
-  (h) closest scale note down first
+  (n) gen_note_from_intervals_seconds_down_eight
+  (e) gen_note_from_intervals_seconds_up_eight
+  (i) gen_note_from_intervals_34_57_down_eight
+  (o) gen_note_from_intervals_34_57_up_eight
+  (l) gen_note_from_intervals_seconds_down_triplet
+  (u) gen_note_from_intervals_seconds_up_triplet
+  (y) gen_note_from_intervals_34_57_down_triplet
+  (h) gen_note_from_intervals_34_57_up_triplet
+  (enter) gen_note_from_intervals_seconds_down_sixteen
+  (backspace) gen_note_from_intervals_seconds_up_sixteen
+  ( ) gen_note_from_intervals_34_57_down_sixteen
+  (tab) gen_note_from_intervals_34_57_up_sixteen
+  (s) gen_note_play_true
+  (w) gen_note_play_false
+  (f) gen_shift_down_scale1
+  (p) gen_shift_up_scale1
+  (z) change notes scale gen_note_from_scale
+  (x) gen_closest_scale_note_up_and_down
+  (c) gen_closest_scale_note_down_first
+  (d) gen_closest_scale_note_up_first
   "
 
   "gen_maps"
@@ -100,8 +104,11 @@
   "filts"
   "
   choose filter:
-  (n) filter_accept_all
-  (e) filter_accept_bh
+  (n) ok all notes
+  (e) ok BH 4:d 8:u/s      3/16:d/u/s
+  (i) ok only downbeats
+  (o) ok downbeats on 4  8/3/16:d/u/s
+  (h) ok downbeats on 4/8  3/16:u/s
   "
 
   "selection"

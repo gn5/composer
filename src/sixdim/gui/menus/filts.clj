@@ -25,5 +25,23 @@
                 mfilts/filter_accept_bh)
         (menu_switch/to_menu "base"))}
 
+    "i" {:log1 "filter_accept_only_downbeats"
+         :action #(do 
+        (reset! atoms/active_filter 
+                mfilts/filter_accept_only_downbeats)
+        (menu_switch/to_menu "base"))}
+
+    "o" {:log1 "filter_accept_downbeats_on_4"
+         :action #(do 
+        (reset! atoms/active_filter 
+                mfilts/filter_accept_downbeats_on_4)
+        (menu_switch/to_menu "base"))}
+
+    "h" {:log1 "filter_accept_downbeats_on_48_up316"
+         :action #(do 
+        (reset! atoms/active_filter 
+                mfilts/filter_accept_downbeats_on_48_up316)
+        (menu_switch/to_menu "base"))}
+
       })
 
