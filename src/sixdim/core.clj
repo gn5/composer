@@ -51,6 +51,7 @@
 (load-file "src/sixdim/init/save.clj")
 (load-file "src/sixdim/init/gui.clj")
 
+
 ; (defn ttt []
   ; (overtone.midi/midi-note midi_receivers/midi_out_virtualport 66 127 500 0))
 ; (apply-by (+ 10000 (now)) #'ttt [])
