@@ -118,26 +118,6 @@
   (gen_note_from_intervals_sixteen seconds_up 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (defn gen_note_from_scale
   [score bar_n beat_key beat_n extra_gen_args]
   (let [current_note (nav/get_score_beat score bar_n beat_key beat_n) 
