@@ -33,6 +33,7 @@
    [sixdim.score.scales.modes_four :as scales_modes_four]
    [sixdim.score.scales.modes_three :as scales_modes_three]
    [sixdim.score.melody_filters :as mfilters]
+   [sixdim.score.melody_pattern_keys :as melody_pattern_keys]
    [sixdim.score.melody_generators :as mgens]
    [sixdim.print.core :as print_core]
    [sixdim.print.score :as print_score]
@@ -47,6 +48,8 @@
 ; (overtone.midi/midi-note midi_receivers/midi_out_virtualport 66 127 500 0)
 
 (load-file "src/sixdim/init/scales.clj")
+(println (str "log: core init - n scales:" (count @atoms/scales)))
+(println (str "log: core init - all scales:" (vec (map #(:id %) @atoms/scales))))
 (load-file "src/sixdim/init/scores.clj")
 (load-file "src/sixdim/init/metronome.clj")
 (load-file "src/sixdim/init/save.clj")
@@ -58,10 +61,7 @@
 
 ; (apply-at (+ 1000 (now)) #'overtone.midi/midi-note [midi_receivers/midi_out_virtualport 66 127 500 0])
 
-(print @atoms/active_scores_n)
-(print @atoms/location)
-(print @atoms/gen_maps)
-(= 1 1)
-(count @atoms/scales)
-(print (map #(:id %)  @atoms/scales))
+
+
+
 

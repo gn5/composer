@@ -155,6 +155,7 @@
 (defn reset_fill_score_with_active_gen_map []
   (let [gen_maps_ @atoms/gen_maps
         scales_ @atoms/scales
+        patterns_ @atoms/active_patterns
         int_active_score 
           (first @atoms/active_scores_n)]
     (let [
@@ -166,11 +167,12 @@
           (common_fns/int_to_undo_atom int_active_score)]
       (do         
       ;add scores to scores buffer
+      ; (println (str "log: reset_fill_score_with_active_gen_map() swap! atoms/scores_buffer with melody/gen_melody"))  
       (swap! atoms/scores_buffer
              undo/add_scores_to_buffer  
              (vec (map #(:score %)
                        (melody/gen_melody 
-                         score_to_swap_ gen_maps_ scales_)))
+                         score_to_swap_ gen_maps_ scales_ patterns_)))
              state_defs/max_scores_buffer)
       ;add previous score to undo buffer
       (swap! undo_atom_to_swap_ 

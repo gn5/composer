@@ -9,11 +9,17 @@
   (map 
     #(hash-map :score % 
                :filters (:filters score_filters)
-               :scales (:scales score_filters))
+               :scales  (:scales score_filters)
+               :patterns (:patterns score_filters)
+               :patterns_delta (:patterns_delta score_filters)
+               )
     (generator (:score score_filters) 
                bar_n beat_key beat_n
                (assoc extra_gen_args
-                      :scales (:scales score_filters)))))
+                      :scales  (:scales score_filters)
+                      :patterns (:patterns score_filters)
+                      :patterns_delta (:patterns_delta score_filters)
+                      ))))
 
 ; (count (melody/apply_generator_on_score_filters 
   ; {:score @atoms/score1 :filters [] :scales @atoms/scales} 
@@ -79,9 +85,12 @@
 (defn run_filters_on_score_filters
   [score_filters]
   (reduce filters_reducer
-          {:score (:score score_filters) 
+          {:score   (:score score_filters) 
            :filters []
-           :scales (:scales score_filters)}
+           :scales  (:scales score_filters) 
+           :patterns (:patterns score_filters)
+           :patterns_delta (:patterns_delta score_filters)
+           }
           (:filters score_filters)))
 
 ; (run_filters_on_score_filters (nth tinput 0))
@@ -115,17 +124,19 @@
       (filter #(not= [] (:score %)) v)
       (subsample_scores v)
       )))
-   
 
 ; (in_scale_group "A" (first @scales) "downbeats")
 ; (in_scale_group "A" (first @scales) "upbeats")
 
-(defn gen_melody [score gen_maps scales]
-  ""
+(defn gen_melody
+  "gen melody" 
+   [score gen_maps scales patterns patterns_delta]
   ; (flip all gen_maps beats meta to edit)
+  ; (println (str "log: gen_melody pattern: " pattern))
   (reduce gen_and_filters
           ; init list of objects {:score ... :filters [... ...]}
-          [{:score score :filters [] :scales scales}]
+          [{:score score :filters [] :scales scales
+            :patterns patterns :patterns_delta patterns_delta}]
           gen_maps))
 
 ; (print_score/print_bar_notes @atoms/score1 1 5)
