@@ -106,14 +106,6 @@
 (reset! atoms/active_view_bar 1) ; GUI-look at bar 2
 ;;;; end example usage
 
-;; tmp
-
-;; ch1d: c1 first note of :downbeats in first inversion
-;; n1dq: next :downbeat from previous note on quarter-notes vector
-;; n2dq: next-next :downbeat from previous note on quarter-notes vector
-;; n1d8: next :downbeat from previous note on eights-notes vector
-;; 0:    set note to init note C0 and play:false
-;; 1:    keep note as is
 (def fbar_test_pattern_0
   "full bar (fbar) test pattern"
   {"quarter" ["ch1d" "ch1d" "ch1d" "ch1d"]
@@ -121,58 +113,37 @@
    "triplet" ["ch1d" "ch1d" "ch1d" "ch1d" "ch1d" "ch1d" "ch1d" "ch1d"]
    "sixteen" ["ch1d" "ch1d" "ch1d" "ch1d" "ch1d" "ch1d" "ch1d" "ch1d"]})
 
-(def fbar_test_pattern_1
-  "full bar (fbar) test pattern"
-  {"quarter" ["ch1d" "n1dq" "n1dq" "n1dq"]
+;; ch1d3: first chord note of downbeats (when ordered in first inversion) 
+;;        in octave 3
+;; u1dq: up-1 from previous downbeat quarter-note
+;; d1dq: down-1 from previous downbeat quarter-note
+(def fbar_pattern_quarter_arp_up_inv1
+  "chord arpeggio from 1st note of downbeats"
+  {"quarter" ["ch1d3" "u1dq" "u1dq" "u1dq"]
    "eight"   [0 0 0 0]
    "triplet" [0 0 0 0 0 0 0 0]
    "sixteen" [0 0 0 0 0 0 0 0]})
 
-(defn apply_fbar_pattern
-  "apply full bar notes pattern in score at bar position
-   Args: 
-     pattern (dict): pattern to transform into score notes at bar_n
-     bar_n (int>0): bar number on which to apply bar pattern"
-  [bar_n pattern]
-    ; set selection on target bar (cover all bar notes)
-  (set_selection_on_full_bar bar_n)
-  ; set pattern atom 
-  (reset! atoms/active_patterns pattern)
-  ; set generator atom to change pattern
-  (reset! atoms/active_generator mgens/gen_note_from_pattern)
-  ; set compatible filter: accept all generator changes
-  (reset! atoms/active_filter mfilts/filter_accept_all)
-  ; set gen_map atom to all sixteen notes
-  (swaps_gen_maps/reset_sixteen_gen_maps_with_active_gen_filt)
-  ; apply (on all bar sixteen)
-  (ss/reset_fill_score_with_active_gen_map)
-  ; set gen_map atom to all triplet notes
-  (swaps_gen_maps/reset_triplet_gen_maps_with_active_gen_filt)
-  ; re-apply (for bar triplets)
-  ; reset active_score for GUI sync is done in ss/reset_fill...
-  (ss/reset_fill_score_with_active_gen_map)
-  ; set active view bar in GUI
-  (reset! atoms/active_view_bar bar_n)
-  "apply_fbar_pattern")
-
-;; start example
-; (print @atoms/active_patterns)
-(apply_fbar_pattern 2 fbar_test_pattern_0)
-;; end example 
+(def fbar_pattern_quarter_arp_down_inv1
+  "chord arpeggio from 1st note of downbeats"
+  {"quarter" ["ch1d4" "d1dq" "d1dq" "d1dq"]
+   "eight"   [0 0 0 0]
+   "triplet" [0 0 0 0 0 0 0 0]
+   "sixteen" [0 0 0 0 0 0 0 0]})
 
 (defn apply_fbars_patterns
   "apply full bar notes list of patterns 
   into score from bar_start to bar_end
    Args: 
-     patterns: list of patterns to transform into score
-     cycle_patterns: 'cycle' or 'no_cycle'
-       if less patterns than bars to edit, 
-       cycle (restart at first pattern) until all bars filled"
-  [sel_starts sel_ends patterns cycle_patterns]
+     patterns: list of patterns to transform into score"
+  [sel_starts sel_ends patterns]
   ; set selection on target bar (cover all bar notes)
   (set_selection sel_starts sel_ends)
   ; set patterns atom 
-  (reset! atoms/active_patterns patterns)
+  (let [cycled_patterns 
+          (vec (take 
+                (+ (- (nth sel_ends 0) (nth sel_starts 0)) 1) (cycle patterns)))] 
+    (reset! atoms/active_patterns cycled_patterns))
   ; set indexes offset between first bar of score to edit 
   ; and first bar of patterns
   (reset! atoms/active_patterns_delta (- (nth sel_starts 0) 1))
@@ -193,14 +164,21 @@
   (reset! atoms/active_view_bar (nth sel_starts 0))
   "apply_fbars_patterns")
 
+(apply_fbars_patterns
+ [0 0 0 0] [7 8 8 8]
+ [{"quarter" ["play_0" "play_0" "play_0" "play_0"]
+   "eight"   ["play_0" "play_0" "play_0" "play_0"]
+   "triplet" ["play_0" "play_0" "play_0" "play_0" 
+              "play_0" "play_0" "play_0" "play_0"]
+   "sixteen" ["play_0" "play_0" "play_0" "play_0" 
+              "play_0" "play_0" "play_0" "play_0"]}])
+
 (apply_fbars_patterns 
-  [5 4 4 4] [7 4 4 4]
-  [fbar_test_pattern_0 fbar_test_pattern_0]
-  "cycle")
+ [1 0 0 0] [7 8 8 8]
+ [{"quarter" ["ch1d3" "ch1d3" "ch1d3" "ch1d3"]
+   "eight"   [1 1 1 1]
+   "triplet" [1 1 1 1 1 1 1 1]
+   "sixteen" [1 1 1 1 1 1 1 1]}])
 
-(print @atoms/gen_maps)
-(> (count [7 5]) 5)
-(if (< (count [7 5]) 5) (print "here") (print "there"))      
-
-
-(repeat [1 2])
+(println (map #(:bar %) @atoms/gen_maps))
+(println (map #(:n %) @atoms/gen_maps))

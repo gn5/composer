@@ -61,6 +61,8 @@
 
 ; (apply-at (+ 1000 (now)) #'overtone.midi/midi-note [midi_receivers/midi_out_virtualport 66 127 500 0])
 
+; (print (first @atoms/scales))
+
 
 
 

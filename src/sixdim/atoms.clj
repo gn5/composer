@@ -89,7 +89,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; melody atoms
 (defonce gen_maps (atom []))
-(defonce active_patterns (atom [])) 
+(defonce active_patterns (atom []))
+(defonce active_patterns_delta (atom 0))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gui atoms
 (defonce key_press (atom "t"))

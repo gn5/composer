@@ -156,6 +156,7 @@
   (let [gen_maps_ @atoms/gen_maps
         scales_ @atoms/scales
         patterns_ @atoms/active_patterns
+        patterns_delta_ @atoms/active_patterns_delta
         int_active_score 
           (first @atoms/active_scores_n)]
     (let [
@@ -172,7 +173,7 @@
              undo/add_scores_to_buffer  
              (vec (map #(:score %)
                        (melody/gen_melody 
-                         score_to_swap_ gen_maps_ scales_ patterns_)))
+                         score_to_swap_ gen_maps_ scales_ patterns_ patterns_delta_)))
              state_defs/max_scores_buffer)
       ;add previous score to undo buffer
       (swap! undo_atom_to_swap_ 
@@ -303,5 +304,7 @@
       #(score/remove_score_bars % (count %) 1))
     (reset! atoms/active_scores_n 
             @atoms/active_scores_n)))))
+
+
 
 
