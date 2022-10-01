@@ -14,8 +14,7 @@
   "- get previous/next eigth note from key direction beat_number
    - space delimited to form map key
    - bar 1 means get beat from previous/next bar, not current"
-  {
-   "quarter + 1" {:bar 0  :beat_key "eight"   :beat_n 1}
+  {"quarter + 1" {:bar 0  :beat_key "eight"   :beat_n 1}
    "quarter + 2" {:bar 0  :beat_key "eight"   :beat_n 2}
    "quarter + 3" {:bar 0  :beat_key "eight"   :beat_n 3}
    "quarter + 4" {:bar 0  :beat_key "eight"   :beat_n 4}
@@ -31,7 +30,42 @@
    "eight - 2"   {:bar 0  :beat_key "quarter" :beat_n 2}
    "eight - 3"   {:bar 0  :beat_key "quarter" :beat_n 3}
    "eight - 4"   {:bar 0  :beat_key "quarter" :beat_n 4}
-   })
+
+   "sixteen + 1"   {:bar 0  :beat_key "eight" :beat_n 1}
+   "sixteen + 2"   {:bar 0  :beat_key "quarter" :beat_n 2}
+   "sixteen + 3"   {:bar 0  :beat_key "eight" :beat_n 2}
+   "sixteen + 4"   {:bar 0  :beat_key "quarter" :beat_n 3}
+   "sixteen + 5"   {:bar 0  :beat_key "eight" :beat_n 3}
+   "sixteen + 6"   {:bar 0  :beat_key "quarter" :beat_n 4}
+   "sixteen + 7"   {:bar 0  :beat_key "eight" :beat_n 4}
+   "sixteen + 8"   {:bar 1  :beat_key "quarter" :beat_n 1}
+
+   "sixteen - 1"   {:bar 0  :beat_key "" :beat_n 1}
+   "sixteen - 2"   {:bar 0  :beat_key "eight" :beat_n 1}
+   "sixteen - 3"   {:bar 0  :beat_key "" :beat_n 2}
+   "sixteen - 4"   {:bar 0  :beat_key "eight" :beat_n 2}
+   "sixteen - 5"   {:bar 0  :beat_key "" :beat_n 3}
+   "sixteen - 6"   {:bar 0  :beat_key "eight" :beat_n 3}
+   "sixteen - 7"   {:bar 0  :beat_key "" :beat_n 4}
+   "sixteen - 8"   {:bar 0  :beat_key "eight" :beat_n 4}
+   
+   "triplet + 1"   {:bar 0  :beat_key "eight" :beat_n 1}
+   "triplet + 2"   {:bar 0  :beat_key "quarter" :beat_n 2}
+   "triplet + 3"   {:bar 0  :beat_key "eight" :beat_n 2}
+   "triplet + 4"   {:bar 0  :beat_key "quarter" :beat_n 3}
+   "triplet + 5"   {:bar 0  :beat_key "eight" :beat_n 3}
+   "triplet + 6"   {:bar 0  :beat_key "quarter" :beat_n 4}
+   "triplet + 7"   {:bar 0  :beat_key "eight" :beat_n 4}
+   "triplet + 8"   {:bar 1  :beat_key "quarter" :beat_n 1}
+
+   "triplet - 1"   {:bar 0  :beat_key "" :beat_n 1}
+   "triplet - 2"   {:bar 0  :beat_key "eight" :beat_n 1}
+   "triplet - 3"   {:bar 0  :beat_key "" :beat_n 2}
+   "triplet - 4"   {:bar 0  :beat_key "eight" :beat_n 2}
+   "triplet - 5"   {:bar 0  :beat_key "" :beat_n 3}
+   "triplet - 6"   {:bar 0  :beat_key "eight" :beat_n 3}
+   "triplet - 7"   {:bar 0  :beat_key "" :beat_n 4}
+   "triplet - 8"   {:bar 0  :beat_key "eight" :beat_n 4}})
 
 (defn get_next_eight_map 
   [score bar_n beat_key beat_n direction]

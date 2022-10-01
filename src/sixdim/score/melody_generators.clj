@@ -4,7 +4,7 @@
     [sixdim.score.score :as score]
     [sixdim.score.score_nav :as nav]
     [sixdim.score.scales :as scales]
-    [sixdim.score.melody_pattern_keys :as melody_pattern_keys]
+    ; [sixdim.score.patterns.melody-pattern-keys :as melody_pattern_keys]
    )
   (:gen-class))
 
@@ -316,8 +316,10 @@
     ; (print current_pattern_key)
     ; apply key code function at specific bar location (time subdiv)
     (let [new_melody
-      ((melody_pattern_keys/melody_key_functions_map current_pattern_key) 
-        score_ bar_n_ beat_key_ beat_n_ extra_gen_args)]
+      (apply (nth current_pattern_key 0) 
+             (concat [score_ bar_n_ beat_key_ beat_n_ extra_gen_args]
+                     (nth current_pattern_key 1)))]
       ; (println (str "new_melody: " new_melody))
       new_melody)))
 
+; (apply tt (concat [1 2]  [3 4 4 ]))

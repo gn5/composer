@@ -1,7 +1,7 @@
 (ns sixdim.score.scales
   (:use overtone.core)
-    (:require
-     [clojure.string :as clj_string])
+  (:require
+   [clojure.string :as clj_string])
   (:gen-class))
 
 (def flat_to_case {"C" "C" "Cb" "B" "C#" "d"
@@ -196,29 +196,28 @@
 ;        (take 25 (cycle (make_inversions_map  ["C" "D" "F" "A"] 3))))))
 
 (defn order_inversions_by_n_higher [map_of_inversions]
-  (let [highest_inversion_n 
-       (reduce #(if (> (:n_higher %2) %1)
-                  (:n_higher %2)
-                  %1)
-               0
-               map_of_inversions)
+  (let [highest_inversion_n
+        (reduce #(if (> (:n_higher %2) %1)
+                   (:n_higher %2)
+                   %1)
+                0
+                map_of_inversions)
         n_notes (count (:inversion (nth map_of_inversions 0)))]
     (take n_notes (:inversions (reduce #(if (:found_highest %1)
-                                    (assoc %1 :inversions (concat (:inversions %1) (list %2)))
-                                    (if (< (:n_higher %2) highest_inversion_n)
-                                      %1
-                                      (assoc %1
-                                             :found_highest true
-                                             :inversions (concat (:inversions %1) (list %2)))))
-                                 {:found_highest false :inversions []}
-                                 (take 25 (cycle map_of_inversions)))))))
+                                          (assoc %1 :inversions (concat (:inversions %1) (list %2)))
+                                          (if (< (:n_higher %2) highest_inversion_n)
+                                            %1
+                                            (assoc %1
+                                                   :found_highest true
+                                                   :inversions (concat (:inversions %1) (list %2)))))
+                                       {:found_highest false :inversions []}
+                                       (take 25 (cycle map_of_inversions)))))))
 
 ;(order_inversions_by_n_higher (make_inversions_map  ["C" "E" "G" "B"] 3))
 ;(order_inversions_by_n_higher (make_inversions_map  ["C" "D" "F" "A"] 3))
 
-(defn make_all_inversions [list_notes_no_octave base_octave] 
- (map #(vec (:inversion %)) (order_inversions_by_n_higher (make_inversions_map  list_notes_no_octave base_octave)))
-)
+(defn make_all_inversions [list_notes_no_octave base_octave]
+  (map #(vec (:inversion %)) (order_inversions_by_n_higher (make_inversions_map  list_notes_no_octave base_octave))))
 
 ;(make_all_inversions  ["C" "E" "G" "B"] 3)
 ;(make_all_inversions  ["C" "D" "F" "A"] 3)
@@ -231,13 +230,13 @@
        (- nth_note 1)))
 
 (defn get_in_Coctave_nth_note_from_nth_inversion_octave_n
-  [nth_note nth_inversion list_notes_no_octave base_octave] 
-  (clj_string/replace-first  
-   (str 
-    (:pitch-class 
-     (note-info 
-      (get_nth_note_from_nth_inversion_octave_n 
-       nth_note nth_inversion list_notes_no_octave base_octave))) base_octave) 
+  [nth_note nth_inversion list_notes_no_octave base_octave]
+  (clj_string/replace-first
+   (str
+    (:pitch-class
+     (note-info
+      (get_nth_note_from_nth_inversion_octave_n
+       nth_note nth_inversion list_notes_no_octave base_octave))) base_octave)
    ":" ""))
 
 ;(get_nth_note_from_nth_inversion_octave_n 10 1 ["C"] 3)
@@ -251,3 +250,41 @@
 
 ;(get_nth_note_from_nth_inversion_octave_n 40 50 ["C" "D" "F" "A"] 3)
 ;(get_in_Coctave_nth_note_from_nth_inversion_octave_n 423 12 ["C" "D" "F" "A"] 3)
+
+(def test_scale
+  {:id "C13"
+   :id_long "1st 3-notes mode in C major"
+   :downbeats ["C" "E" "G"]
+   :upbeats ["D" "F" "A" "B"]
+   :scale_chromatics []
+   :other_chromatics ["C#" "Eb" "F#" "Ab" "Bb"]})
+
+(defn get_scale_div_notes
+  [scale div_key]
+  ((keyword div_key) scale))
+
+(defn get_scale_div_notes_C0_10
+  [scale div_key]
+  (as->
+   ((keyword div_key) scale) v
+    (mapv (fn [oct] (mapv #(str % oct) v)) (range 11))
+    (flatten v) (vec v)))
+
+(get_scale_div_notes_C0_10 test_scale "downbeats")
+
+(defn in?
+  "true if coll contains elm"
+  [coll elm]
+  (some #(= elm %) coll))
+
+(defn scale_nav
+  [from_pitch scale scale_div dir iter_n] 
+  (let [div_notes_C0_C10
+        (get_scale_div_notes_C0_10 scale scale_div)] 
+    (as-> (range 150) v
+      (mapv #(shift_note from_pitch dir %) v)
+      (filterv #(in? div_notes_C0_C10  %) v)
+      (nth v iter_n)
+      )))
+    
+; (scale_nav "C8" test_scale "upbeats" + 1)
