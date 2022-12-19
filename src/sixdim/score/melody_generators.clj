@@ -3,7 +3,9 @@
   (:require
     [sixdim.score.score :as score]
     [sixdim.score.score_nav :as nav]
-    [sixdim.score.scales :as scales])
+    [sixdim.score.scales :as scales]
+    ; [sixdim.score.patterns.melody-pattern-keys :as melody_pattern_keys]
+   )
   (:gen-class))
 
 (def seconds [{:sign + :n 1} {:sign + :n 2}
@@ -65,6 +67,7 @@
                                             (:sign %)      ;  + or -
                                             (:n %))))      ;  n semitones
             intervals_map)))
+
 (defn gen_note_from_intervals_34_57_down_triplet
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
   (gen_note_from_intervals_triplet n34_57_down 
@@ -97,6 +100,7 @@
                                             (:sign %)      ;  + or -
                                             (:n %))))      ;  n semitones
             intervals_map)))
+
 (defn gen_note_from_intervals_34_57_down_sixteen
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
   (gen_note_from_intervals_sixteen n34_57_down 
@@ -117,26 +121,6 @@
   [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
   (gen_note_from_intervals_sixteen seconds_up 
                            score_ bar_n_ beat_key_ beat_n_ extra_gen_args))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 (defn gen_note_from_scale
   [score bar_n beat_key beat_n extra_gen_args]
@@ -309,9 +293,33 @@
                 score bar_n beat_key beat_n 
                 (assoc current_note "pitch" new_pitch)))))))
 
+(defn get_pattern_key
+  "deprecated.
+   get specific note (= bar time subdivision) from pattern  (typically bar)" [beat_key beat_n pattern]
+  ;(println (str "log: get_pattern_key() beat_key: " beat_key))
+  ;(println (str "log: get_pattern_key() beat_n: " beat_n))
+  ;(println (str "log: get_pattern_key() pattern: " pattern))
+  (nth (pattern beat_key) (- beat_n 1)))
 
 
+(defn gen_note_from_pattern 
+  "convert pattern (typically bar) of key codes to actual notes melody"
+  [score_ bar_n_ beat_key_ beat_n_ extra_gen_args] 
+  ; (println (str "log: gen_note_from_pattern score_: " score_))
+  ; (println (str "log: gen_note_from_pattern (:pattern extra_gen_args): " (:pattern extra_gen_args)))  
+  (let [current_pattern_key 
+        (nav/get_score_beat 
+          (:patterns extra_gen_args) 
+          (- bar_n_ (:patterns_delta extra_gen_args)) 
+          beat_key_ beat_n_)]
+    ; (println (str "current_pattern_key: " current_pattern_key))
+    ; (print current_pattern_key)
+    ; apply key code function at specific bar location (time subdiv)
+    (let [new_melody
+      (apply (nth current_pattern_key 0) 
+             (concat [score_ bar_n_ beat_key_ beat_n_ extra_gen_args]
+                     (nth current_pattern_key 1)))]
+      ; (println (str "new_melody: " new_melody))
+      new_melody)))
 
-
-
-
+; (apply tt (concat [1 2]  [3 4 4 ]))
